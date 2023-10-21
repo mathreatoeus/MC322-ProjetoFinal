@@ -1,0 +1,57 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class MySQLDatabaseConnection {
+
+    public static void main(String[] args) {
+        // Informações de conexão com o banco de dados MySQL
+        String url = "jdbc:mysql://localhost:3306/seu_banco_de_dados";
+        String user = "seu_usuario";
+        String password = "sua_senha";
+
+        // Declarações JDBC
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Registre o driver JDBC (certifique-se de que o arquivo JAR do driver esteja no classpath)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Conecte-se ao banco de dados
+            connection = DriverManager.getConnection(url, user, password);
+
+            // Crie uma declaração SQL
+            statement = connection.createStatement();
+
+            // Execute uma consulta SQL
+            String query = "SELECT * FROM sua_tabela";
+            resultSet = statement.executeQuery(query);
+
+            // Processar o resultado da consulta
+            while (resultSet.next()) {
+                String coluna1 = resultSet.getString("nome_da_coluna1");
+                String coluna2 = resultSet.getString("nome_da_coluna2");
+                // Faça algo com os dados obtidos
+                System.out.println(coluna1 + ", " + coluna2);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // Feche os recursos
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
