@@ -106,6 +106,4 @@ public class AluguelCarro {
     private void setSeguro(Seguro seguro) {
         this.seguro = seguro;
     }
-
-
 }
