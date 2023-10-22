@@ -1,4 +1,4 @@
-package models.utils;
+package models.usuario;
 
 public abstract class GerarID {
     /**

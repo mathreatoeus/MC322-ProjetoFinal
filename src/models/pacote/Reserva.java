@@ -1,7 +1,7 @@
 package models.pacote;
 
 import java.time.LocalDateTime;
-
+import models.usuario.Usuario;
 public class Reserva {
     private int idReserva;
     // private Pacote pacote;
