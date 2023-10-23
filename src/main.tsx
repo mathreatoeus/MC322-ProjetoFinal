@@ -14,12 +14,15 @@ import Checkout from './routes/Checkout.tsx';
 import Configuration from './routes/Configuration.tsx';
 import MyPackages from './routes/MyPackages.tsx';
 import PackageManagement from './routes/PackageManagement.tsx';
+import Authentication from './auth.tsx';
+
+const auth = new Authentication()
 
 //Defining routes
 const router = createBrowserRouter([
   {
     path:"/",
-    element: <App/>,
+    element: <App auth={auth}/>,
     children:[
       {
         path:"/",
@@ -46,16 +49,18 @@ const router = createBrowserRouter([
         element: <PackageManagement/>,
       },
 
+
     ]
   },
   {
     path:"/login",
-    element: <Login/>,
+    element: <Login auth={auth}/>,
   },
   {
     path:"/register",
     element: <Register/>,
   },
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

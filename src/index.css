@@ -454,3 +454,8 @@ body{
   font-weight: bold;
 
 }
+
+.loginButton:hover{
+  cursor:pointer;
+  background-color: rgb(123, 64, 179);
+}
