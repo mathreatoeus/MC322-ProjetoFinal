@@ -1,9 +1,12 @@
 package exceptions;
 
-public class InvalidCredentialsException extends Exception {
-    // User comes here...
+import models.usuario.Usuario;
 
-    public InvalidCredentialsException(String mensagem) {
+public class InvalidCredentialsException extends Exception {
+    Usuario usuario;
+
+    public InvalidCredentialsException(String mensagem, Usuario usuario) {
         super(mensagem);
+        this.usuario = usuario;
     }
 }
