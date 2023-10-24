@@ -1,6 +1,5 @@
 package models.pacote;
 
-import models.utils.GerarID;
 import models.pacote.Seguro;
 import java.time.LocalDateTime;
 
@@ -20,8 +19,8 @@ public class AluguelCarro {
     // Constructor ----------------------------------------------------------------------
     public AluguelCarro(int numDiarias, String modeloCarro, String locadora, LocalDateTime retirada,
                         String enderecoRetirada, String enderecoDevolucao, double diaria,
-                        Seguro seguro) {
-        this.idAluguelCarro = GerarID.gerarId(modeloCarro + retirada.toString());
+                        Seguro seguro, int idAluguelCarro) {
+        this.idAluguelCarro = idAluguelCarro;
         this.numDiarias = numDiarias;
         this.modeloCarro = modeloCarro;
         this.locadora = locadora;

@@ -1,6 +1,5 @@
 package models.pacote;
 
-import models.utils.GerarID;
 import java.time.LocalDateTime;
 
 public class Hospedagem {
@@ -21,8 +20,8 @@ public class Hospedagem {
     // Constructor ----------------------------------------------------------------------
     public Hospedagem(String hotel, String tipoSuite, String endereco, Local local,
                       LocalDateTime checkin, LocalDateTime checkout, double diaria, int numDiarias,
-                      double avaliacai) {
-        this.idHospedagem = GerarID.gerarId(hotel);                // ID vai ser usuario.
+                      double avaliacai, int idHospedagem) {
+        this.idHospedagem = idHospedagem;
         this.hotel = hotel;
         this.tipoSuite = tipoSuite;
         this.endereco = endereco;
