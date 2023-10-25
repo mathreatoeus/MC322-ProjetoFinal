@@ -1,0 +1,8 @@
+modificar UML {
+    [DELETAR] atributo [USUARIO] da classe [PAGAMENTO]
+    [MUDAR NOME] do atributo [STATUS] da classe [PAGAMENTO], sugestão para novo nome: [situacao]
+
+    [DELETAR] atributos de relacionamento de TODAS AS CLASSES CONECTADAS EM PACOTE, com exceção da classe [RESERVA]
+
+    [MUDAR NOME] da classe [LOCAL], sugestão para nome: [DESTINO]
+}
