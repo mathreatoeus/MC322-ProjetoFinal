@@ -14,7 +14,7 @@ public class ConexaoMySQL {
 
     /* metodo para conexão com o banco de dados */
 
-    private static Connection getConexao() {
+    public static Connection getConexao() {
         try {
             /* criando uma conexão caso ela não tenha sido criada ainda */
             if (conn == null) {

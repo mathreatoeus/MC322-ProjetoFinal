@@ -1,6 +1,5 @@
 package controllers;
 
-public class pacoteControllerImpl {
+public class PacoteControllerImpl {
     
-    /* função para adicionar um novo pacote */
 }
