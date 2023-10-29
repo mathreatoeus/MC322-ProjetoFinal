@@ -65,10 +65,10 @@ public class UsuarioControllerImpl {
         return false;
     }
 
-    /* verificação de credenciais do usuário */
+    /* verificação de credenciais do usuário - retorno deve ser usado pelo Front-end*/
     private boolean credenciais(String email, String senha) {
         try {
-            String sql = "SELECT COUNT(*) FROM USUARIO WHERE CPF = ? OR SENHA = ?";
+            String sql = "SELECT COUNT(*) FROM USUARIO WHERE EMAIL = ? OR SENHA = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, senha);
