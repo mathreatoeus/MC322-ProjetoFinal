@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import models.usuario.Usuario;
 
-
 public class UsuarioControllerImpl {
 
     /* metodo para cadastrar usuário */
@@ -47,8 +46,8 @@ public class UsuarioControllerImpl {
     }
 
     /* Metodo para verificar se já existe um usuário com mesmo CPF ou e-mail */
-    private boolean usuarioExiste(String cpf, String email){
-        try{
+    private boolean usuarioExiste(String cpf, String email) {
+        try {
             String sql = "SELECT COUNT(*) FROM USUARIO WHERE CPF = ? OR EMAIL = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, cpf);
@@ -60,7 +59,28 @@ public class UsuarioControllerImpl {
                 int count = rs.getInt(1);
                 return count > 0; // Se count for maior que 0, já existe um registro com o CPF ou email
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /* verificação de credenciais do usuário */
+    private boolean credenciais(String email, String senha) {
+        try {
+            String sql = "SELECT COUNT(*) FROM USUARIO WHERE CPF = ? OR SENHA = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, senha);
+    
+            ResultSet rs = ps.executeQuery();
+    
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // Se count for maior que 0, as credenciais são válidas
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
