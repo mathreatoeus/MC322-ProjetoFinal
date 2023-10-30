@@ -165,7 +165,7 @@ desconto decimal(6,2),
 PrecoFinal decimal(6,2) not null,
 primary key (id),
 foreign key (pacote) references Pacote(id),
-foreign key (usuario) references Usuario(id),
+foreign key (usuario) references Cliente(id),
 foreign key (usuario) references Funcionario(id)
 ) default charset = utf8mb4;
 
