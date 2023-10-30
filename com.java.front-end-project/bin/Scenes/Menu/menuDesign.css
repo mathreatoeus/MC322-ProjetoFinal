@@ -1,0 +1,42 @@
+.buttons{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+
+.header{
+    -fx-background-color:white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0, 0.5), 5, 0, 0, 0);
+}
+
+.body{
+    -fx-background-color:#FED049;
+}
+
+.buttons:hover{
+    -fx-cursor:hand;
+    -fx-font-color: #3D5656;
+
+
+}
+
+.card{
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0, 0.5), 5, 0, 0, 0);
+    -fx-background-radius: 10px;
+}
+
+.card-button{
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0, 0.5), 5, 0, 0, 0);
+    -fx-background-radius: 100%;
+    -fx-border-color: transparent;
+
+}
+
+.card-button:hover{
+    -fx-cursor:hand;
+    -fx-font-color: #3D5656;
+
+
+}
