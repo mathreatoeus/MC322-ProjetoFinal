@@ -14,5 +14,9 @@ public class main {
 
         Funcionario funcionario = new Funcionario(0, "Felipe Teste", LocalDate.now(), "25896314", "48481588", "sdjhfufyhusidf@dac", "95959", "1998370035", "888451689", "sdhfushdfusf", Funcionario.Cargo.CORRETOR);
         new UsuarioControllerImpl().cadastrarFuncionario(funcionario);
+
+        /* teste de credenciais */
+
+        new UsuarioControllerImpl().credenciaisCliente("f243385@dac.unicamp", "123456");
     }
 }

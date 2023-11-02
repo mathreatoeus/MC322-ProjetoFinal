@@ -92,7 +92,10 @@ public class UsuarioControllerImpl {
         }
     }
 
-    /* Metodo para verificar se já existe um usuário tipo cliente com mesmo CPF ou e-mail */
+    /*
+     * Metodo para verificar se já existe um usuário tipo cliente com mesmo CPF ou
+     * e-mail
+     */
     private boolean clienteExiste(String cpf, String email) {
         try {
             String sql = "SELECT COUNT(*) FROM CLIENTE WHERE CPF = ? OR EMAIL = ?";
@@ -112,7 +115,10 @@ public class UsuarioControllerImpl {
         return false;
     }
 
-    /* Metodo para verificar se já existe um usuário tipo funcionario com mesmo CPF ou e-mail */
+    /*
+     * Metodo para verificar se já existe um usuário tipo funcionario com mesmo CPF
+     * ou e-mail
+     */
     private boolean funcionarioExiste(String cpf, String email) {
         try {
             String sql = "SELECT COUNT(*) FROM FUNCIONARIO WHERE CPF = ? OR EMAIL = ?";
@@ -133,11 +139,11 @@ public class UsuarioControllerImpl {
     }
 
     /*
-     * verificação de credenciais do usuário - retorno deve ser usado pelo Front-end
+     * verificação de credenciais do cliente - retorno deve ser usado pelo Front-end
      */
-    private boolean credenciais(String email, String senha) {
+    public boolean credenciaisCliente(String email, String senha) {
         try {
-            String sql = "SELECT COUNT(*) FROM USUARIO WHERE EMAIL = ? OR SENHA = ?";
+            String sql = "SELECT COUNT(*) FROM CLIENTE WHERE EMAIL = ? OR SENHA = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, senha);
@@ -146,7 +152,36 @@ public class UsuarioControllerImpl {
 
             if (rs.next()) {
                 int count = rs.getInt(1);
+                System.out.println("Credenciais validas -> usar no front");
                 return count > 0; // Se count for maior que 0, as credenciais são válidas
+            } else {
+                System.out.println("Credenciais invalidas -> usar no front");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /*
+     * verificação de credenciais do funcionario - retorno deve ser usado pelo Front-end
+     */
+    public boolean credenciaisFuncionario(String email, String senha) {
+        try {
+            String sql = "SELECT COUNT(*) FROM FUNCIONARIO WHERE EMAIL = ? OR SENHA = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, senha);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                System.out.println("Credenciais validas -> usar no front");
+                return count > 0; // Se count for maior que 0, as credenciais são válidas
+            } else {
+                System.out.println("Credenciais invalidas -> usar no front");
             }
 
         } catch (SQLException e) {
