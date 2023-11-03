@@ -1,7 +1,7 @@
 package models.pacote;
 
 import models.pacote.Local;
-import models.utils.GerarID;
+import models.usuario.GerarID;
 import java.time.LocalDateTime;
 
 public abstract class Passagem {

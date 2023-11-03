@@ -1,6 +1,7 @@
 package models.pacote;
 
 import java.time.LocalDateTime;
+import models.usuario.Usuario;
 
 public class Pagamento {
     private int idPagamento;

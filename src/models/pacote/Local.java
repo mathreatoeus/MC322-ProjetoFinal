@@ -1,6 +1,6 @@
 package models.pacote;
 
-import models.utils.GerarID;
+import models.usuario.GerarID;
 
 public class Local {
     // Attributes -----------------------------------------------------------------------
