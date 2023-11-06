@@ -81,7 +81,17 @@ public class SystemController implements Initializable{
     }
 
     @FXML
-    void packConfigPage(ActionEvent event) {
+    void packConfigPage(ActionEvent event) throws IOException {
+        URL path = getClass().getResource("../UserSpecific/PackageRegistration.fxml");
+        
+        Parent root;
+        root = FXMLLoader.load(path);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();       
+
+        userName.getScene().getWindow().hide();
 
     }
 

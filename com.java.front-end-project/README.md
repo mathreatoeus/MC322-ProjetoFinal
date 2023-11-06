@@ -1,18 +1,10 @@
-## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+#How to use JavaFX
+1-Install javaFX from https://openjfx.io/
+2-Install Scene Builder from https://gluonhq.com/products/scene-builder/
+3-Set up javaFX
+    Put all jar files from javaFX into your java project. Follow these instructions: https://openjfx.io/openjfx-docs/
+4-Create screens
+5-Create stayles
+6-Create controllers
+7-Connect with backend
