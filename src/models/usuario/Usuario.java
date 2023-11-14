@@ -15,23 +15,19 @@ public abstract class Usuario {
     private String email;
     private String senha;
     private String celular;
-    private String telefoneResidencial;
     private String endereco;
 
     // Constructor ----------------------------------------------------------------------
 
-    public Usuario(int idUsuario, String nome, LocalDate nascimento, String rg, String cpf,
-                   String email, String senha, String celular, String telefoneResidencial,
-                   String endereco) {
+    public Usuario(int idUsuario, String nome, LocalDate nascimento, String cpf,
+                   String email, String senha, String celular, String endereco) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.nascimento = nascimento;
-        this.rg = rg;
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
         this.celular = celular;
-        this.telefoneResidencial = telefoneResidencial;
         this.endereco = endereco;
     }
 
@@ -54,14 +50,6 @@ public abstract class Usuario {
 
     public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
     }
 
     public String getCpf() {
@@ -94,14 +82,6 @@ public abstract class Usuario {
 
     public void setCelular(String celular) {
         this.celular = celular;
-    }
-
-    public String getTelefoneResidencial() {
-        return telefoneResidencial;
-    }
-
-    public void setTelefoneResidencial(String telefoneResidencial) {
-        this.telefoneResidencial = telefoneResidencial;
     }
 
     public String getEndereco() {
