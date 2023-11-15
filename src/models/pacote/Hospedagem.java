@@ -2,7 +2,7 @@ package models.pacote;
 
 import java.time.LocalDateTime;
 
-public class Hospedagem {
+public class Hospedagem implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private final int idHospedagem;
     private final String hotel;
@@ -35,6 +35,7 @@ public class Hospedagem {
     }
 
     // Getters --------------------------------------------------------------------------
+   
     public int getIdHospedagem() {
         return idHospedagem;
     }
@@ -71,13 +72,17 @@ public class Hospedagem {
         return numDiarias;
     }
 
+    
     public double getPreco() {
         return preco;
+        
     }
 
     public double getAvaliacao() {
         return avaliacao;
     }
+
+    
 
     // Setters --------------------------------------------------------------------------
     private void setTipoSuite(String tipoSuite) {

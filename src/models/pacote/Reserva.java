@@ -2,7 +2,7 @@ package models.pacote;
 
 import java.time.LocalDateTime;
 import models.usuario.Usuario;
-public class Reserva {
+public class Reserva implements ItemPacote {
     private int idReserva;
     // private Pacote pacote;
     private Usuario usuario;
@@ -25,7 +25,7 @@ public class Reserva {
         this.desconto = desconto;
         this.preco = preco;
     }
-
+    
     public int getIdReserva() {
         return idReserva;
     }

@@ -3,7 +3,7 @@ package models.pacote;
 import models.pacote.Seguro;
 import java.time.LocalDateTime;
 
-public class AluguelCarro {
+public class AluguelCarro  implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private final int idAluguelCarro;
     private int numDiarias;
@@ -33,6 +33,7 @@ public class AluguelCarro {
     }
 
     // Getters --------------------------------------------------------------------------
+    
     public int getIdAluguelCarro() {
         return idAluguelCarro;
     }
@@ -65,8 +66,10 @@ public class AluguelCarro {
         return enderecoDevolucao;
     }
 
+    
     public double getPreco() {
         return preco;
+        
     }
 
     public Seguro getSeguro() {
@@ -105,4 +108,6 @@ public class AluguelCarro {
     private void setSeguro(Seguro seguro) {
         this.seguro = seguro;
     }
+
+    
 }

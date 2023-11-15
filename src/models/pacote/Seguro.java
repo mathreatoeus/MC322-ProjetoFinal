@@ -1,8 +1,9 @@
 package models.pacote;
 
-public class Seguro {
+public class Seguro implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private double franquia;
+    
     // Usuario vem aqui
 
     // Constructor ----------------------------------------------------------------------

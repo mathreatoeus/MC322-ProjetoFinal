@@ -2,7 +2,7 @@ package models.pacote;
 
 import models.usuario.GerarID;
 
-public class Local {
+public class Local  implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private final int idLocal;
     private final String nome;
@@ -16,6 +16,7 @@ public class Local {
     }
 
     // Getters --------------------------------------------------------------------------
+    
     public int getIdLocal() {
         return idLocal;
     }

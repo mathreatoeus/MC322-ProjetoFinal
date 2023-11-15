@@ -3,7 +3,7 @@ package models.pacote;
 import java.time.LocalDateTime;
 import models.usuario.Usuario;
 
-public class Pagamento {
+public class Pagamento implements ItemPacote{
     private int idPagamento;
     private Usuario usuario;
     private double quantia;
@@ -17,6 +17,7 @@ public class Pagamento {
         this.prazo = prazo;
     }
 
+  
     public int getIdPagamento() {
         return idPagamento;
     }

@@ -98,7 +98,7 @@ public class UsuarioControllerImpl {
      */
     private boolean clienteExiste(String cpf, String email) {
         try {
-            String sql = "SELECT COUNT(*) FROM CLIENTE WHERE CPF = ? OR EMAIL = ?";
+            String sql = "SELECT COUNT(*) FROM Cliente WHERE CPF = ? OR EMAIL = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, cpf);
             ps.setString(2, email);
@@ -121,7 +121,7 @@ public class UsuarioControllerImpl {
      */
     private boolean funcionarioExiste(String cpf, String email) {
         try {
-            String sql = "SELECT COUNT(*) FROM FUNCIONARIO WHERE CPF = ? OR EMAIL = ?";
+            String sql = "SELECT COUNT(*) FROM Funcionario WHERE CPF = ? OR EMAIL = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, cpf);
             ps.setString(2, email);
@@ -143,7 +143,7 @@ public class UsuarioControllerImpl {
      */
     public boolean credenciaisCliente(String email, String senha) {
         try {
-            String sql = "SELECT COUNT(*) FROM CLIENTE WHERE EMAIL = ? OR SENHA = ?";
+            String sql = "SELECT COUNT(*) FROM Cliente WHERE EMAIL = ? OR SENHA = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, senha);
@@ -169,7 +169,7 @@ public class UsuarioControllerImpl {
      */
     public boolean credenciaisFuncionario(String email, String senha) {
         try {
-            String sql = "SELECT COUNT(*) FROM FUNCIONARIO WHERE EMAIL = ? OR SENHA = ?";
+            String sql = "SELECT COUNT(*) FROM FuncionarioWHERE EMAIL = ? OR SENHA = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, senha);

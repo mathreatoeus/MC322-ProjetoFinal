@@ -4,7 +4,7 @@ import models.usuario.GerarID;
 
 import java.time.LocalDateTime;
 
-public class Atividade {
+public class Atividade implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private final int idAtividade;
     private final String nomeAtividade;
@@ -27,6 +27,7 @@ public class Atividade {
     }
 
     // Getters --------------------------------------------------------------------------
+    
     public int getIdAtividade() {
         return idAtividade;
     }
@@ -51,8 +52,10 @@ public class Atividade {
         return fim;
     }
 
+    
     public double getPreco() {
         return preco;
+        
     }
 
     // Setters --------------------------------------------------------------------------
