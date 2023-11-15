@@ -1,18 +1,26 @@
 package models.pacote;
 
+import exceptions.InvalidRatingException;
 import models.usuario.GerarID;
+import models.usuario.Usuario;
+
+import java.util.ArrayList;
 
 public class Local {
     // Attributes -----------------------------------------------------------------------
     private final int idLocal;
     private final String nome;
-    private double avaliacao;                                             // 0 - 5.
+    private double mediaAvaliacoes;                                             // 0 - 5.
+    private int numAvaliacoes;
+    private final ArrayList<Comentario> comentarios;
 
     // Constructor ----------------------------------------------------------------------
     public Local(String nome) {
         this.idLocal = GerarID.gerarId(nome);
         this.nome = nome;
-        this.avaliacao = 0;
+        this.mediaAvaliacoes = 0;                                       // Valor inicial.
+        this.numAvaliacoes = 0;                                         // Valor inicial.
+        this.comentarios = new ArrayList<>();
     }
 
     // Getters --------------------------------------------------------------------------
@@ -24,12 +32,54 @@ public class Local {
         return nome;
     }
 
-    public double getAvaliacao() {
-        return avaliacao;
+    public double getMediaAvaliacoes() {
+        return mediaAvaliacoes;
+    }
+
+    public int getNumAvaliacoes() {
+        return numAvaliacoes;
+    }
+
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
     }
 
     // Setters --------------------------------------------------------------------------
-    public void setAvaliacao(double avaliacao) {
-        this.avaliacao = avaliacao;
+    private void setMediaAvaliacoes(double mediaAvaliacoes) {
+        this.mediaAvaliacoes = mediaAvaliacoes;
+    }
+
+    private void setNumAvaliacoes(int numAvaliacoes) {
+        this.numAvaliacoes = numAvaliacoes;
+    }
+
+    // Methods --------------------------------------------------------------------------
+    /**
+     * Submete uma avaliacao de usuario e atualiza a media e o numero de avaliacoes.
+     *
+     * @param avaliacao a avaliacao do usuario.
+     * @throws InvalidRatingException se a avaliacao for maior que 5 ou menor que 0.
+     */
+    public void avaliar(double avaliacao) throws InvalidRatingException {
+        if (avaliacao > 5 || avaliacao < 0) {
+            throw new InvalidRatingException("Avaliacao invalida (maior que 5 ou menor que 0).",
+                    avaliacao);
+        }
+        else {
+            // mediaAvaliacoes = somatorioAvaliacoes / numAvaliacoes.
+            double novoSomatorio = (this.mediaAvaliacoes * this.numAvaliacoes) + avaliacao;
+            this.numAvaliacoes++;
+            this.mediaAvaliacoes = novoSomatorio / this.numAvaliacoes;
+        }
+    }
+
+    /**
+     * Adiciona um comentario à lista de comentarios.
+     *
+     * @param usuario o usuario que fez o comentario.
+     * @param mensagem a mensagem do comentario.
+     */
+    public void adicionarComentario(Usuario usuario, String mensagem) {
+        this.comentarios.add(new Comentario(usuario, mensagem));
     }
 }
