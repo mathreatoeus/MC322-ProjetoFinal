@@ -46,7 +46,8 @@ primary key (id)
 create table Localizacao (
 id int auto_increment not null,
 nome varchar(100) not null,
-avaliacao tinyint not null,
+mediaAvaliacoes float not null,
+numAvaliacoes int not null,
 primary key (id)
 ) default charset = utf8mb4;
 
@@ -69,7 +70,8 @@ nome varchar(100) not null,
 descricao  varchar(100),
 endereco varchar(100) not null,
 diaria decimal(6,2) not null,
-avaliacao tinyint,
+mediaAvaliacoes float not null,
+numAvaliacoes int not null,
 primary key (id)
 ) default charset = utf8mb4;
 

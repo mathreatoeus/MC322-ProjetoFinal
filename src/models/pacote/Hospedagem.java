@@ -1,5 +1,6 @@
 package models.pacote;
 
+import exceptions.CommentIsTooLongException;
 import exceptions.InvalidRatingException;
 import models.usuario.Usuario;
 
@@ -153,12 +154,18 @@ public class Hospedagem {
     }
 
     /**
-     * Adiciona um comentario à lista de comentarios.
+     * Adiciona um comentario de ate 500 caracteres à lista de comentarios.
      *
      * @param usuario o usuario que fez o comentario.
-     * @param mensagem a mensagem do comentario.
+     * @param mensagem a mensagem em si.
+     * @throws CommentIsTooLongException se o comentario tiver mais do que 500 caracteres.
      */
-    public void adicionarComentario(Usuario usuario, String mensagem) {
-        this.comentarios.add(new Comentario(usuario, mensagem));
+    public void adicionarComentario(Usuario usuario, String mensagem) throws CommentIsTooLongException {
+        if (mensagem.length() < 500) {
+            (this.comentarios).add(new Comentario(usuario, mensagem));
+        }
+        else {
+            throw new CommentIsTooLongException("Comentario excede 500 caracteres.", mensagem);
+        }
     }
 }
