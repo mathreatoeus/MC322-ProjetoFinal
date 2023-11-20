@@ -58,42 +58,47 @@
                </children></AnchorPane>
             <AnchorPane prefHeight="430.0" prefWidth="772.0" styleClass="body" stylesheets="@menuDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
                <children>
-                  <AnchorPane layoutX="73.0" layoutY="80.0" prefHeight="350.0" prefWidth="200.0" styleClass="card" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="80.0">
+                  <AnchorPane layoutX="75.0" layoutY="80.0" prefHeight="263.0" prefWidth="134.0" styleClass="card" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="80.0">
                      <children>
-                        <ImageView fitHeight="223.0" fitWidth="200.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ImageView fitHeight="130.0" fitWidth="183.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="17.0">
                            <image>
                               <Image url="@../../Img/image-not-found-scaled-1150x647.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="cardName1" layoutX="79.0" layoutY="242.0" text="Label" />
-                        <Text layoutX="33.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-                        <Text layoutX="41.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
-                        <Label fx:id="cardCost1" layoutX="79.0" layoutY="267.0" text="Label" />
+                        <Label fx:id="cardName1" layoutX="80.0" layoutY="175.0" text="Label" />
+                        <Text layoutX="34.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                        <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
+                        <Label fx:id="cardCost1" layoutX="80.0" layoutY="200.0" text="Label" />
                      </children>
                   </AnchorPane>
-                  <Button fx:id="btnRight" layoutX="517.0" layoutY="141.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#passToRight" prefHeight="40.0" prefWidth="40.0" styleClass="card-button" stylesheets="@menuDesign.css" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="270.0">
-                     <graphic>
-                        <SVGPath content="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnLeft" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#passToLeft" prefHeight="40.0" prefWidth="40.0" styleClass="card-button" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="270.0">
-                     <graphic>
-                        <SVGPath content="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                     </graphic>
-                  </Button>
-                  <AnchorPane layoutX="477.0" layoutY="76.0" prefHeight="350.0" prefWidth="200.0" styleClass="card" stylesheets="@menuDesign.css" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="80.0">
+                  <AnchorPane layoutX="291.0" layoutY="80.0" prefHeight="263.0" prefWidth="134.0" styleClass="card" stylesheets="@menuDesign.css">
                      <children>
-                        <ImageView fitHeight="223.0" fitWidth="200.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ImageView fitHeight="130.0" fitWidth="183.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="17.0">
                            <image>
                               <Image url="@../../Img/image-not-found-scaled-1150x647.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="79.0" layoutY="242.0" text="Label" />
-                        <Text layoutX="33.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-                        <Text layoutX="41.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
-                        <Label layoutX="79.0" layoutY="267.0" text="Label" />
+                        <Label fx:id="cardName11" layoutX="80.0" layoutY="175.0" text="Label" />
+                        <Text layoutX="34.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                        <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
+                        <Label fx:id="cardCost11" layoutX="80.0" layoutY="200.0" text="Label" />
                      </children>
                   </AnchorPane>
+                  <AnchorPane layoutX="507.0" layoutY="80.0" prefHeight="263.0" prefWidth="134.0" styleClass="card" stylesheets="@menuDesign.css">
+                     <children>
+                        <ImageView fitHeight="130.0" fitWidth="183.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="17.0">
+                           <image>
+                              <Image url="@../../Img/image-not-found-scaled-1150x647.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="cardName12" layoutX="80.0" layoutY="175.0" text="Label" />
+                        <Text layoutX="34.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                        <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
+                        <Label fx:id="cardCost12" layoutX="80.0" layoutY="200.0" text="Label" />
+                     </children>
+                  </AnchorPane>
+                  <Button layoutX="14.0" layoutY="192.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="44.0" style="-fx-background-radius: 100%; -fx-background-color: white;" styleClass="card-button" />
+                  <Button layoutX="725.0" layoutY="200.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="44.0" style="-fx-background-radius: 100%; -fx-background-color: white;" styleClass="card-button" />
                </children>
             </AnchorPane>
          </children>

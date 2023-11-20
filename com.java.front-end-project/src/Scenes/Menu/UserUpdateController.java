@@ -17,7 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
-public class SystemController implements Initializable{
+public class UserUpdateController implements Initializable{
 
     @FXML
     private MenuItem btnConfig;
@@ -71,17 +71,47 @@ public class SystemController implements Initializable{
     }
 
     @FXML
-    void explorePage(ActionEvent event) {
+    void explorePage(ActionEvent event) throws IOException {
+        URL path = getClass().getResource("./sysLayout.fxml");
+        
+        Parent root;
+        root = FXMLLoader.load(path);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();       
+
+        userName.getScene().getWindow().hide();
 
     }
 
     @FXML
-    void myTravelPackPage(ActionEvent event) {
+    void myTravelPackPage(ActionEvent event) throws IOException {
+        URL path = getClass().getResource("./myPack.fxml");
+        
+        Parent root;
+        root = FXMLLoader.load(path);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();       
+
+        userName.getScene().getWindow().hide();
 
     }
 
     @FXML
-    void packConfigPage(ActionEvent event) {
+    void packConfigPage(ActionEvent event) throws IOException {
+        URL path = getClass().getResource("../UserSpecific/PackageRegistration.fxml");
+        
+        Parent root;
+        root = FXMLLoader.load(path);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();       
+
+        userName.getScene().getWindow().hide();
 
     }
 
@@ -96,7 +126,17 @@ public class SystemController implements Initializable{
     }
 
     @FXML
-    void userConfigurationPage(ActionEvent event) {
+    void userConfigurationPage(ActionEvent event) throws IOException {
+        URL path = getClass().getResource("./sysUserUpdate.fxml");
+        
+        Parent root;
+        root = FXMLLoader.load(path);
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();       
+
+        userName.getScene().getWindow().hide();
 
     }
     @Override
