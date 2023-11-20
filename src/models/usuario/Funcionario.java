@@ -6,9 +6,9 @@ public class Funcionario extends Usuario {
     private Cargo cargo;
     // private Localizacao localizacao;
 
-    public Funcionario(int idUsuario, String nome, LocalDate nascimento, String rg, String cpf, String email,
-            String senha, String celular, String telefoneResidencial, String endereco, Cargo cargo) {
-        super(idUsuario, nome, nascimento, rg, cpf, email, senha, celular, telefoneResidencial, endereco);
+    public Funcionario(int idUsuario, String nome, LocalDate nascimento,String cpf, String email,
+            String senha, String celular, String endereco, Cargo cargo) {
+        super(idUsuario, nome, nascimento, cpf, email, senha, celular, endereco);
         this.cargo = cargo;
     }
 

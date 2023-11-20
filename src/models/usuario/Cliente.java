@@ -12,10 +12,10 @@ public class Cliente extends Usuario{
     
     
     private LocalDate dataRegistro;
-    public Cliente(int idUsuario, String nome, LocalDate nascimento, String rg, String cpf, String email, String senha,
-            String celular, String telefoneResidencial, String endereco, String numeroCartao, LocalDate validade,
+    public Cliente(int idUsuario, String nome, LocalDate nascimento, String cpf, String email, String senha,
+            String celular, String endereco, String numeroCartao, LocalDate validade,
             int cvv, String nomeCartao, LocalDate dataRegistro) {
-        super(idUsuario, nome, nascimento, rg, cpf, email, senha, celular, telefoneResidencial, endereco);
+        super(idUsuario, nome, nascimento, cpf, email, senha, celular, endereco);
         this.numeroCartao = numeroCartao;
         this.validade = validade;
         this.cvv = cvv;

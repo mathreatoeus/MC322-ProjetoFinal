@@ -6,12 +6,10 @@ create table Cliente (
 id int auto_increment not null,
 nome varchar(100) not null,
 nascimento date not null,
-rg varchar(100) not null,
 cpf varchar(100) not null,
 email varchar(100) not null,
 senha varchar(100) not null,
 celular int not null,
-telefoneResidencial int,
 endereco varchar(100) not null,
 numeroCartao int,
 validade date,
@@ -27,12 +25,10 @@ create table Funcionario (
 id int auto_increment not null,
 nome varchar(100) not null,
 nascimento date not null,
-rg varchar(100) not null,
 cpf varchar(100) not null,
 email varchar(100) not null,
 senha varchar(100) not null,
 celular int not null,
-telefoneResidencial int,
 endereco varchar(100) not null,
 cargo enum('CORRETOR','GERENTE','DIRETOR'),
 primary key (id)
@@ -168,5 +164,3 @@ foreign key (pacote) references Pacote(id),
 foreign key (usuario) references Cliente(id),
 foreign key (usuario) references Funcionario(id)
 ) default charset = utf8mb4;
-
-

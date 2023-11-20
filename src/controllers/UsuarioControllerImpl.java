@@ -19,7 +19,7 @@ public class UsuarioControllerImpl {
             /* lançar uma mensagem no Front-end --> COMO FAZ ISSO??? */
             return;
         }
-        String sql = "INSERT INTO CLIENTE (NOME, NASCIMENTO, RG, CPF, EMAIL, SENHA, CELULAR, TELEFONERESIDENCIAL, ENDERECO, NUMEROCARTAO, VALIDADE, CVV, NOMECARTAO, DATAREGISTRO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Cliente (NOME, NASCIMENTO, CPF, EMAIL, SENHA, CELULAR, ENDERECO, NUMEROCARTAO, VALIDADE, CVV, NOMECARTAO, DATAREGISTRO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
 
         try {
@@ -29,24 +29,22 @@ public class UsuarioControllerImpl {
             // Converter o LocalDate para java.sql.Date
             Date dataNascimento = Date.valueOf(usuario.getNascimento());
             ps.setDate(2, dataNascimento);
-            ps.setString(3, usuario.getRg());
-            ps.setString(4, usuario.getCpf());
-            ps.setString(5, usuario.getEmail());
-            ps.setString(6, usuario.getSenha());
-            ps.setString(7, usuario.getCelular());
-            ps.setString(8, usuario.getTelefoneResidencial());
-            ps.setString(9, usuario.getEndereco());
-            ps.setString(10, usuario.getNumeroCartao());
+            ps.setString(3, usuario.getCpf());
+            ps.setString(4, usuario.getEmail());
+            ps.setString(5, usuario.getSenha());
+            ps.setString(6, usuario.getCelular());
+            ps.setString(7, usuario.getEndereco());
+            ps.setString(8, usuario.getNumeroCartao());
 
             // Converter o LocalDate para java.sql.Date
             Date validadeCartao = Date.valueOf(usuario.getValidade());
-            ps.setDate(11, validadeCartao);
-            ps.setInt(12, usuario.getCvv());
-            ps.setString(13, usuario.getNomeCartao());
+            ps.setDate(9, validadeCartao);
+            ps.setInt(10, usuario.getCvv());
+            ps.setString(11, usuario.getNomeCartao());
 
             // Converter o LocalDate para java.sql.Date
             Date dataRegistro = Date.valueOf(usuario.getDataRegistro());
-            ps.setDate(14, dataRegistro);
+            ps.setDate(12, dataRegistro);
 
             ps.execute();
             ps.close();
@@ -65,7 +63,7 @@ public class UsuarioControllerImpl {
             /* lançar uma mensagem no Front-end --> COMO FAZ ISSO??? */
             return;
         }
-        String sql = "INSERT INTO FUNCIONARIO (NOME, NASCIMENTO, RG, CPF, EMAIL, SENHA, CELULAR, TELEFONERESIDENCIAL, ENDERECO, CARGO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Funcionario (NOME, NASCIMENTO, CPF, EMAIL, SENHA, CELULAR, ENDERECO, CARGO) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
 
         try {
@@ -75,14 +73,12 @@ public class UsuarioControllerImpl {
             // Converter o LocalDate para java.sql.Date
             Date dataNascimento = Date.valueOf(usuario.getNascimento());
             ps.setDate(2, dataNascimento);
-            ps.setString(3, usuario.getRg());
-            ps.setString(4, usuario.getCpf());
-            ps.setString(5, usuario.getEmail());
-            ps.setString(6, usuario.getSenha());
-            ps.setString(7, usuario.getCelular());
-            ps.setString(8, usuario.getTelefoneResidencial());
-            ps.setString(9, usuario.getEndereco());
-            ps.setString(10, usuario.getCargo().name());
+            ps.setString(3, usuario.getCpf());
+            ps.setString(4, usuario.getEmail());
+            ps.setString(5, usuario.getSenha());
+            ps.setString(6, usuario.getCelular());
+            ps.setString(7, usuario.getEndereco());
+            ps.setString(8, usuario.getCargo().name());
 
             ps.execute();
             ps.close();
@@ -169,7 +165,7 @@ public class UsuarioControllerImpl {
      */
     public boolean credenciaisFuncionario(String email, String senha) {
         try {
-            String sql = "SELECT COUNT(*) FROM FuncionarioWHERE EMAIL = ? OR SENHA = ?";
+            String sql = "SELECT COUNT(*) FROM Funcionario WHERE EMAIL = ? OR SENHA = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, senha);
