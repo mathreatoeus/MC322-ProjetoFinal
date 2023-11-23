@@ -9,6 +9,9 @@ public class PassagemAerea extends Passagem {
     private String iataPartida;
     private String iataChegada;
 
+    // OBS: código IATA (International Air Transport Assiciation) é um código de 3 letras
+    // utilizado para identificar aeroportos (Ex: Guarulhos --> GRU).
+
     // Constructor ----------------------------------------------------------------------
     public PassagemAerea(Local partida, Local destino, LocalDateTime saida, LocalDateTime chegada,
                          double duracao, String companhia, double preco, String aeroportoPartida,

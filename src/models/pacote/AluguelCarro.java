@@ -13,13 +13,14 @@ public class AluguelCarro {
     private LocalDateTime devolucao;
     private String enderecoRetirada;
     private String enderecoDevolucao;
+    private double diaria;
     private double preco;
     private Seguro seguro;
 
     // Constructor ----------------------------------------------------------------------
-    public AluguelCarro(int numDiarias, String modeloCarro, String locadora, LocalDateTime retirada,
-                        String enderecoRetirada, String enderecoDevolucao, double diaria,
-                        Seguro seguro, int idAluguelCarro) {
+    public AluguelCarro(int idAluguelCarro, int numDiarias, String modeloCarro, String locadora,
+                        LocalDateTime retirada, String enderecoRetirada, String enderecoDevolucao,
+                        double diaria, Seguro seguro) {
         this.idAluguelCarro = idAluguelCarro;
         this.numDiarias = numDiarias;
         this.modeloCarro = modeloCarro;
@@ -28,6 +29,7 @@ public class AluguelCarro {
         this.devolucao = retirada.plusDays(numDiarias);
         this.enderecoRetirada = enderecoRetirada;
         this.enderecoDevolucao =enderecoDevolucao;
+        this.diaria = diaria;
         this.preco = diaria * numDiarias;
         this.seguro = seguro;
     }
@@ -65,6 +67,10 @@ public class AluguelCarro {
         return enderecoDevolucao;
     }
 
+    public double getDiaria() {
+        return diaria;
+    }
+
     public double getPreco() {
         return preco;
     }
@@ -96,6 +102,10 @@ public class AluguelCarro {
 
     private void setEnderecoDevolucao(String enderecoDevolucao) {
         this.enderecoDevolucao = enderecoDevolucao;
+    }
+
+    public void setDiaria(double diaria) {
+        this.diaria = diaria;
     }
 
     private void setPreco(double preco) {

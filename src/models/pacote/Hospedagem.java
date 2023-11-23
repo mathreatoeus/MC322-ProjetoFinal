@@ -10,8 +10,11 @@ import java.util.ArrayList;
 public class Hospedagem {
     // Attributes -----------------------------------------------------------------------
     private final int idHospedagem;
-    private final String hotel;
-    private TipoSuite tipoSuite;
+    private final String nome;
+    private final TipoHospedagem tipoHospedagem;
+    private final TipoSuite tipoSuite;
+    private final TipoCama tipoCama;
+    private String descricao;
     private String endereco;
     private final Local local;
     private LocalDateTime checkin;
@@ -22,14 +25,19 @@ public class Hospedagem {
     private double mediaAvaliacoes;
     private int numAvaliacoes;
     private final ArrayList<Comentario> comentarios;
+    private boolean disponivel;
 
     // Constructor ----------------------------------------------------------------------
-    public Hospedagem(String hotel, TipoSuite tipoSuite, String endereco, Local local,
-                      LocalDateTime checkin, LocalDateTime checkout, double diaria, int numDiarias,
-                      int idHospedagem) {
+    public Hospedagem(int idHospedagem, String nome, TipoHospedagem tipoHospedagem,
+                      TipoSuite tipoSuite, TipoCama tipoCama, String descricao, String endereco,
+                      Local local, LocalDateTime checkin, LocalDateTime checkout, double diaria,
+                      int numDiarias, boolean disponivel) {
         this.idHospedagem = idHospedagem;
-        this.hotel = hotel;
+        this.nome = nome;
+        this.tipoHospedagem = tipoHospedagem;
         this.tipoSuite = tipoSuite;
+        this.tipoCama = tipoCama;
+        this.descricao = descricao;
         this.endereco = endereco;
         this.local = local;
         this.checkin = checkin;
@@ -40,11 +48,20 @@ public class Hospedagem {
         this.mediaAvaliacoes = 0;                                       // Valor inicial.
         this.numAvaliacoes = 0;                                         // Valor inicial.
         this.comentarios = new ArrayList<>();
+        this.disponivel = disponivel;
     }
 
     // Enum -----------------------------------------------------------------------------
+    public enum TipoHospedagem {
+        HOTEL, APARTAMENTO, CASA, ALBERGUE, POUSADA
+    }
+
     public enum TipoSuite {
         INDIVIDUAL, DUPLA, TRIPLA, QUADRUPLA, PREMIUM
+    }
+
+    public enum TipoCama {
+        SOLTEIRO, BELICHE, CASAL, QUEEN, KING
     }
 
     // Getters --------------------------------------------------------------------------
@@ -52,12 +69,24 @@ public class Hospedagem {
         return idHospedagem;
     }
 
-    public String getHotel() {
-        return hotel;
+    public String getNome() {
+        return nome;
+    }
+
+    public TipoHospedagem getTipoHospedagem() {
+        return tipoHospedagem;
     }
 
     public String getTipoSuite() {
         return tipoSuite.toString();
+    }
+
+    public TipoCama getTipoCama() {
+        return tipoCama;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
     public String getEndereco() {
@@ -100,9 +129,13 @@ public class Hospedagem {
         return comentarios;
     }
 
+    public boolean getDisponivel() {
+        return disponivel;
+    }
+
     // Setters --------------------------------------------------------------------------
-    private void setTipoSuite(TipoSuite tipoSuite) {
-        this.tipoSuite = tipoSuite;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     private void setEndereco(String endereco) {
@@ -131,6 +164,14 @@ public class Hospedagem {
 
     private void setNumAvaliacoes(int numAvaliacoes) {
         this.numAvaliacoes = numAvaliacoes;
+    }
+
+    public void setDisponivel() {
+        this.disponivel = !disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
     // Methods --------------------------------------------------------------------------

@@ -15,7 +15,6 @@ numeroCartao int,
 validade date,
 cvv tinyint,
 nomeCartao varchar(100),
-reservas varchar(100),
 dataRegistro date,
 primary key (id)
 ) default charset = utf8mb4;
@@ -37,15 +36,20 @@ describe Cliente;
 
 create table Pagamento (
 id int auto_increment not null,
-montante decimal(7,2) not null,
+cliente int not_null,
+valor decimal(7,2) not null,
+situacao enum ('PENDENTE','PAGO','ATRASADO') not null,
 vencimento date not null,
-situacao enum ('PENDENTE','PAGO','ATRAZADO') not null,
-primary key (id)
+primary key (id),
+foreign key (cliente) references Cliente(id)
 ) default charset = utf8mb4;
 
+-- 'Local' é palavra reservada do SQL. Por isso usamos 'Localizacao'.
 create table Localizacao (
 id int auto_increment not null,
 nome varchar(100) not null,
+continente enum('AMERICA_DO_SUL', 'AMERICA_DO_NORTE', 'AMERICA_CENTRAL', 
+				'ASIA', 'OCEANIA', 'EUROPA', 'ORIENTE_MEDIO', 'AFRICA'),
 mediaAvaliacoes float not null,
 numAvaliacoes int not null,
 primary key (id)
@@ -67,24 +71,38 @@ foreign key (localizacao) references Localizacao(id)
 create table Hospedagem (
 id int auto_increment not null,
 nome varchar(100) not null,
-descricao  varchar(100),
-endereco varchar(100) not null,
+tipo_hospedagem enum('HOTEL', 'APARTAMENTO', 'CASA', 'ALBERGUE', 'POUSADA'),
+tipo_suite enum('INDIVIDUAL', 'DUPLA', 'TRIPLA', 'QUADRUPLA', 'PREMIUM'),
+tipo_cama enum('SOLTEIRO', 'BELICHE', 'CASAL', 'QUEEN', 'KING'),
+descricao varchar(100),
+endereco varchar(200) not null,
+localizacao int not null,
+checkin datetime not null,
+checkout datetime not null,
 diaria decimal(6,2) not null,
+num_diarias int not null,
+preco decimal(8, 2) not null,
 mediaAvaliacoes float not null,
 numAvaliacoes int not null,
-primary key (id)
+disponivel bool not null,
+primary key (id),
+foreign key (localizacao) references Localizacao(id)
 ) default charset = utf8mb4;
 
-create table AluguelCarro (
+create table Comentarios_Hospedagens (
 id int auto_increment not null,
-modelo varchar(100) not null,
-empresa varchar(100) not null,
-retirada datetime not null,
-devolucao datetime not null,
-enderecoRetirada varchar(100) not null,
-endereco varchar(100) not null,
-diaria decimal(6,2) not null,
-primary key (id)
+hospedagem int not null,
+comentario varchar(500) not null,
+primary key(id),
+foreign key (hospedagem) references hospedagem(id)
+)default charset = uft8mb4;
+
+create table Comentarios_Localizacoes (
+id int auto_increment not null,
+localizacao int not_null,
+comentario varchar(500),
+primary key(id),
+foreign key (localizacao) references Localizacao(id)
 ) default charset = utf8mb4;
 
 create table Seguro (
@@ -94,17 +112,33 @@ franquia decimal (6,2),
 primary key (id)
 ) default charset = utf8mb4;
 
+create table AluguelCarro (
+id int auto_increment not null,
+num_diarias int not null,
+modelo varchar(100) not null,
+empresa varchar(100) not null,
+retirada datetime not null,
+devolucao datetime not null,
+endereco_retirada varchar(100) not null,
+endereco_devolucao varchar(100) not null,
+diaria decimal(6,2) not null,
+preco decimal(8, 2) not null,
+seguro int not null,
+primary key (id),
+foreign key (seguro) references Seguro(id)
+) default charset = utf8mb4;
+
 create table PassagemAerea (
 id int auto_increment not null,
-localPartida int not null,
-localChegada int not null,
+local_partida int not null,
+local_destino int not null,
 saida datetime not null,
 chegada datetime not null,
-duracao time,
+duracao decimal(2, 2),
 companhia varchar(100) not null,
 preco decimal(6,2) not null,
-aeroportoSaida varchar(100) not null,
-aeroportoChegada varchar(100) not null,
+aeroporto_partida varchar(100) not null,
+aeroporto_chegada varchar(100) not null,
 iataPartida varchar(100) not null,
 iataDestino varchar(100) not null,
 primary key (id),
@@ -154,8 +188,7 @@ foreign key (atividade) references Atividade(id)
 create table reserva(
 id int auto_increment not null,
 pacote int not null,
-tipoUsuario enum('Funcionario','Cliente') not null,
-usuario int not null,
+cliente int not null,
 entrada datetime not null,
 saida datetime not null,
 pagamento int not null,
@@ -163,7 +196,7 @@ desconto decimal(6,2),
 PrecoFinal decimal(6,2) not null,
 primary key (id),
 foreign key (pacote) references Pacote(id),
-foreign key (usuario) references Cliente(id),
+foreign key (cliente) references Cliente(id),
 foreign key (usuario) references Funcionario(id)
 ) default charset = utf8mb4;
 

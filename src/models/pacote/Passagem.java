@@ -1,7 +1,5 @@
 package models.pacote;
 
-import models.pacote.Local;
-import models.usuario.GerarID;
 import java.time.LocalDateTime;
 
 public abstract class Passagem {
@@ -11,14 +9,14 @@ public abstract class Passagem {
     private final Local destino;
     private LocalDateTime saida;
     private LocalDateTime chegada;
-    private double duracao;
+    private double duracao;                                                     // Horas.
     private String companhia;
     private double preco;
 
     // Constructor ----------------------------------------------------------------------
-    public Passagem(Local partida, Local destino, LocalDateTime saida, LocalDateTime chegada,
-                    double duracao, String companhia, double preco) {
-        this.idPassagem = GerarID.gerarId(partida.getNome() + destino.getNome());
+    public Passagem(int idPassagem, Local partida, Local destino, LocalDateTime saida,
+                    LocalDateTime chegada, double duracao, String companhia, double preco) {
+        this.idPassagem = idPassagem;
         this.partida = partida;
         this.destino = destino;
         this.saida = saida;

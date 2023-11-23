@@ -1,7 +1,6 @@
 package models.pacote;
 
 import exceptions.InvalidRatingException;
-import models.usuario.GerarID;
 import models.usuario.Usuario;
 
 import java.util.ArrayList;
@@ -10,17 +9,24 @@ public class Local {
     // Attributes -----------------------------------------------------------------------
     private final int idLocal;
     private final String nome;
+    private final Continente continente;
     private double mediaAvaliacoes;                                             // 0 - 5.
     private int numAvaliacoes;
     private final ArrayList<Comentario> comentarios;
 
     // Constructor ----------------------------------------------------------------------
-    public Local(String nome) {
-        this.idLocal = GerarID.gerarId(nome);
+    public Local(int idLocal, String nome, Continente continente) {
+        this.idLocal = idLocal;
         this.nome = nome;
+        this.continente = continente;
         this.mediaAvaliacoes = 0;                                       // Valor inicial.
         this.numAvaliacoes = 0;                                         // Valor inicial.
         this.comentarios = new ArrayList<>();
+    }
+
+    public enum Continente {
+        AMERICA_DO_SUL, AMERICA_CENTRAL, AMERICA_DO_NORTE, ASIA, OCEANIA, EUROPA, ORIENTE_MEDIO,
+        AFRICA
     }
 
     // Getters --------------------------------------------------------------------------
@@ -30,6 +36,10 @@ public class Local {
 
     public String getNome() {
         return nome;
+    }
+
+    public Continente getContinente() {
+        return continente;
     }
 
     public double getMediaAvaliacoes() {
