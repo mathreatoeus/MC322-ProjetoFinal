@@ -2,7 +2,7 @@ package models.pacote;
 
 import java.time.LocalDateTime;
 
-public class Atividade {
+public class Atividade implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private final int idAtividade;
     private final String nomeAtividade;
@@ -27,7 +27,7 @@ public class Atividade {
     }
 
     // Getters --------------------------------------------------------------------------
-    public int getIdAtividade() {
+    public int getId() {
         return idAtividade;
     }
 

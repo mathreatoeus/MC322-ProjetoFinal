@@ -24,7 +24,7 @@ public class Reserva {
         this.preco = preco;
     }
 
-    public int getIdReserva() {
+    public int getId() {
         return idReserva;
     }
 

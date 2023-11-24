@@ -2,7 +2,7 @@ package models.pacote;
 
 import java.time.LocalDateTime;
 
-public abstract class Passagem {
+public abstract class Passagem implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private final int idPassagem;
     private final Local partida;
@@ -27,7 +27,7 @@ public abstract class Passagem {
     }
 
     // Getters --------------------------------------------------------------------------
-    public int getIdPassagem() {
+    public int getId() {
         return idPassagem;
     }
 
