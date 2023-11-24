@@ -16,7 +16,7 @@ public class Hospedagem {
     private final TipoCama tipoCama;
     private String descricao;
     private String endereco;
-    private final Local local;
+    private final int idLocal;
     private LocalDateTime checkin;
     private LocalDateTime checkout;
     private final double diaria;
@@ -30,7 +30,7 @@ public class Hospedagem {
     // Constructor ----------------------------------------------------------------------
     public Hospedagem(int idHospedagem, String nome, TipoHospedagem tipoHospedagem,
                       TipoSuite tipoSuite, TipoCama tipoCama, String descricao, String endereco,
-                      Local local, LocalDateTime checkin, LocalDateTime checkout, double diaria,
+                      int idLocal, LocalDateTime checkin, LocalDateTime checkout, double diaria,
                       int numDiarias, boolean disponivel) {
         this.idHospedagem = idHospedagem;
         this.nome = nome;
@@ -39,7 +39,7 @@ public class Hospedagem {
         this.tipoCama = tipoCama;
         this.descricao = descricao;
         this.endereco = endereco;
-        this.local = local;
+        this.idLocal = idLocal;
         this.checkin = checkin;
         this.checkout = checkout;
         this.diaria = diaria;
@@ -93,8 +93,8 @@ public class Hospedagem {
         return endereco;
     }
 
-    public Local getLocal() {
-        return local;
+    public int getIdLocal() {
+        return idLocal;
     }
 
     public LocalDateTime getCheckin() {
@@ -197,13 +197,13 @@ public class Hospedagem {
     /**
      * Adiciona um comentario de ate 500 caracteres à lista de comentarios.
      *
-     * @param usuario o usuario que fez o comentario.
+     * @param idUsuario o id do usuario que fez o comentario.
      * @param mensagem a mensagem em si.
      * @throws CommentIsTooLongException se o comentario tiver mais do que 500 caracteres.
      */
-    public void adicionarComentario(Usuario usuario, String mensagem) throws CommentIsTooLongException {
+    public void adicionarComentario(int idComentario, int idUsuario, String mensagem) throws CommentIsTooLongException {
         if (mensagem.length() < 500) {
-            (this.comentarios).add(new Comentario(usuario, mensagem));
+            (this.comentarios).add(new Comentario(idComentario, idUsuario, mensagem));
         }
         else {
             throw new CommentIsTooLongException("Comentario excede 500 caracteres.", mensagem);

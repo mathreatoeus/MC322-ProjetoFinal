@@ -4,22 +4,23 @@ import java.time.LocalDateTime;
 import models.usuario.Usuario;
 
 public class Reserva {
-    private int idReserva;
-    // private Pacote pacote;
-    private Usuario usuario;
+    private final int idReserva;
+    private final int idPacote;
+    private int idUsuario;
     private LocalDateTime entrada;
     private LocalDateTime saida;
-    private final Pagamento pagamento;
+    private final int idPagamento;
     private double desconto;
     private double preco;
 
-    public Reserva(int idReserva, Usuario usuario, LocalDateTime entrada, LocalDateTime saida,
-                   Pagamento pagamento, double desconto, double preco) {
+    public Reserva(int idReserva, int idPacote, int idUsuario, LocalDateTime entrada,
+                   LocalDateTime saida, int idPagamento, double desconto, double preco) {
         this.idReserva = idReserva;
-        this.usuario = usuario;
+        this.idPacote = idPacote;
+        this.idUsuario = idUsuario;
         this.entrada = entrada;
         this.saida = saida;
-        this.pagamento = pagamento;
+        this.idPagamento = idPagamento;
         this.desconto = desconto;
         this.preco = preco;
     }
@@ -28,16 +29,16 @@ public class Reserva {
         return idReserva;
     }
 
-    public void setIdReserva(int idReserva) {
-        this.idReserva = idReserva;
+    public int getIdPacote() {
+        return idPacote;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public LocalDateTime getEntrada() {
@@ -56,8 +57,8 @@ public class Reserva {
         this.saida = saida;
     }
 
-    public Pagamento getPagamento() {
-        return pagamento;
+    public int getIdPagamento() {
+        return idPagamento;
     }
 
     public double getDesconto() {

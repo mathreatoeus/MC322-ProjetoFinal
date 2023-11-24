@@ -9,6 +9,7 @@ public class Cliente extends Usuario{
     private String nomeCartao;
     private LocalDate dataRegistro;
 
+    // Com data de registro...
     public Cliente(int idUsuario, String nome, LocalDate nascimento, String cpf, String email, String senha,
             String celular, String endereco, String numeroCartao, LocalDate validade,
             int cvv, String nomeCartao, LocalDate dataRegistro) {
@@ -18,6 +19,18 @@ public class Cliente extends Usuario{
         this.cvv = cvv;
         this.nomeCartao = nomeCartao;
         this.dataRegistro = dataRegistro;
+    }
+
+    // Data de registro default (LocalDate.now())...
+    public Cliente(int idUsuario, String nome, LocalDate nascimento, String cpf, String email, String senha,
+                   String celular, String endereco, String numeroCartao, LocalDate validade,
+                   int cvv, String nomeCartao) {
+        super(idUsuario, nome, nascimento, cpf, email, senha, celular, endereco);
+        this.numeroCartao = numeroCartao;
+        this.validade = validade;
+        this.cvv = cvv;
+        this.nomeCartao = nomeCartao;
+        this.dataRegistro = LocalDate.now();
     }
 
     public String getNumeroCartao() {

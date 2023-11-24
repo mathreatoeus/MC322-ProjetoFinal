@@ -8,10 +8,10 @@ public class PassagemOnibus extends Passagem{
     private String enderecoChegada;
 
     // Constructor ----------------------------------------------------------------------
-    public PassagemOnibus(int idPassagem,Local partida, Local destino, LocalDateTime saida, LocalDateTime chegada,
+    public PassagemOnibus(int idPassagem, int idPartida, int idDestino, LocalDateTime saida, LocalDateTime chegada,
                           double duracao, String companhia, double preco, String enderecoPartida,
                           String enderecoChegada) {
-        super(idPassagem,partida, destino, saida, chegada, duracao, companhia, preco);
+        super(idPassagem, idPartida, idDestino, saida, chegada, duracao, companhia, preco);
         this.enderecoPartida = enderecoPartida;
         this.enderecoChegada = enderecoChegada;
     }

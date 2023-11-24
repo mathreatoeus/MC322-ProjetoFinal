@@ -57,7 +57,7 @@ primary key (id)
 
 create table Atividade (
 id int auto_increment not null,
-nome varchar(100) not null,
+nome_atividade varchar(100) not null,
 descricao varchar(100),
 localizacao int not null,
 endereco varchar(100) not null,
@@ -89,34 +89,40 @@ primary key (id),
 foreign key (localizacao) references Localizacao(id)
 ) default charset = utf8mb4;
 
-create table Comentarios_Hospedagens (
+create table ComentariosHospedagens (
 id int auto_increment not null,
-hospedagem int not null,
+cliente int not null,
+data_e_hora_da_postagem datetime not null,
 comentario varchar(500) not null,
+hospedagem int not null,
 primary key(id),
+foreign key (cliente) references Cliente(id),
 foreign key (hospedagem) references hospedagem(id)
 )default charset = uft8mb4;
 
-create table Comentarios_Localizacoes (
+create table ComentariosLocalizacoes (
 id int auto_increment not null,
-localizacao int not_null,
+cliente int not null,
+data_e_hora_da_postagem datetime not null,
 comentario varchar(500),
+localizacao int not_null,
 primary key(id),
+foreign key (cliente) references Cliente(id),
 foreign key (localizacao) references Localizacao(id)
 ) default charset = utf8mb4;
 
 create table Seguro (
 id int auto_increment not null,
+franquia decimal (6,2) not null,
 descricao varchar(100),
-franquia decimal (6,2),
 primary key (id)
 ) default charset = utf8mb4;
 
 create table AluguelCarro (
 id int auto_increment not null,
 num_diarias int not null,
-modelo varchar(100) not null,
-empresa varchar(100) not null,
+modelo_carro varchar(100) not null,
+locadora varchar(100) not null,
 retirada datetime not null,
 devolucao datetime not null,
 endereco_retirada varchar(100) not null,
@@ -166,14 +172,28 @@ create table Pacote (
 id int auto_increment not null,
 destino int,
 hospedagem int,
-tipoPassagem enum ('PassagemAerea', 'PassagemOnibus'),
+tipoPassagem enum ('AEREA', 'ONIBUS'),
 passagem int,
 aluguelCarro int,
-precoTotal decimal(6,2) not null,
-avaliacao tinyint,
+desconto int,
+preco decimal(6,2) not null,
+media_avaliacoes decimal(1,2),
+num_avaliacoes int,
+fechado bool not null,
 primary key (id),
 foreign key (passagem) references PassagemAerea(id),
 foreign key (passagem) references PassagemOnibus(id)
+) default charset = utf8mb4;
+
+create table ComentariosPacotes (
+id int auto_increment not null,
+cliente int not null,
+data_e_hora_da_postagem datetime not null,
+comentario varchar(500) not null,
+pacote int not null,
+primary key(id),
+foreign key (cliente) references Cliente(id),
+foreign key (pacote) references Pacote(id)
 ) default charset = utf8mb4;
 
 create table ativadesPacote(
@@ -185,7 +205,7 @@ foreign key (pacote) references Pacote(id),
 foreign key (atividade) references Atividade(id)
 ) default charset = utf8mb4;
 
-create table reserva(
+create table Reserva(
 id int auto_increment not null,
 pacote int not null,
 cliente int not null,
@@ -193,7 +213,7 @@ entrada datetime not null,
 saida datetime not null,
 pagamento int not null,
 desconto decimal(6,2),
-PrecoFinal decimal(6,2) not null,
+preco decimal(6,2) not null,
 primary key (id),
 foreign key (pacote) references Pacote(id),
 foreign key (cliente) references Cliente(id),

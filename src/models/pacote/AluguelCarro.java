@@ -1,6 +1,5 @@
 package models.pacote;
 
-import models.pacote.Seguro;
 import java.time.LocalDateTime;
 
 public class AluguelCarro implements ItemPacote {
@@ -15,12 +14,12 @@ public class AluguelCarro implements ItemPacote {
     private String enderecoDevolucao;
     private double diaria;
     private double preco;
-    private Seguro seguro;
+    private int idSeguro;
 
     // Constructor ----------------------------------------------------------------------
     public AluguelCarro(int idAluguelCarro, int numDiarias, String modeloCarro, String locadora,
                         LocalDateTime retirada, String enderecoRetirada, String enderecoDevolucao,
-                        double diaria, Seguro seguro) {
+                        double diaria, int idSeguro) {
         this.idAluguelCarro = idAluguelCarro;
         this.numDiarias = numDiarias;
         this.modeloCarro = modeloCarro;
@@ -31,7 +30,7 @@ public class AluguelCarro implements ItemPacote {
         this.enderecoDevolucao =enderecoDevolucao;
         this.diaria = diaria;
         this.preco = diaria * numDiarias;
-        this.seguro = seguro;
+        this.idSeguro = idSeguro;
     }
 
     // Getters --------------------------------------------------------------------------
@@ -75,8 +74,8 @@ public class AluguelCarro implements ItemPacote {
         return preco;
     }
 
-    public Seguro getSeguro() {
-        return seguro;
+    public int getIdSeguro() {
+        return idSeguro;
     }
 
     // Setters --------------------------------------------------------------------------
@@ -112,7 +111,7 @@ public class AluguelCarro implements ItemPacote {
         this.preco = preco;
     }
 
-    private void setSeguro(Seguro seguro) {
-        this.seguro = seguro;
+    private void setIdSeguro(int idSeguro) {
+        this.idSeguro = idSeguro;
     }
 }

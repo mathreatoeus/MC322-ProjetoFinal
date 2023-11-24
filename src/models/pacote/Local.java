@@ -86,10 +86,10 @@ public class Local {
     /**
      * Adiciona um comentario à lista de comentarios.
      *
-     * @param usuario o usuario que fez o comentario.
+     * @param idUsuario o id do usuario que fez o comentario.
      * @param mensagem a mensagem do comentario.
      */
-    public void adicionarComentario(Usuario usuario, String mensagem) {
-        this.comentarios.add(new Comentario(usuario, mensagem));
+    public void adicionarComentario(int idComentario, int idUsuario, String mensagem) {
+        this.comentarios.add(new Comentario(idComentario, idUsuario, mensagem));
     }
 }

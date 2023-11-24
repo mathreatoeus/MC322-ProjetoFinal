@@ -13,10 +13,11 @@ public class PassagemAerea extends Passagem {
     // utilizado para identificar aeroportos (Ex: Guarulhos --> GRU).
 
     // Constructor ----------------------------------------------------------------------
-    public PassagemAerea(int idPassagem,Local partida, Local destino, LocalDateTime saida, LocalDateTime chegada,
-                         double duracao, String companhia, double preco, String aeroportoPartida,
-                         String aeroportoChegada, String iataPartida, String iataChegada) {
-        super(idPassagem,partida, destino, saida, chegada, duracao, companhia, preco);
+    public PassagemAerea(int idPassagem, int idPartida, int idDestino, LocalDateTime saida,
+                         LocalDateTime chegada, double duracao, String companhia, double preco,
+                         String aeroportoPartida, String aeroportoChegada, String iataPartida,
+                         String iataChegada) {
+        super(idPassagem, idPartida, idDestino, saida, chegada, duracao, companhia, preco);
         this.aeroportoPartida = aeroportoPartida;
         this.aeroportoChegada = aeroportoChegada;
         this.iataPartida = iataPartida;

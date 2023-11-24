@@ -5,16 +5,16 @@ import models.usuario.Usuario;
 
 public class Pagamento {
     private int idPagamento;
-    private Usuario usuario;
+    private int idUsuario;
     private double valor;
     private Situacao situacao;
     private LocalDate vencimento;
 
     // private StatusPagamento status;
-    public Pagamento(int idPagamento, Usuario usuario, double valor, Situacao situacao,
+    public Pagamento(int idPagamento, int idUsuario, double valor, Situacao situacao,
                      LocalDate vencimento) {
         this.idPagamento = idPagamento;
-        this.usuario = usuario;
+        this.idUsuario = idUsuario;
         this.valor = valor;
         this.situacao = situacao;
         this.vencimento = vencimento;
@@ -32,12 +32,12 @@ public class Pagamento {
         this.idPagamento = idPagamento;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public double getValor() {
