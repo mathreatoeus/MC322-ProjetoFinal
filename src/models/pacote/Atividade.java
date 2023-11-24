@@ -1,13 +1,12 @@
 package models.pacote;
 
-import models.usuario.GerarID;
-
 import java.time.LocalDateTime;
 
 public class Atividade implements ItemPacote{
     // Attributes -----------------------------------------------------------------------
     private final int idAtividade;
     private final String nomeAtividade;
+    private String descricao;
     private final Local local;
     private String endereco;
     private LocalDateTime inicio;
@@ -15,10 +14,11 @@ public class Atividade implements ItemPacote{
     private double preco;
 
     // Constructor ----------------------------------------------------------------------
-    public Atividade(String nomeAtividade, Local local, String endereco, LocalDateTime inicio,
-                     LocalDateTime fim, double preco) {
-        this.idAtividade = GerarID.gerarId(nomeAtividade);
+    public Atividade(int idAtividade, String nomeAtividade, Local local, String descricao,
+                     String endereco, LocalDateTime inicio, LocalDateTime fim, double preco) {
+        this.idAtividade = idAtividade;
         this.nomeAtividade = nomeAtividade;
+        this.descricao = descricao;
         this.local = local;
         this.endereco = endereco;
         this.inicio = inicio;
@@ -27,13 +27,16 @@ public class Atividade implements ItemPacote{
     }
 
     // Getters --------------------------------------------------------------------------
-    
-    public int getIdAtividade() {
+    public int getId() {
         return idAtividade;
     }
 
     public String getNomeAtividade() {
         return nomeAtividade;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
     public Local getLocal() {
@@ -52,10 +55,8 @@ public class Atividade implements ItemPacote{
         return fim;
     }
 
-    
     public double getPreco() {
         return preco;
-        
     }
 
     // Setters --------------------------------------------------------------------------
@@ -65,6 +66,10 @@ public class Atividade implements ItemPacote{
 
     private void setInicio(LocalDateTime inicio) {
         this.inicio = inicio;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     private void setFim(LocalDateTime fim) {

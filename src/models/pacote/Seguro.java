@@ -1,14 +1,14 @@
 package models.pacote;
 
-public class Seguro implements ItemPacote{
+public class Seguro {
     // Attributes -----------------------------------------------------------------------
     private double franquia;
-    
-    // Usuario vem aqui
+    private final String descricao;
 
     // Constructor ----------------------------------------------------------------------
-    public Seguro() {
-        this.franquia = calcularFranquia();
+    public Seguro(double franquia, String descricao) {
+        this.franquia = franquia;
+        this.descricao = descricao;
     }
 
     // Getters --------------------------------------------------------------------------
@@ -16,14 +16,12 @@ public class Seguro implements ItemPacote{
         return franquia;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
     // Setters --------------------------------------------------------------------------
     private void setFranquia(double franquia) {
         this.franquia = franquia;
-    }
-
-    // Methods --------------------------------------------------------------------------
-    private double calcularFranquia() {
-        // Logica para calculo da franquia...
-        return 0.0;
     }
 }

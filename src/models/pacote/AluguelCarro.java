@@ -3,7 +3,7 @@ package models.pacote;
 import models.pacote.Seguro;
 import java.time.LocalDateTime;
 
-public class AluguelCarro  implements ItemPacote{
+public class AluguelCarro implements ItemPacote {
     // Attributes -----------------------------------------------------------------------
     private final int idAluguelCarro;
     private int numDiarias;
@@ -13,13 +13,14 @@ public class AluguelCarro  implements ItemPacote{
     private LocalDateTime devolucao;
     private String enderecoRetirada;
     private String enderecoDevolucao;
+    private double diaria;
     private double preco;
     private Seguro seguro;
 
     // Constructor ----------------------------------------------------------------------
-    public AluguelCarro(int numDiarias, String modeloCarro, String locadora, LocalDateTime retirada,
-                        String enderecoRetirada, String enderecoDevolucao, double diaria,
-                        Seguro seguro, int idAluguelCarro) {
+    public AluguelCarro(int idAluguelCarro, int numDiarias, String modeloCarro, String locadora,
+                        LocalDateTime retirada, String enderecoRetirada, String enderecoDevolucao,
+                        double diaria, Seguro seguro) {
         this.idAluguelCarro = idAluguelCarro;
         this.numDiarias = numDiarias;
         this.modeloCarro = modeloCarro;
@@ -28,13 +29,13 @@ public class AluguelCarro  implements ItemPacote{
         this.devolucao = retirada.plusDays(numDiarias);
         this.enderecoRetirada = enderecoRetirada;
         this.enderecoDevolucao =enderecoDevolucao;
+        this.diaria = diaria;
         this.preco = diaria * numDiarias;
         this.seguro = seguro;
     }
 
     // Getters --------------------------------------------------------------------------
-    
-    public int getIdAluguelCarro() {
+    public int getId() {
         return idAluguelCarro;
     }
 
@@ -66,10 +67,12 @@ public class AluguelCarro  implements ItemPacote{
         return enderecoDevolucao;
     }
 
-    
+    public double getDiaria() {
+        return diaria;
+    }
+
     public double getPreco() {
         return preco;
-        
     }
 
     public Seguro getSeguro() {
@@ -101,6 +104,10 @@ public class AluguelCarro  implements ItemPacote{
         this.enderecoDevolucao = enderecoDevolucao;
     }
 
+    public void setDiaria(double diaria) {
+        this.diaria = diaria;
+    }
+
     private void setPreco(double preco) {
         this.preco = preco;
     }
@@ -108,6 +115,4 @@ public class AluguelCarro  implements ItemPacote{
     private void setSeguro(Seguro seguro) {
         this.seguro = seguro;
     }
-
-    
 }

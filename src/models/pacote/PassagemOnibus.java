@@ -2,16 +2,16 @@ package models.pacote;
 
 import java.time.LocalDateTime;
 
-public class PassagemOnibus extends Passagem {
+public class PassagemOnibus extends Passagem{
     // Attributes -----------------------------------------------------------------------
     private String enderecoPartida;
     private String enderecoChegada;
 
     // Constructor ----------------------------------------------------------------------
-    public PassagemOnibus(Local partida, Local destino, LocalDateTime saida, LocalDateTime chegada,
+    public PassagemOnibus(int idPassagem,Local partida, Local destino, LocalDateTime saida, LocalDateTime chegada,
                           double duracao, String companhia, double preco, String enderecoPartida,
                           String enderecoChegada) {
-        super(partida, destino, saida, chegada, duracao, companhia, preco);
+        super(idPassagem,partida, destino, saida, chegada, duracao, companhia, preco);
         this.enderecoPartida = enderecoPartida;
         this.enderecoChegada = enderecoChegada;
     }

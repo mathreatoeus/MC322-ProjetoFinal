@@ -2,31 +2,29 @@ package models.pacote;
 
 import java.time.LocalDateTime;
 import models.usuario.Usuario;
-public class Reserva implements ItemPacote {
+
+public class Reserva {
     private int idReserva;
     // private Pacote pacote;
     private Usuario usuario;
     private LocalDateTime entrada;
     private LocalDateTime saida;
-    // private Pagamento pagamento;
+    private final Pagamento pagamento;
     private double desconto;
     private double preco;
 
-    public boolean transferirReserva(Usuario Usuario) {
-        return false;
-    }
-
-    public Reserva(int idReserva, Usuario usuario, LocalDateTime entrada, LocalDateTime saida, double desconto,
-            double preco) {
+    public Reserva(int idReserva, Usuario usuario, LocalDateTime entrada, LocalDateTime saida,
+                   Pagamento pagamento, double desconto, double preco) {
         this.idReserva = idReserva;
         this.usuario = usuario;
         this.entrada = entrada;
         this.saida = saida;
+        this.pagamento = pagamento;
         this.desconto = desconto;
         this.preco = preco;
     }
-    
-    public int getIdReserva() {
+
+    public int getId() {
         return idReserva;
     }
 
@@ -56,6 +54,10 @@ public class Reserva implements ItemPacote {
 
     public void setSaida(LocalDateTime saida) {
         this.saida = saida;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
     }
 
     public double getDesconto() {

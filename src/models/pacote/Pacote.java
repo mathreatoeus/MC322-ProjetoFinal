@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pacote {
-    private String id;
+    private int id;
+   //colocar atributos da lista pacote
     private boolean fechado;
 
     // Constructor ----------------------------------------------------------------------
@@ -14,7 +15,7 @@ public class Pacote {
     }
     
     // Getters --------------------------------------------------------------------------
-    public String getId(){
+    public int getId(){
         return id;
     }
     
