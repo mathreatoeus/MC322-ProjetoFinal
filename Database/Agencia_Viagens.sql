@@ -196,7 +196,7 @@ foreign key (cliente) references Cliente(id),
 foreign key (pacote) references Pacote(id)
 ) default charset = utf8mb4;
 
-create table ativadesPacote(
+create table AtividadesPacotes(
 id int auto_increment not null,
 pacote int not null,
 atividade int not null,
