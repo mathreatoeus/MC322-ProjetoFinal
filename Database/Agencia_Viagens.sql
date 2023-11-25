@@ -36,7 +36,7 @@ describe Cliente;
 
 create table Pagamento (
 id int auto_increment not null,
-cliente int not_null,
+cliente int not null,
 valor decimal(7,2) not null,
 situacao enum ('PENDENTE','PAGO','ATRASADO') not null,
 vencimento date not null,
@@ -98,14 +98,14 @@ hospedagem int not null,
 primary key(id),
 foreign key (cliente) references Cliente(id),
 foreign key (hospedagem) references hospedagem(id)
-)default charset = uft8mb4;
+)default charset = utf8mb4;
 
 create table ComentariosLocalizacoes (
 id int auto_increment not null,
 cliente int not null,
 data_e_hora_da_postagem datetime not null,
 comentario varchar(500),
-localizacao int not_null,
+localizacao int not null,
 primary key(id),
 foreign key (cliente) references Cliente(id),
 foreign key (localizacao) references Localizacao(id)
@@ -136,8 +136,8 @@ foreign key (seguro) references Seguro(id)
 
 create table PassagemAerea (
 id int auto_increment not null,
-local_partida int not null,
-local_destino int not null,
+localPartida int not null,
+localChegada int not null,
 saida datetime not null,
 chegada datetime not null,
 duracao decimal(2, 2),
@@ -177,7 +177,7 @@ passagem int,
 aluguelCarro int,
 desconto int,
 preco decimal(6,2) not null,
-media_avaliacoes decimal(1,2),
+media_avaliacoes decimal(2,1),
 num_avaliacoes int,
 fechado bool not null,
 primary key (id),
@@ -208,7 +208,7 @@ foreign key (atividade) references Atividade(id)
 create table Reserva(
 id int auto_increment not null,
 pacote int not null,
-cliente int not null,
+usuario int not null,
 entrada datetime not null,
 saida datetime not null,
 pagamento int not null,
@@ -216,7 +216,7 @@ desconto decimal(6,2),
 preco decimal(6,2) not null,
 primary key (id),
 foreign key (pacote) references Pacote(id),
-foreign key (cliente) references Cliente(id),
+foreign key (usuario) references Cliente(id),
 foreign key (usuario) references Funcionario(id)
 ) default charset = utf8mb4;
 
