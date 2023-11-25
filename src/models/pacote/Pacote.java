@@ -78,6 +78,10 @@ public class Pacote {
         return idDestino;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
     public int getIdHospedagem() {
         return idHospedagem;
     }
