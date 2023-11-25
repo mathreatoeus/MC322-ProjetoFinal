@@ -11,11 +11,11 @@ email varchar(100) not null,
 senha varchar(100) not null,
 celular int not null,
 endereco varchar(100) not null,
-numeroCartao int,
+numero_cartao int,
 validade date,
 cvv tinyint,
-nomeCartao varchar(100),
-dataRegistro date,
+nome_cartao varchar(100),
+data_registro date,
 primary key (id)
 ) default charset = utf8mb4;
 describe Cliente;
@@ -97,7 +97,7 @@ comentario varchar(500) not null,
 hospedagem int not null,
 primary key(id),
 foreign key (cliente) references Cliente(id),
-foreign key (hospedagem) references hospedagem(id)
+foreign key (hospedagem) references Hospedagem(id)
 )default charset = utf8mb4;
 
 create table ComentariosLocalizacoes (
@@ -181,6 +181,8 @@ media_avaliacoes decimal(2,1),
 num_avaliacoes int,
 fechado bool not null,
 primary key (id),
+foreign key (destino) references Localizacao(id),
+foreign key (hospedagem) references Hospedagem(id),
 foreign key (passagem) references PassagemAerea(id),
 foreign key (passagem) references PassagemOnibus(id)
 ) default charset = utf8mb4;
@@ -217,7 +219,8 @@ preco decimal(6,2) not null,
 primary key (id),
 foreign key (pacote) references Pacote(id),
 foreign key (usuario) references Cliente(id),
-foreign key (usuario) references Funcionario(id)
+foreign key (usuario) references Funcionario(id),
+foreign key (pagamento) references Pagamento(id)
 ) default charset = utf8mb4;
 
 
