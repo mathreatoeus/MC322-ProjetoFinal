@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Pacote {
     private final int id;
     private final int idDestino;
+    private final Categoria categoria;
     private int idHospedagem;
     private TipoPassagem tipoPassagem;
     private int idPassagem;
@@ -20,12 +21,13 @@ public class Pacote {
     private boolean fechado;
 
     // Constructor ----------------------------------------------------------------------
-    // Informando mediaAvaliacoes e numAvaliacoes...
-    public Pacote(int id, int idDestino, int idHospedagem, TipoPassagem tipoPassagem,
-                  int idPassagem, int idAluguelCarro, double desconto, double preco,
-                  double mediaAvaliacoes, int numAvaliacoes){
+    // Informando mediaAvaliacoes e numAvaliacoes manualmente...
+    public Pacote(int id, int idDestino, Categoria categoria, int idHospedagem,
+                  TipoPassagem tipoPassagem, int idPassagem, int idAluguelCarro, double desconto,
+                  double preco, double mediaAvaliacoes, int numAvaliacoes){
         this.id = id;
         this.idDestino = idDestino;
+        this.categoria = categoria;
         this.idHospedagem = idHospedagem;
         this.tipoPassagem = tipoPassagem;
         this.idPassagem = idPassagem;
@@ -39,10 +41,11 @@ public class Pacote {
     }
 
     // mediaAvaliacoes e numAvaliacoes assumem valores default (0.0 e 0)...
-    public Pacote(int id, int idDestino, int idHospedagem, TipoPassagem tipoPassagem,
+    public Pacote(int id, int idDestino, Categoria categoria, int idHospedagem, TipoPassagem tipoPassagem,
                   int idPassagem, int idAluguelCarro, double desconto, double preco) {
         this.id = id;
         this.idDestino = idDestino;
+        this.categoria = categoria;
         this.idHospedagem = idHospedagem;
         this.tipoPassagem = tipoPassagem;
         this.idPassagem = idPassagem;
@@ -59,7 +62,13 @@ public class Pacote {
     public enum TipoPassagem {
         AEREA, ONIBUS
     }
-    
+
+    public enum Categoria {
+        AVENTURA, CULTURA, RELAXAMENTO, HISTORICO, VIDA_NOTURNA, GASTRONOMIA, FAMILIA, CRUZEIRO,
+        FESTIVAL
+    }
+
+
     // Getters --------------------------------------------------------------------------
     public int getId(){
         return id;

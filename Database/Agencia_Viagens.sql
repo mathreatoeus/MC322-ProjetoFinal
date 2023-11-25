@@ -171,6 +171,8 @@ foreign key (localChegada) references Localizacao(id)
 create table Pacote (
 id int auto_increment not null,
 destino int,
+categoria enum ('AVENTURA', 'CULTURA', 'RELAXAMENTO', 'HISTORICO', 'VIDA_NOTURNA',
+				'GASTRONOMIA', 'FAMILIA', 'CRUZEIRO', 'FESTIVAL'),
 hospedagem int,
 tipoPassagem enum ('AEREA', 'ONIBUS'),
 passagem int,
