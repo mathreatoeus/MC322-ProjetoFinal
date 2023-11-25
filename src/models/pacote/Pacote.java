@@ -68,7 +68,6 @@ public class Pacote {
         FESTIVAL
     }
 
-
     // Getters --------------------------------------------------------------------------
     public int getId(){
         return id;
