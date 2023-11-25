@@ -18,7 +18,7 @@ public class Seguro {
         return id;
     }
 
-    private double getFranquia() {
+    public double getFranquia() {
         return franquia;
     }
 
