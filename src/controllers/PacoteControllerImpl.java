@@ -3,6 +3,11 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 import models.pacote.*;
+import models.pacote.Hospedagem.TipoCama;
+import models.pacote.Hospedagem.TipoHospedagem;
+import models.pacote.Hospedagem.TipoSuite;
+import models.pacote.Pacote.Categoria;
+import models.pacote.Pacote.TipoPassagem;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,11 +17,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
 public class PacoteControllerImpl {
+
+    private ArrayList<Pacote> listapacotes;
+
+        
 
     // cadastro no banco de dados
 
@@ -26,6 +36,8 @@ public class PacoteControllerImpl {
 
             return;
         }
+        pacote.setPreco(somarpagamento(pacote.getId()));
+        listapacotes.add(pacote);
         String sql = "INSERT INTO Pacote (destino, hospedagem, tipoPassagem, passagem, aluguelCarro, desconto, preco, media_avaliacoes, num_avaliacoes, fechado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
 
@@ -652,7 +664,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+               
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -678,7 +690,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+               
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -704,7 +716,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+             
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -730,7 +742,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+               
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -756,7 +768,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+                
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -782,7 +794,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+                // Item encontrado
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -808,7 +820,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+              
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -834,7 +846,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+                
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -860,7 +872,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+               
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -886,7 +898,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+                
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -912,7 +924,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+               
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -930,6 +942,15 @@ public class PacoteControllerImpl {
     }
 
     public void excluirPacote(int id) throws SQLException {
+        for (int i = 0; i < listapacotes.size(); i++) {
+            Pacote pacote = listapacotes.get(i);
+
+            // Verifica se o ID do pacote atual é igual ao ID fornecido
+            if (pacote.getId() == id) {
+                // Remove o pacote da lista
+                listapacotes.remove(i);
+             }
+            }
         String selectSql = "SELECT COUNT(*) FROM Pacote WHERE ID = ?";
         String deleteSql = "DELETE FROM Pacote WHERE ID = ?";
 
@@ -938,7 +959,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+                
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -964,7 +985,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+               
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -981,9 +1002,621 @@ public class PacoteControllerImpl {
         }
     }
 
+    //busca de um pacote
+    public Pacote buscarPacotePorId(int idPacote) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Pacote pacote = null;
+
+        try {
+            String sql = "SELECT * FROM  Pacote  WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idPacote);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pacote = construirPacote(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return pacote;
+    }
+
+    private Pacote construirPacote(ResultSet rs) throws SQLException {
+        // Construa o objeto Pacote com os dados do ResultSet
+        return new Pacote(
+                rs.getInt("id"),
+                rs.getInt("idDestino"),
+                Categoria.valueOf(rs.getString("categoria")), 
+                rs.getInt("idHospedagem"),
+                Pacote.TipoPassagem.valueOf(rs.getString("tipoPassagem")), 
+                rs.getInt("idPassagem"),
+                rs.getInt("idAluguelCarro"),
+                rs.getDouble("desconto"),
+                rs.getDouble("preco"),
+                rs.getDouble("mediaAvaliacoes"),
+                rs.getInt("numAvaliacoes")
+        );
+    }
+    
+
+    // Método para fechar os recursos
+    private void fecharRecursos(ResultSet rs, PreparedStatement ps, Connection conexao) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conexao != null) {
+                conexao.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        }
+    }
     //busca de um item em um pacote
 
-    //envio de email ao fazer reserva
+    public AluguelCarro buscarAluguelCarroPorId(int idAluguelCarro) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        AluguelCarro aluguelCarro = null;
+
+        try {
+            String sql = "SELECT * FROM AluguelCarro WHERE idAluguelCarro = ?";
+            conexao = ConexaoMySQL.getConexao();
+
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idAluguelCarro);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                aluguelCarro = construirAluguelCarro(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return aluguelCarro;
+    }
+
+    private AluguelCarro construirAluguelCarro(ResultSet rs) throws SQLException {
+        // Construa o objeto AluguelCarro com os dados do ResultSet
+        return new AluguelCarro(
+                rs.getInt("idAluguelCarro"),
+                rs.getInt("numDiarias"),
+                rs.getString("modeloCarro"),
+                rs.getString("locadora"),
+                rs.getTimestamp("retirada").toLocalDateTime(),
+                rs.getString("enderecoRetirada"),
+                rs.getString("enderecoDevolucao"),
+                rs.getDouble("diaria"),
+                rs.getInt("idSeguro")
+        );
+    }
+
+    public Atividade buscarAtividadePorId(int idAtividade) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Atividade atividade = null;
+
+        try {
+            String sql = "SELECT * FROM Atividade WHERE idAtividade = ?";
+            conexao = ConexaoMySQL.getConexao();
+
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idAtividade);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                atividade = construirAtividade(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return atividade;
+    }
+
+    private Atividade construirAtividade(ResultSet rs) throws SQLException {
+        // Construa o objeto Atividade com os dados do ResultSet
+        return new Atividade(
+                rs.getInt("idAtividade"),
+                rs.getString("nomeAtividade"),
+                rs.getInt("idLocal"),
+                rs.getString("descricao"),
+                rs.getString("endereco"),
+                rs.getTimestamp("inicio").toLocalDateTime(),
+                rs.getTimestamp("fim").toLocalDateTime(),
+                rs.getDouble("preco")
+        );
+    }
+
+    public Comentario buscarComentarioHospedagemPorId(int idComentario) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Comentario comentario = null;
+
+        try {
+            String sql = "SELECT * FROM ComentariosHospedagens WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idComentario);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                comentario = construirComentario(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return comentario;
+    }
+
+     public Comentario buscarComentarioLocalPorId(int idComentario) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Comentario comentario = null;
+
+        try {
+            String sql = "SELECT * FROM ComentariosLocalizacoes  WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idComentario);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                comentario = construirComentario(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return comentario;
+    }
+
+     public Comentario buscarComentarioPacotePorId(int idComentario) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Comentario comentario = null;
+
+        try {
+            String sql = "SELECT * FROM ComentariosPacotes WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idComentario);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                comentario = construirComentario(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return comentario;
+    }
+
+    private Comentario construirComentario(ResultSet rs) throws SQLException {
+        // Construa o objeto Comentario com os dados do ResultSet
+        return new Comentario(
+                rs.getInt("id"),
+                rs.getInt("cliente"),
+                rs.getString("comentario"),
+                rs.getTimestamp("data_e_hora_da_postagem").toLocalDateTime()
+        );
+    }
+    public Hospedagem buscarHospedagemPorId(int idHospedagem) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Hospedagem hospedagem = null;
+
+        try {
+            String sql = "SELECT * FROM Hospedagem WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao(); // Obtém a conexão usando o método da classe ConexaoMySQL
+
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idHospedagem);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                hospedagem = construirHospedagem(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return hospedagem;
+    }
+
+    // Método auxiliar para criar uma instância de Hospedagem a partir do ResultSet
+   private static Hospedagem construirHospedagem(ResultSet rs) throws SQLException {
+        int idHospedagem = rs.getInt("id");
+        String nome = rs.getString("nome");
+        TipoHospedagem tipoHospedagem = TipoHospedagem.valueOf(rs.getString("tipo_hospedagem"));
+        TipoSuite tipoSuite = TipoSuite.valueOf(rs.getString("tipo_suite"));
+        TipoCama tipoCama = TipoCama.valueOf(rs.getString("tipo_cama"));
+        String descricao = rs.getString("descricao");
+        String endereco = rs.getString("endereco");
+        int idLocal = rs.getInt("localizacao");
+        LocalDateTime checkin = rs.getTimestamp("checkin").toLocalDateTime();
+        LocalDateTime checkout = rs.getTimestamp("checkout").toLocalDateTime();
+        double diaria = rs.getDouble("diaria");
+        int numDiarias = rs.getInt("num_diarias");
+        boolean disponivel = rs.getBoolean("disponivel");
+
+        // Crie a instância de Hospedagem com os dados do ResultSet
+        return new Hospedagem(idHospedagem, nome, tipoHospedagem, tipoSuite, tipoCama,
+                descricao, endereco, idLocal, checkin, checkout, diaria, numDiarias, disponivel);
+    }
+
+
+    // Método auxiliar para buscar comentários de uma hospedagem pelo ID
+    private List<Comentario> buscarComentariosPorHospedagem(int idHospedagem, Connection connection) throws SQLException {
+        List<Comentario> comentarios = new ArrayList<>();
+        String query = "SELECT * FROM ComentariosHospedagens WHERE hospedagem = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idHospedagem);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    comentarios.add(construirComentario(resultSet));
+                }
+            }
+        }
+        return comentarios;
+    }
+
+    public Local buscarLocalPorId(int idLocal) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Local local = null;
+
+        try {
+             String sql = "SELECT * FROM Localizacao WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+           ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idLocal);
+            rs = ps.executeQuery();
+
+
+            if (rs.next()) {
+                local = construirLocal(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return local;
+    }
+
+    private Local construirLocal(ResultSet rs) throws SQLException {
+        int idLocal = rs.getInt("id");
+        String nome = rs.getString("nome");
+        Local.Continente continente = Local.Continente.valueOf(rs.getString("continente"));
+        double mediaAvaliacoes = rs.getDouble("mediaAvaliacoes");
+        int numAvaliacoes = rs.getInt("numAvaliacoes");
+
+        Local local = new Local(idLocal, nome, continente);
+        local.setMediaAvaliacoes(mediaAvaliacoes);
+        local.setNumAvaliacoes(numAvaliacoes);
+
+        return local;
+    }
+
+    public Pagamento buscarPagamentoPorId(int idPagamento) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Pagamento pagamento = null;
+
+        try {
+             String sql = "SELECT * FROM Pagamento WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idPagamento);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pagamento = construirPagamento(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return pagamento;
+    }
+
+    private Pagamento construirPagamento(ResultSet rs) throws SQLException {
+        int idPagamento = rs.getInt("id");
+        int idUsuario = rs.getInt("cliente");
+        double valor = rs.getDouble("valor");
+        Pagamento.Situacao situacao = Pagamento.Situacao.valueOf(rs.getString("situacao"));
+        LocalDate vencimento = rs.getDate("vencimento").toLocalDate();
+
+        return new Pagamento(idPagamento, idUsuario, valor, situacao, vencimento);
+    }
+
+    public PassagemAerea buscarPassagemAereaPorId(int idPassagem) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        PassagemAerea passagemAerea = null;
+
+        try {
+            String sql = "SELECT * FROM Pagamento WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idPassagem);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                passagemAerea = construirPassagemAerea(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return passagemAerea;
+    }
+
+    private PassagemAerea construirPassagemAerea(ResultSet rs) throws SQLException {
+        int idPassagem = rs.getInt("id");
+        int idPartida = rs.getInt("localPartida");
+        int idDestino = rs.getInt("localChegada");
+        LocalDateTime saida = rs.getTimestamp("saida").toLocalDateTime();
+        LocalDateTime chegada = rs.getTimestamp("chegada").toLocalDateTime();
+        double duracao = rs.getDouble("duracao");
+        String companhia = rs.getString("companhia");
+        double preco = rs.getDouble("preco");
+        String aeroportoPartida = rs.getString("aeroporto_partida");
+        String aeroportoChegada = rs.getString("aeroporto_chegada");
+        String iataPartida = rs.getString("iataPartida");
+        String iataChegada = rs.getString("iataDestino");
+
+        return new PassagemAerea(idPassagem, idPartida, idDestino, saida, chegada, duracao,
+                companhia, preco, aeroportoPartida, aeroportoChegada, iataPartida, iataChegada);
+    }
+
+    public PassagemOnibus buscarPassagemOnibusPorId(int idPassagem) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        PassagemOnibus passagemOnibus = null;
+
+        try {
+            String sql = "SELECT * FROM PassagemOnibus WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idPassagem);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                passagemOnibus = construirPassagemOnibus(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return passagemOnibus;
+    }
+
+    private PassagemOnibus construirPassagemOnibus(ResultSet rs) throws SQLException {
+        int idPassagem = rs.getInt("id");
+        int idPartida = rs.getInt("localPartida");
+        int idDestino = rs.getInt("localChegada");
+        LocalDateTime saida = rs.getTimestamp("saida").toLocalDateTime();
+        LocalDateTime chegada = rs.getTimestamp("chegada").toLocalDateTime();
+        double duracao = rs.getDouble("duracao");
+        String companhia = rs.getString("companhia");
+        double preco = rs.getDouble("preco");
+        String enderecoPartida = rs.getString("enderecoPartida");
+        String enderecoChegada = rs.getString("enderecoChegada");
+
+        return new PassagemOnibus(idPassagem, idPartida, idDestino, saida, chegada, duracao,
+                companhia, preco, enderecoPartida, enderecoChegada);
+    }
+
+
+    public Reserva buscarReservaPorId(int idReserva) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Reserva reserva = null;
+
+        try {
+            String sql = "SELECT * FROM Reserva WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idReserva);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                reserva = construirReserva(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return reserva;
+    }
+
+    private Reserva construirReserva(ResultSet rs) throws SQLException {
+        int idReserva = rs.getInt("id");
+        int idPacote = rs.getInt("pacote");
+        int idUsuario = rs.getInt("usuario");
+        LocalDateTime entrada = rs.getTimestamp("entrada").toLocalDateTime();
+        LocalDateTime saida = rs.getTimestamp("saida").toLocalDateTime();
+        int idPagamento = rs.getInt("pagamento");
+        double desconto = rs.getDouble("desconto");
+        double preco = rs.getDouble("preco");
+
+        return new Reserva(idReserva, idPacote, idUsuario, entrada, saida, idPagamento, desconto, preco);
+    }
+
+    public Seguro buscarSeguroPorId(int idSeguro) {
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Seguro seguro = null;
+
+        try {
+            String sql = "SELECT * FROM Seguro WHERE id = ?";
+            conexao = ConexaoMySQL.getConexao();
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idSeguro);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                seguro = construirSeguro(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+
+        return seguro;
+    }
+
+    private Seguro construirSeguro(ResultSet rs) throws SQLException {
+        int idSeguro = rs.getInt("id");
+        double franquia = rs.getDouble("franquia");
+        String descricao = rs.getString("descricao");
+
+        return new Seguro(idSeguro, franquia, descricao);
+    }
+
+    public List<Atividade> buscarAtividadesdoPacotePorId(int idPacote) {
+        List<Atividade> lista = new ArrayList<>();
+    
+        Connection conexao = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+    
+        try {
+            String sql = "SELECT a.* FROM AtividadesPacotes ap " +
+                         "JOIN Atividade a ON ap.atividade = a.id " +
+                         "WHERE ap.pacote = ?";
+            conexao = ConexaoMySQL.getConexao();
+    
+            ps = conexao.prepareStatement(sql);
+            ps.setInt(1, idPacote);
+    
+            rs = ps.executeQuery();
+    
+            while (rs.next()) {
+                Atividade atividade = construirAtividade(rs);
+                lista.add(atividade);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Trate a exceção conforme necessário
+        } finally {
+            fecharRecursos(rs, ps, conexao);
+        }
+    
+        return lista;
+    }
+
+    
+
+    //calcular pagamento
+    public double somarpagamento(int Idpacote){
+        double total =0.0;
+
+        double precoHospedagem = buscarHospedagemPorId(buscarPacotePorId(Idpacote).getIdHospedagem()).getPreco();
+        total+=precoHospedagem;
+        TipoPassagem tipo = buscarPacotePorId(Idpacote).getTipoPassagem();
+        double precoPassagem = 0.0;
+        switch (tipo) {
+            case AEREA:
+                precoPassagem = buscarPassagemAereaPorId(buscarPacotePorId(Idpacote).getIdPassagem()).getPreco();
+                break;
+            case ONIBUS:
+                precoPassagem = buscarPassagemOnibusPorId(buscarPacotePorId(Idpacote).getIdPassagem()).getPreco();
+                break;
+            default:
+                // Tratamento para qualquer outro caso (opcional)
+                break;
+        }
+        total+=precoPassagem;
+        
+        double precoAluguelCarro = buscarAluguelCarroPorId(buscarPacotePorId(Idpacote).getIdAluguelCarro()).getPreco();
+        total+=precoAluguelCarro;
+        AluguelCarro aluguel = buscarAluguelCarroPorId(buscarPacotePorId(Idpacote).getIdAluguelCarro());
+        double precoSeguro = buscarSeguroPorId(aluguel.getIdSeguro()).getFranquia();
+        total+=precoSeguro;
+        double precoAtividades = 0.0;
+        List<Atividade> lista = buscarAtividadesdoPacotePorId(Idpacote);
+        for (Atividade atividade : lista) {
+            precoAtividades += atividade.getPreco();
+        }
+        total+=precoAtividades;
+
+        return total;
+    }
     
 
 }

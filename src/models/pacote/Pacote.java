@@ -3,6 +3,7 @@ package models.pacote;
 import exceptions.CommentIsTooLongException;
 import exceptions.InvalidRatingException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Pacote {
@@ -188,7 +189,7 @@ public class Pacote {
      */
     public void adicionarComentario(int idComentario, int idUsuario, String mensagem) throws CommentIsTooLongException {
         if (mensagem.length() < 500) {
-            (this.comentarios).add(new Comentario(idComentario, idUsuario, mensagem));
+            (this.comentarios).add(new Comentario(idComentario, idUsuario, mensagem, LocalDateTime.now()));
         }
         else {
             throw new CommentIsTooLongException("Comentario excede 500 caracteres.", mensagem);

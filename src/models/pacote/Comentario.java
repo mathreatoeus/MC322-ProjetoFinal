@@ -10,11 +10,12 @@ public class Comentario {
     private final String comentario;
 
     // Constructor ----------------------------------------------------------------------
-    public Comentario(int id, int idUsuario, String comentario) {
+    public Comentario(int id, int idUsuario, String comentario, LocalDateTime localDateTime) {
         this.id = id;
         this.idUsuario = idUsuario;
-        this.dataEHoraDaPostagem = LocalDateTime.now();
+        this.dataEHoraDaPostagem = localDateTime;
         this.comentario = comentario;
+        
     }
 
     // Getters --------------------------------------------------------------------------

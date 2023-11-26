@@ -185,4 +185,57 @@ public class UsuarioControllerImpl {
         }
         return false;
     }
+
+    //exclusão de usuário
+    public void excluirCliente(String cpf) throws SQLException {
+        String selectSql = "SELECT COUNT(*) FROM Cliente WHERE CPF = ?";
+        String deleteSql = "DELETE FROM Cliente WHERE CPF = ?";
+
+        try (PreparedStatement selectStatement = ConexaoMySQL.getConexao().prepareStatement(selectSql)) {
+            selectStatement.setString(1, cpf);
+            ResultSet rs = selectStatement.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                // Item encontrado, agora vamos excluir
+                try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
+                    deleteStatement.setString(1, cpf);
+                    int rowsAffected = deleteStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        return;
+                    } else {
+                        throw new SQLException("Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
+                    }
+                }
+            } else {
+                throw new SQLException("usuário com CPF " + cpf + " não encontrado.");
+            }
+        }
+    }
+
+    public void excluirFuncionario(String cpf) throws SQLException {
+        String selectSql = "SELECT COUNT(*) FROM Funcionario WHERE CPF = ?";
+        String deleteSql = "DELETE FROM Funcionario WHERE CPF = ?";
+
+        try (PreparedStatement selectStatement = ConexaoMySQL.getConexao().prepareStatement(selectSql)) {
+            selectStatement.setString(1, cpf);
+            ResultSet rs = selectStatement.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                // Item encontrado, agora vamos excluir
+                try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
+                    deleteStatement.setString(1, cpf);
+                    int rowsAffected = deleteStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        return;
+                    } else {
+                        throw new SQLException("Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
+                    }
+                }
+            } else {
+                throw new SQLException("usuário com CPF " + cpf + " não encontrado.");
+            }
+        }
+    }
 }

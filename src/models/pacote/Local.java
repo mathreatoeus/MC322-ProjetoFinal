@@ -3,6 +3,7 @@ package models.pacote;
 import exceptions.InvalidRatingException;
 import models.usuario.Usuario;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Local {
@@ -55,11 +56,11 @@ public class Local {
     }
 
     // Setters --------------------------------------------------------------------------
-    private void setMediaAvaliacoes(double mediaAvaliacoes) {
+    public void setMediaAvaliacoes(double mediaAvaliacoes) {
         this.mediaAvaliacoes = mediaAvaliacoes;
     }
 
-    private void setNumAvaliacoes(int numAvaliacoes) {
+    public void setNumAvaliacoes(int numAvaliacoes) {
         this.numAvaliacoes = numAvaliacoes;
     }
 
@@ -90,6 +91,6 @@ public class Local {
      * @param mensagem a mensagem do comentario.
      */
     public void adicionarComentario(int idComentario, int idUsuario, String mensagem) {
-        this.comentarios.add(new Comentario(idComentario, idUsuario, mensagem));
+        this.comentarios.add(new Comentario(idComentario, idUsuario, mensagem, LocalDateTime.now()));
     }
 }

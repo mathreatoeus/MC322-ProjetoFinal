@@ -150,19 +150,19 @@ public class Hospedagem {
         this.checkout = checkout;
     }
 
-    private void setNumDiarias(int numDiarias) {
+    public void setNumDiarias(int numDiarias) {
         this.numDiarias = numDiarias;
     }
 
-    private void setPreco(double preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 
-    private void setMediaAvaliacoes(double mediaAvaliacoes) {
+    public void setMediaAvaliacoes(double mediaAvaliacoes) {
         this.mediaAvaliacoes = mediaAvaliacoes;
     }
 
-    private void setNumAvaliacoes(int numAvaliacoes) {
+    public void setNumAvaliacoes(int numAvaliacoes) {
         this.numAvaliacoes = numAvaliacoes;
     }
 
@@ -203,7 +203,7 @@ public class Hospedagem {
      */
     public void adicionarComentario(int idComentario, int idUsuario, String mensagem) throws CommentIsTooLongException {
         if (mensagem.length() < 500) {
-            (this.comentarios).add(new Comentario(idComentario, idUsuario, mensagem));
+            (this.comentarios).add(new Comentario(idComentario, idUsuario, mensagem, LocalDateTime.now()));
         }
         else {
             throw new CommentIsTooLongException("Comentario excede 500 caracteres.", mensagem);
