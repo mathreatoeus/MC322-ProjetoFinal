@@ -60,7 +60,7 @@ public class UsuarioControllerImpl {
 
         /* Verificar se já existe um usuário com mesmo CPF ou e-mail */
         if (funcionarioExiste(usuario.getCpf(), usuario.getEmail())) {
-            /* lançar uma mensagem no Front-end --> COMO FAZ ISSO??? */
+            /* lançar uma mensagem no Front-end */
             return;
         }
         String sql = "INSERT INTO Funcionario (NOME, NASCIMENTO, CPF, EMAIL, SENHA, CELULAR, ENDERECO, CARGO) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -161,7 +161,8 @@ public class UsuarioControllerImpl {
     }
 
     /*
-     * verificação de credenciais do funcionario - retorno deve ser usado pelo Front-end
+     * verificação de credenciais do funcionario - retorno deve ser usado pelo
+     * Front-end
      */
     public boolean credenciaisFuncionario(String email, String senha) {
         try {
@@ -186,7 +187,7 @@ public class UsuarioControllerImpl {
         return false;
     }
 
-    //exclusão de usuário
+    /* exclusão de cliente do banco de dados */
     public void excluirCliente(String cpf) throws SQLException {
         String selectSql = "SELECT COUNT(*) FROM Cliente WHERE CPF = ?";
         String deleteSql = "DELETE FROM Cliente WHERE CPF = ?";
@@ -196,7 +197,7 @@ public class UsuarioControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+                /* Item encontrado */
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setString(1, cpf);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -204,7 +205,8 @@ public class UsuarioControllerImpl {
                     if (rowsAffected > 0) {
                         return;
                     } else {
-                        throw new SQLException("Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
+                        throw new SQLException(
+                                "Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
                     }
                 }
             } else {
@@ -213,6 +215,7 @@ public class UsuarioControllerImpl {
         }
     }
 
+    /* exclusão de funcionario do banco de dados */
     public void excluirFuncionario(String cpf) throws SQLException {
         String selectSql = "SELECT COUNT(*) FROM Funcionario WHERE CPF = ?";
         String deleteSql = "DELETE FROM Funcionario WHERE CPF = ?";
@@ -222,7 +225,7 @@ public class UsuarioControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                // Item encontrado, agora vamos excluir
+                /* Item encontrado */
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setString(1, cpf);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -230,7 +233,8 @@ public class UsuarioControllerImpl {
                     if (rowsAffected > 0) {
                         return;
                     } else {
-                        throw new SQLException("Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
+                        throw new SQLException(
+                                "Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
                     }
                 }
             } else {

@@ -21,12 +21,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class PacoteControllerImpl {
 
     private ArrayList<Pacote> listapacotes;
-
-        
 
     // cadastro no banco de dados
 
@@ -39,12 +36,11 @@ public class PacoteControllerImpl {
         pacote.setPreco(somarpagamento(pacote.getId()));
         listapacotes.add(pacote);
         String sql = "INSERT INTO Pacote (destino, hospedagem, tipoPassagem, passagem, aluguelCarro, desconto, preco, media_avaliacoes, num_avaliacoes, fechado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
 
         try (PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql)) {
             ps.setInt(1, pacote.getIdDestino());
             ps.setInt(2, pacote.getIdHospedagem());
-            ps.setString(3, pacote.getTipoPassagem().name()); 
+            ps.setString(3, pacote.getTipoPassagem().name());
             ps.setInt(4, pacote.getIdPassagem());
             ps.setInt(5, pacote.getIdAluguelCarro());
             ps.setDouble(6, pacote.getDesconto());
@@ -52,7 +48,7 @@ public class PacoteControllerImpl {
             ps.setDouble(8, pacote.getMediaAvaliacoes());
             ps.setInt(9, pacote.getNumAvaliacoes());
             ps.setBoolean(10, pacote.getFechado());
-    
+
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,26 +98,27 @@ public class PacoteControllerImpl {
             return;
         }
         String sqlInserirAtividade = "INSERT INTO Atividade (nome_atividade, descricao, localizacao, endereco, inicio, fim, preco) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    
-        try (PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sqlInserirAtividade, Statement.RETURN_GENERATED_KEYS)) {
+
+        try (PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sqlInserirAtividade,
+                Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, atividade.getNomeAtividade());
             ps.setString(2, atividade.getDescricao());
             ps.setInt(3, atividade.getLocal());
             ps.setString(4, atividade.getEndereco());
-    
+
             // Convertendo LocalDateTime para Timestamp
             LocalDateTime inicioLocalDateTime = atividade.getInicio();
             Timestamp inicioTimestamp = Timestamp.valueOf(inicioLocalDateTime);
             ps.setTimestamp(5, inicioTimestamp);
-    
+
             LocalDateTime fimLocalDateTime = atividade.getFim();
             Timestamp fimTimestamp = Timestamp.valueOf(fimLocalDateTime);
             ps.setTimestamp(6, fimTimestamp);
-    
+
             ps.setDouble(7, atividade.getPreco());
-    
+
             ps.executeUpdate();
-    
+
             ResultSet generatedKeys = ps.getGeneratedKeys();
             int idAtividadeInserida = -1;
             if (generatedKeys.next()) {
@@ -129,15 +126,16 @@ public class PacoteControllerImpl {
             } else {
                 throw new SQLException("Falha ao obter o ID da atividade inserida.");
             }
-    
+
             String sqlInserirAtividadePacote = "INSERT INTO ativadesPacote (pacote, atividade) VALUES (?, ?)";
-            try (PreparedStatement psAtividadePacote = ConexaoMySQL.getConexao().prepareStatement(sqlInserirAtividadePacote)) {
+            try (PreparedStatement psAtividadePacote = ConexaoMySQL.getConexao()
+                    .prepareStatement(sqlInserirAtividadePacote)) {
                 psAtividadePacote.setInt(1, pacote.getId());
                 psAtividadePacote.setInt(2, idAtividadeInserida);
-    
+
                 psAtividadePacote.executeUpdate();
             }
-    
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -166,9 +164,9 @@ public class PacoteControllerImpl {
         }
     }
 
-     public void cadastrarComentarioLocalizacoes(Comentario comentario, int idCliente, int idDestino) {
+    public void cadastrarComentarioLocalizacoes(Comentario comentario, int idCliente, int idDestino) {
 
-         if (ComentariosLocalizacoesExiste(comentario.getId())) {
+        if (ComentariosLocalizacoesExiste(comentario.getId())) {
 
             return;
         }
@@ -180,7 +178,7 @@ public class PacoteControllerImpl {
             ps.setTimestamp(2, Timestamp.valueOf(comentario.getDataEHoraDaPostagem()));
             ps.setString(3, comentario.getComentario());
             ps.setInt(4, idDestino);
-    
+
             ps.executeUpdate();
 
             ps.close();
@@ -191,7 +189,7 @@ public class PacoteControllerImpl {
 
     public void cadastrarComentarioPacote(Comentario comentario, int idCliente, int idPacote) {
 
-         if (ComentariosPacotesExiste(comentario.getId())) {
+        if (ComentariosPacotesExiste(comentario.getId())) {
 
             return;
         }
@@ -211,14 +209,14 @@ public class PacoteControllerImpl {
             e.printStackTrace();
         }
     }
-    
-     public void cadastrarHospedagem(Hospedagem hospedagem) {
 
-         if (HospedagemExiste(hospedagem.getIdHospedagem())) {
+    public void cadastrarHospedagem(Hospedagem hospedagem) {
+
+        if (HospedagemExiste(hospedagem.getIdHospedagem())) {
 
             return;
         }
-         try {
+        try {
             String sql = "INSERT INTO Hospedagem (nome, tipo_hospedagem, tipo_suite, tipo_cama, descricao, endereco, localizacao, "
                     + "checkin, checkout, diaria, num_diarias, preco, mediaAvaliacoes, numAvaliacoes, disponivel) "
                     + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -248,15 +246,15 @@ public class PacoteControllerImpl {
             e.printStackTrace();
         }
     }
-    
+
     public void cadastrarLocal(Local local) {
 
-         if (LocalizacaoExiste(local.getIdLocal())) {
+        if (LocalizacaoExiste(local.getIdLocal())) {
 
             return;
         }
-         try {
-              String sql = "INSERT INTO Localizacao (nome, continente, mediaAvaliacoes, numAvaliacoes) VALUES (?, ?, ?, ?)";
+        try {
+            String sql = "INSERT INTO Localizacao (nome, continente, mediaAvaliacoes, numAvaliacoes) VALUES (?, ?, ?, ?)";
 
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -273,13 +271,13 @@ public class PacoteControllerImpl {
         }
     }
 
-     public void cadastrarPagamento(Pagamento pagamento) {
+    public void cadastrarPagamento(Pagamento pagamento) {
 
-         if (PagamentoExiste(pagamento.getIdPagamento())) {
+        if (PagamentoExiste(pagamento.getIdPagamento())) {
 
             return;
         }
-         try {
+        try {
             String sql = "INSERT INTO Pagamento (cliente, valor, situacao, vencimento) VALUES (?, ?, ?, ?)";
 
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -290,40 +288,37 @@ public class PacoteControllerImpl {
             ps.executeUpdate();
 
             ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-            
     }
 
     public void cadastrarPassagem(Passagem passagem) {
         try {
-          
 
             // Verificar o tipo da passagem
             if (passagem instanceof PassagemAerea) {
                 if (PassagemAereaExiste(passagem.getId())) {
 
                     return;
-                }else{
+                } else {
                     adicionarPassagemAerea((PassagemAerea) passagem);
                 }
-                
+
             } else if (passagem instanceof PassagemOnibus) {
                 if (PassagemOnibusExiste(passagem.getId())) {
 
                     return;
-                }else{
+                } else {
                     adicionarPassagemOnibus((PassagemOnibus) passagem);
                 }
-                
+
             }
 
-             
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void adicionarPassagemAerea(PassagemAerea passagemAerea) throws SQLException {
@@ -357,7 +352,7 @@ public class PacoteControllerImpl {
         ps.setInt(2, passagemOnibus.getIdDestino());
         ps.setTimestamp(3, Timestamp.valueOf(passagemOnibus.getSaida()));
         ps.setTimestamp(4, Timestamp.valueOf(passagemOnibus.getChegada()));
-        ps.setObject(5, passagemOnibus.getDuracao()); 
+        ps.setObject(5, passagemOnibus.getDuracao());
         ps.setString(6, passagemOnibus.getCompanhia());
         ps.setDouble(7, passagemOnibus.getPreco());
         ps.setString(8, passagemOnibus.getEnderecoPartida());
@@ -367,14 +362,13 @@ public class PacoteControllerImpl {
         ps.close();
     }
 
-    
-     public void cadastrarReserva(Reserva reserva) {
+    public void cadastrarReserva(Reserva reserva) {
 
-         if (reservaExiste(reserva.getId())) {
+        if (reservaExiste(reserva.getId())) {
 
             return;
         }
-         try {
+        try {
             String sql = "INSERT INTO Reserva (pacote, usuario, entrada, saida, pagamento, desconto, preco) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -388,20 +382,19 @@ public class PacoteControllerImpl {
             ps.executeUpdate();
 
             ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            
-            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void cadastrarSeguro(Seguro seguro) {
 
-         if (SeguroExiste(seguro.getId())) {
+        if (SeguroExiste(seguro.getId())) {
 
             return;
         }
-         try {
+        try {
             String sql = "INSERT INTO Seguro (franquia, descricao) VALUES (?, ?)";
 
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -411,13 +404,12 @@ public class PacoteControllerImpl {
             ps.executeUpdate();
 
             ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }     
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // verificação de existência
-
 
     public boolean PacoteExiste(int id) {
         try {
@@ -664,7 +656,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-               
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -690,7 +682,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-               
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -716,7 +708,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-             
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -742,7 +734,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-               
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -768,7 +760,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -820,7 +812,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-              
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -846,7 +838,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -872,7 +864,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-               
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -898,7 +890,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -924,7 +916,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-               
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -949,8 +941,8 @@ public class PacoteControllerImpl {
             if (pacote.getId() == id) {
                 // Remove o pacote da lista
                 listapacotes.remove(i);
-             }
             }
+        }
         String selectSql = "SELECT COUNT(*) FROM Pacote WHERE ID = ?";
         String deleteSql = "DELETE FROM Pacote WHERE ID = ?";
 
@@ -959,7 +951,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -985,7 +977,7 @@ public class PacoteControllerImpl {
             ResultSet rs = selectStatement.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-               
+
                 try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
                     deleteStatement.setInt(1, id);
                     int rowsAffected = deleteStatement.executeUpdate();
@@ -1002,7 +994,7 @@ public class PacoteControllerImpl {
         }
     }
 
-    //busca de um pacote
+    // busca de um pacote
     public Pacote buscarPacotePorId(int idPacote) {
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -1023,7 +1015,7 @@ public class PacoteControllerImpl {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            
+
         } finally {
             fecharRecursos(rs, ps, conexao);
         }
@@ -1036,18 +1028,16 @@ public class PacoteControllerImpl {
         return new Pacote(
                 rs.getInt("id"),
                 rs.getInt("idDestino"),
-                Categoria.valueOf(rs.getString("categoria")), 
+                Categoria.valueOf(rs.getString("categoria")),
                 rs.getInt("idHospedagem"),
-                Pacote.TipoPassagem.valueOf(rs.getString("tipoPassagem")), 
+                Pacote.TipoPassagem.valueOf(rs.getString("tipoPassagem")),
                 rs.getInt("idPassagem"),
                 rs.getInt("idAluguelCarro"),
                 rs.getDouble("desconto"),
                 rs.getDouble("preco"),
                 rs.getDouble("mediaAvaliacoes"),
-                rs.getInt("numAvaliacoes")
-        );
+                rs.getInt("numAvaliacoes"));
     }
-    
 
     // Método para fechar os recursos
     private void fecharRecursos(ResultSet rs, PreparedStatement ps, Connection conexao) {
@@ -1066,7 +1056,7 @@ public class PacoteControllerImpl {
             // Trate a exceção conforme necessário
         }
     }
-    //busca de um item em um pacote
+    // busca de um item em um pacote
 
     public AluguelCarro buscarAluguelCarroPorId(int idAluguelCarro) {
         Connection conexao = null;
@@ -1107,8 +1097,7 @@ public class PacoteControllerImpl {
                 rs.getString("enderecoRetirada"),
                 rs.getString("enderecoDevolucao"),
                 rs.getDouble("diaria"),
-                rs.getInt("idSeguro")
-        );
+                rs.getInt("idSeguro"));
     }
 
     public Atividade buscarAtividadePorId(int idAtividade) {
@@ -1149,8 +1138,7 @@ public class PacoteControllerImpl {
                 rs.getString("endereco"),
                 rs.getTimestamp("inicio").toLocalDateTime(),
                 rs.getTimestamp("fim").toLocalDateTime(),
-                rs.getDouble("preco")
-        );
+                rs.getDouble("preco"));
     }
 
     public Comentario buscarComentarioHospedagemPorId(int idComentario) {
@@ -1181,7 +1169,7 @@ public class PacoteControllerImpl {
         return comentario;
     }
 
-     public Comentario buscarComentarioLocalPorId(int idComentario) {
+    public Comentario buscarComentarioLocalPorId(int idComentario) {
         Connection conexao = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -1209,7 +1197,7 @@ public class PacoteControllerImpl {
         return comentario;
     }
 
-     public Comentario buscarComentarioPacotePorId(int idComentario) {
+    public Comentario buscarComentarioPacotePorId(int idComentario) {
         Connection conexao = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -1243,9 +1231,9 @@ public class PacoteControllerImpl {
                 rs.getInt("id"),
                 rs.getInt("cliente"),
                 rs.getString("comentario"),
-                rs.getTimestamp("data_e_hora_da_postagem").toLocalDateTime()
-        );
+                rs.getTimestamp("data_e_hora_da_postagem").toLocalDateTime());
     }
+
     public Hospedagem buscarHospedagemPorId(int idHospedagem) {
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -1275,7 +1263,7 @@ public class PacoteControllerImpl {
     }
 
     // Método auxiliar para criar uma instância de Hospedagem a partir do ResultSet
-   private static Hospedagem construirHospedagem(ResultSet rs) throws SQLException {
+    private static Hospedagem construirHospedagem(ResultSet rs) throws SQLException {
         int idHospedagem = rs.getInt("id");
         String nome = rs.getString("nome");
         TipoHospedagem tipoHospedagem = TipoHospedagem.valueOf(rs.getString("tipo_hospedagem"));
@@ -1295,9 +1283,9 @@ public class PacoteControllerImpl {
                 descricao, endereco, idLocal, checkin, checkout, diaria, numDiarias, disponivel);
     }
 
-
     // Método auxiliar para buscar comentários de uma hospedagem pelo ID
-    private List<Comentario> buscarComentariosPorHospedagem(int idHospedagem, Connection connection) throws SQLException {
+    private List<Comentario> buscarComentariosPorHospedagem(int idHospedagem, Connection connection)
+            throws SQLException {
         List<Comentario> comentarios = new ArrayList<>();
         String query = "SELECT * FROM ComentariosHospedagens WHERE hospedagem = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -1318,12 +1306,11 @@ public class PacoteControllerImpl {
         Local local = null;
 
         try {
-             String sql = "SELECT * FROM Localizacao WHERE id = ?";
+            String sql = "SELECT * FROM Localizacao WHERE id = ?";
             conexao = ConexaoMySQL.getConexao();
-           ps = conexao.prepareStatement(sql);
+            ps = conexao.prepareStatement(sql);
             ps.setInt(1, idLocal);
             rs = ps.executeQuery();
-
 
             if (rs.next()) {
                 local = construirLocal(rs);
@@ -1359,7 +1346,7 @@ public class PacoteControllerImpl {
         Pagamento pagamento = null;
 
         try {
-             String sql = "SELECT * FROM Pagamento WHERE id = ?";
+            String sql = "SELECT * FROM Pagamento WHERE id = ?";
             conexao = ConexaoMySQL.getConexao();
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, idPagamento);
@@ -1474,7 +1461,6 @@ public class PacoteControllerImpl {
                 companhia, preco, enderecoPartida, enderecoChegada);
     }
 
-
     public Reserva buscarReservaPorId(int idReserva) {
         Connection conexao = null;
         PreparedStatement ps = null;
@@ -1550,22 +1536,22 @@ public class PacoteControllerImpl {
 
     public List<Atividade> buscarAtividadesdoPacotePorId(int idPacote) {
         List<Atividade> lista = new ArrayList<>();
-    
+
         Connection conexao = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-    
+
         try {
             String sql = "SELECT a.* FROM AtividadesPacotes ap " +
-                         "JOIN Atividade a ON ap.atividade = a.id " +
-                         "WHERE ap.pacote = ?";
+                    "JOIN Atividade a ON ap.atividade = a.id " +
+                    "WHERE ap.pacote = ?";
             conexao = ConexaoMySQL.getConexao();
-    
+
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, idPacote);
-    
+
             rs = ps.executeQuery();
-    
+
             while (rs.next()) {
                 Atividade atividade = construirAtividade(rs);
                 lista.add(atividade);
@@ -1576,18 +1562,16 @@ public class PacoteControllerImpl {
         } finally {
             fecharRecursos(rs, ps, conexao);
         }
-    
+
         return lista;
     }
 
-    
-
-    //calcular pagamento
-    public double somarpagamento(int Idpacote){
-        double total =0.0;
+    // calcular pagamento
+    public double somarpagamento(int Idpacote) {
+        double total = 0.0;
 
         double precoHospedagem = buscarHospedagemPorId(buscarPacotePorId(Idpacote).getIdHospedagem()).getPreco();
-        total+=precoHospedagem;
+        total += precoHospedagem;
         TipoPassagem tipo = buscarPacotePorId(Idpacote).getTipoPassagem();
         double precoPassagem = 0.0;
         switch (tipo) {
@@ -1601,22 +1585,21 @@ public class PacoteControllerImpl {
                 // Tratamento para qualquer outro caso (opcional)
                 break;
         }
-        total+=precoPassagem;
-        
+        total += precoPassagem;
+
         double precoAluguelCarro = buscarAluguelCarroPorId(buscarPacotePorId(Idpacote).getIdAluguelCarro()).getPreco();
-        total+=precoAluguelCarro;
+        total += precoAluguelCarro;
         AluguelCarro aluguel = buscarAluguelCarroPorId(buscarPacotePorId(Idpacote).getIdAluguelCarro());
         double precoSeguro = buscarSeguroPorId(aluguel.getIdSeguro()).getFranquia();
-        total+=precoSeguro;
+        total += precoSeguro;
         double precoAtividades = 0.0;
         List<Atividade> lista = buscarAtividadesdoPacotePorId(Idpacote);
         for (Atividade atividade : lista) {
             precoAtividades += atividade.getPreco();
         }
-        total+=precoAtividades;
+        total += precoAtividades;
 
         return total;
     }
-    
 
 }
