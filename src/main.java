@@ -52,31 +52,53 @@ public class main {
         /* Simulação de atualização de mensagem no assunto (Subject) */
         subject.setMessage("Oferta especial: Desconto de 20% em todos os pacotes!");
 
-    AluguelCarro aluguel = new AluguelCarro(0, 5, "prisma", "conectacar", LocalDateTime.now(), "av a n 123", "av b n124", 5.50, 1);
-    new PacoteControllerImpl().cadastrarAluguelCarro(aluguel);
-    Seguro seguro = new Seguro(1, 14.90, "seguro para 5 dias úteis");
-    new PacoteControllerImpl().cadastrarSeguro(seguro);
-    Atividade atividade = new Atividade(1, "passeio 1", 1, "passeio guiado", "av123 n 67", LocalDateTime.now(), LocalDateTime.now(), 45.66);
-   
-    PassagemAerea passagem = new PassagemAerea(1, 1, 1, LocalDateTime.now(), LocalDateTime.now(), 4.5, "Azul", 456.55, "Guarulhos", "Aeroporto Bahia", "aaaa", "aaaa");
-    new PacoteControllerImpl().cadastrarPassagem(passagem);
-    Hospedagem hospedagem = new Hospedagem( 1, "Hotel Exemplo", Hospedagem.TipoHospedagem.HOTEL, Hospedagem.TipoSuite.DUPLA, Hospedagem.TipoCama.CASAL, "Um hotel incrível", "Endereço do Hotel", 1, LocalDateTime.of(2023, 10, 30, 14, 0),LocalDateTime.of(2023, 11, 6, 12, 0), 150.0, 7, true);
-    Local local = new Local(1, "Bahia", Local.Continente.AMERICA_DO_SUL);
-    new PacoteControllerImpl().cadastrarLocal(local);
-    Pagamento pagamento = new Pagamento(1, 1, 333.22, Pagamento.Situacao.PENDENTE, LocalDate.now());
-    new PacoteControllerImpl().cadastrarPagamento(pagamento);
-    Reserva reserva = new Reserva(1,1, 1, LocalDateTime.now(), LocalDateTime.now(), 1  , 0.0, 13.3);
-    new PacoteControllerImpl().cadastrarReserva(reserva);
-    Pacote pacote = new Pacote(1, 1, Pacote.Categoria.AVENTURA, 1, Pacote.TipoPassagem.AEREA, 1, 1, 0.00, 1.1);
-    new PacoteControllerImpl().cadastrarPacote(pacote);
-    new PacoteControllerImpl().cadastrarAtividade(atividade, pacote);
-    Comentario comentariohospedagem = new Comentario(1, 0, "muito bom", LocalDateTime.now());
-    new PacoteControllerImpl().cadastrarComentarioHospedagem(comentariohospedagem, 1, 1);
-    Comentario comentariolocal = new Comentario(2, 0, "muito bom", LocalDateTime.now());
-    new PacoteControllerImpl().cadastrarComentarioLocalizacoes(comentariolocal, 1, 1);
-    Comentario comentariopacote = new Comentario(3, 0, "muito bom", LocalDateTime.now());
-    new PacoteControllerImpl().cadastrarComentarioPacote(comentariopacote, 1, 1);
     
+        // 1. Cadastrar Hospedagem
+        Hospedagem hospedagem = new Hospedagem(1, "Hotel Exemplo", Hospedagem.TipoHospedagem.HOTEL, Hospedagem.TipoSuite.DUPLA, Hospedagem.TipoCama.CASAL, "Um hotel incrível", "Endereço do Hotel", 1, LocalDateTime.of(2023, 10, 30, 14, 0),LocalDateTime.of(2023, 11, 6, 12, 0), 150.0, 7, true);
+        new PacoteControllerImpl().cadastrarHospedagem(hospedagem);
+
+        // 2. Cadastrar Passagem Aérea
+        PassagemAerea passagem = new PassagemAerea(1, 1, 1, LocalDateTime.now(), LocalDateTime.now(), 0, "Azul", 45, "Guarulhos", "Aeroporto Bahia", "aaaa", "aaaa");
+        new PacoteControllerImpl().cadastrarPassagem(passagem);
+
+        // 3. Cadastrar Aluguel de Carro
+        AluguelCarro aluguel = new AluguelCarro(0, 5, "prisma", "conectacar", LocalDateTime.now(), "av a n 123", "av b n124", 5.50, 1);
+        new PacoteControllerImpl().cadastrarAluguelCarro(aluguel);
+
+        // 4. Cadastrar Pacote
+        Pacote pacote = new Pacote(1, 1, Pacote.Categoria.AVENTURA, passagem.getId(), Pacote.TipoPassagem.AEREA, aluguel.getId(), hospedagem.getIdHospedagem(), 0.00, 1.1);
+        new PacoteControllerImpl().cadastrarPacote(pacote);
+
+        // 5. Cadastrar Seguro
+        Seguro seguro = new Seguro(1, 14.90, "seguro para 5 dias úteis");
+        new PacoteControllerImpl().cadastrarSeguro(seguro);
+
+        // 6. Cadastrar Atividade
+        Atividade atividade = new Atividade(1, "passeio 1", 1, "passeio guiado", "av123 n 67", LocalDateTime.now(), LocalDateTime.now(), 45);
+        new PacoteControllerImpl().cadastrarAtividade(atividade, pacote);
+
+        // 7. Cadastrar Local
+        Local local = new Local(1, "Bahia", Local.Continente.AMERICA_DO_SUL);
+        new PacoteControllerImpl().cadastrarLocal(local);
+
+        // 8. Cadastrar Pagamento
+        Pagamento pagamento = new Pagamento(1, 1, 333.22, Pagamento.Situacao.PENDENTE, LocalDate.now());
+        new PacoteControllerImpl().cadastrarPagamento(pagamento);
+
+        // 9. Cadastrar Reserva
+        Reserva reserva = new Reserva(1,1, 1, LocalDateTime.now(), LocalDateTime.now(), 1  , 0.0, 13.3);
+        new PacoteControllerImpl().cadastrarReserva(reserva);
+
+        // 10. Cadastrar Comentários
+        Comentario comentarioHospedagem = new Comentario(1, 0, "muito bom", LocalDateTime.now());
+        new PacoteControllerImpl().cadastrarComentarioHospedagem(comentarioHospedagem, hospedagem.getIdHospedagem(), 1);
+
+        Comentario comentarioLocal = new Comentario(2, 0, "muito bom", LocalDateTime.now());
+        new PacoteControllerImpl().cadastrarComentarioLocalizacoes(comentarioLocal, local.getIdLocal(), 1);
+
+        Comentario comentarioPacote = new Comentario(3, 0, "muito bom", LocalDateTime.now());
+        new PacoteControllerImpl().cadastrarComentarioPacote(comentarioPacote, cliente.getIdUsuario(), 1);
+            
     
     }
 }

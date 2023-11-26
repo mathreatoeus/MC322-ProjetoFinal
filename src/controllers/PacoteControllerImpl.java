@@ -33,8 +33,7 @@ public class PacoteControllerImpl {
 
             return;
         }
-        pacote.setPreco(somarpagamento(pacote.getId()));
-        listapacotes.add(pacote);
+        
         String sql = "INSERT INTO Pacote (destino, hospedagem, tipoPassagem, passagem, aluguelCarro, desconto, preco, media_avaliacoes, num_avaliacoes, fechado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql)) {
@@ -50,6 +49,9 @@ public class PacoteControllerImpl {
             ps.setBoolean(10, pacote.getFechado());
 
             ps.executeUpdate();
+
+            pacote.setPreco(somarpagamento(pacote.getId()));
+            listapacotes.add(pacote);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -61,7 +63,7 @@ public class PacoteControllerImpl {
 
             return;
         }
-        String sql = "INSERT INTO AluguelCarro (NUM_DIARIAS, MODELO, EMPRESA, RETIRADA, DEVOLUCAO, ENDERECO_RETIRADA, ENDERECO_DEVOLUCAO, DIARIA, PRECO, SEGURO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO AluguelCarro (num_diarias, modelo_carro, locadora, retirada, devolucao, endereco_retirada, endereco_devolucao, diaria, preco, seguro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
 
         try {
@@ -248,28 +250,30 @@ public class PacoteControllerImpl {
     }
 
     public void cadastrarLocal(Local local) {
-
         if (LocalizacaoExiste(local.getIdLocal())) {
-
             return;
         }
         try {
             String sql = "INSERT INTO Localizacao (nome, continente, mediaAvaliacoes, numAvaliacoes) VALUES (?, ?, ?, ?)";
-
+    
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
+    
             ps.setString(1, local.getNome());
-            ps.setString(2, local.getContinente().name());
+    
+            // Use toUpperCase() para garantir que o valor do continente seja maiúsculo
+            ps.setString(2, local.getContinente().name().toUpperCase());
+    
             ps.setDouble(3, local.getMediaAvaliacoes());
             ps.setInt(4, local.getNumAvaliacoes());
-
+    
             ps.executeUpdate();
-
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    
+    
 
     public void cadastrarPagamento(Pagamento pagamento) {
 
@@ -326,7 +330,8 @@ public class PacoteControllerImpl {
 
     private void adicionarPassagemAerea(PassagemAerea passagemAerea) throws SQLException {
         String sql = "INSERT INTO PassagemAerea (localPartida, localChegada, saida, chegada, duracao, companhia, preco, aeroporto_partida, aeroporto_chegada, iataPartida, iataDestino) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
         PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -578,7 +583,7 @@ public class PacoteControllerImpl {
 
     public boolean reservaExiste(int id) {
         try {
-            String sql = "SELECT COUNT(*) FROM reserva  WHERE ID = ?";
+            String sql = "SELECT COUNT(*) FROM Reserva  WHERE ID = ?";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
@@ -972,8 +977,8 @@ public class PacoteControllerImpl {
     }
 
     public void excluirreserva(int id) throws SQLException {
-        String selectSql = "SELECT COUNT(*) FROM reserva WHERE ID = ?";
-        String deleteSql = "DELETE FROM reserva WHERE ID = ?";
+        String selectSql = "SELECT COUNT(*) FROM Reserva WHERE ID = ?";
+        String deleteSql = "DELETE FROM Reserva WHERE ID = ?";
 
         try (PreparedStatement selectStatement = ConexaoMySQL.getConexao().prepareStatement(selectSql)) {
             selectStatement.setInt(1, id);
@@ -1088,19 +1093,20 @@ public class PacoteControllerImpl {
 
         return aluguelCarro;
     }
-
+    
+    
     private AluguelCarro construirAluguelCarro(ResultSet rs) throws SQLException {
         // Construa o objeto AluguelCarro com os dados do ResultSet
         return new AluguelCarro(
                 rs.getInt("idAluguelCarro"),
-                rs.getInt("numDiarias"),
-                rs.getString("modeloCarro"),
+                rs.getInt("num_diarias"),
+                rs.getString("modelo_carro"),
                 rs.getString("locadora"),
                 rs.getTimestamp("retirada").toLocalDateTime(),
-                rs.getString("enderecoRetirada"),
-                rs.getString("enderecoDevolucao"),
+                rs.getString("endereco_retirada"),
+                rs.getString("endereco_devolucao"),
                 rs.getDouble("diaria"),
-                rs.getInt("idSeguro"));
+                rs.getInt("Seguro"));
     }
 
     public Atividade buscarAtividadePorId(int idAtividade) {
@@ -1242,8 +1248,8 @@ public class PacoteControllerImpl {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Hospedagem hospedagem = null;
-
-        try {
+        if(HospedagemExiste(idHospedagem)){
+            try {
             String sql = "SELECT * FROM Hospedagem WHERE id = ?";
             conexao = ConexaoMySQL.getConexao(); // Obtém a conexão usando o método da classe ConexaoMySQL
 
@@ -1253,6 +1259,7 @@ public class PacoteControllerImpl {
             rs = ps.executeQuery();
 
             if (rs.next()) {
+                
                 hospedagem = construirHospedagem(rs);
             }
         } catch (SQLException e) {
@@ -1263,15 +1270,20 @@ public class PacoteControllerImpl {
         }
 
         return hospedagem;
+
+        }else{
+            return null;
+        }
+        
     }
 
     // Método auxiliar para criar uma instância de Hospedagem a partir do ResultSet
     private static Hospedagem construirHospedagem(ResultSet rs) throws SQLException {
         int idHospedagem = rs.getInt("id");
         String nome = rs.getString("nome");
-        TipoHospedagem tipoHospedagem = TipoHospedagem.valueOf(rs.getString("tipo_hospedagem"));
-        TipoSuite tipoSuite = TipoSuite.valueOf(rs.getString("tipo_suite"));
-        TipoCama tipoCama = TipoCama.valueOf(rs.getString("tipo_cama"));
+        Hospedagem.TipoHospedagem tipoHospedagem = TipoHospedagem.valueOf(rs.getString("tipo_hospedagem"));
+        Hospedagem.TipoSuite tipoSuite = TipoSuite.valueOf(rs.getString("tipo_suite"));
+        Hospedagem.TipoCama tipoCama = TipoCama.valueOf(rs.getString("tipo_cama"));
         String descricao = rs.getString("descricao");
         String endereco = rs.getString("endereco");
         int idLocal = rs.getInt("localizacao");
@@ -1571,9 +1583,16 @@ public class PacoteControllerImpl {
 
     // calcular pagamento
     public double somarpagamento(int Idpacote) {
-        double total = 0.0;
-
-        double precoHospedagem = buscarHospedagemPorId(buscarPacotePorId(Idpacote).getIdHospedagem()).getPreco();
+       double total = 0.0;
+        
+         /*double precoHospedagem;
+        if(HospedagemExiste(buscarPacotePorId(Idpacote).getIdHospedagem())!=false){
+            Hospedagem hospedagem =buscarHospedagemPorId(buscarPacotePorId(Idpacote).getIdHospedagem());
+             precoHospedagem = hospedagem.getPreco();
+        }else{
+            precoHospedagem = 0.0;
+        }
+        
         total += precoHospedagem;
         TipoPassagem tipo = buscarPacotePorId(Idpacote).getTipoPassagem();
         double precoPassagem = 0.0;
@@ -1600,8 +1619,8 @@ public class PacoteControllerImpl {
         for (Atividade atividade : lista) {
             precoAtividades += atividade.getPreco();
         }
-        total += precoAtividades;
-
+        total += precoAtividades;*/
+        
         return total;
     }
 

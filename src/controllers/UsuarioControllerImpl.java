@@ -25,7 +25,7 @@ public class UsuarioControllerImpl {
             /* lançar uma mensagem no Front-end --> COMO FAZ ISSO??? */
             return;
         }
-        String sql = "INSERT INTO Cliente (NOME, NASCIMENTO, CPF, EMAIL, SENHA, CELULAR, ENDERECO, NUMEROCARTAO, VALIDADE, CVV, NOMECARTAO, DATAREGISTRO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Cliente (NOME, NASCIMENTO, CPF, EMAIL, SENHA, CELULAR, ENDERECO, NUMERO_CARTAO, VALIDADE, CVV, NOME_CARTAO, DATA_REGISTRO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
 
         try {
