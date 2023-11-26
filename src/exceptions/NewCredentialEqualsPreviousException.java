@@ -3,8 +3,8 @@ package exceptions;
 import models.usuario.Usuario;
 
 public class NewCredentialEqualsPreviousException extends Exception{
-    private Usuario usuario;
-    private String credencialErrada;
+    private final Usuario usuario;
+    private final String credencialErrada;
     private String mensagem;
 
     public NewCredentialEqualsPreviousException(Usuario usuario, String credencialErrada,
