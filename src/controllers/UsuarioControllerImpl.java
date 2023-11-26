@@ -5,8 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import exceptions.PackageNotClosedException;
+import models.pacote.*;
 import models.usuario.Cliente;
 import models.usuario.Funcionario;
+import models.usuario.Usuario;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class UsuarioControllerImpl {
 
@@ -240,6 +246,53 @@ public class UsuarioControllerImpl {
             } else {
                 throw new SQLException("usuário com CPF " + cpf + " não encontrado.");
             }
+        }
+    }
+
+    //efetuação de pagamento
+    public void pagar(Cliente cliente, Reserva reserva) throws PackageNotClosedException{
+       Pacote pacote = new PacoteControllerImpl().buscarPacotePorId(reserva.getIdPacote());
+       Pagamento pagamento = new PacoteControllerImpl().buscarPagamentoPorId(reserva.getIdPagamento());
+        if (pacote.getFechado()== false) { 
+           switch (pagamento.getSituacao()) {
+            case PENDENTE:
+                double preco = pacote.getPreco();
+                double desconto = pacote.getDesconto();
+                double total = preco - desconto;
+                pagamento.setValor(total);
+                pagamento.setSituacao(Pagamento.Situacao.PAGO);
+                pacote.setPreco(0.00);
+                pacote.setFechado(false);
+                
+                break;
+           
+            case PAGO:
+                //já está pago, nada acontece
+                break;
+            
+            case ATRASADO:// se estiver em atraso, o desconto é descartado e uma multa é aplicada de acordo com a quantidade de dias
+                long diasAtraso = ChronoUnit.DAYS.between(pagamento.getVencimento(), LocalDate.now());
+               double preco1= 0.0;
+                if( diasAtraso<10){
+                    preco1= pacote.getPreco() + (10*diasAtraso);
+                }else if(diasAtraso<25){
+                     preco1= pacote.getPreco() + (25*diasAtraso);
+                }else if(diasAtraso<50){
+                     preco1= pacote.getPreco() + (50*diasAtraso);
+                }
+                
+                pagamento.setValor(preco1);
+                pagamento.setSituacao(Pagamento.Situacao.PAGO);
+                pacote.setPreco(0.00);
+                pacote.setFechado(false);
+                
+                break;
+            
+            default:
+                break;
+           }
+        } else {
+            throw new PackageNotClosedException("Não é possível fazer o pagamento. O pacote já está fechado.");
         }
     }
 }

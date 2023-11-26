@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 
 public class PacoteControllerImpl {
 
-    private ArrayList<Pacote> listapacotes;
+    private  static ArrayList<Pacote> listapacotes;
 
     // cadastro no banco de dados
 
@@ -276,6 +276,9 @@ public class PacoteControllerImpl {
         if (PagamentoExiste(pagamento.getIdPagamento())) {
 
             return;
+        }
+        if(pagamento.getVencimento().isBefore(LocalDate.now() )&& pagamento.getSituacao()!= Pagamento.Situacao.PAGO){
+            pagamento.setSituacao(Pagamento.Situacao.ATRASADO);
         }
         try {
             String sql = "INSERT INTO Pagamento (cliente, valor, situacao, vencimento) VALUES (?, ?, ?, ?)";
