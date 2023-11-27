@@ -91,13 +91,13 @@ public class main {
 
         // 10. Cadastrar Comentários
         Comentario comentarioHospedagem = new Comentario(1, 0, "muito bom", LocalDateTime.now());
-        new PacoteControllerImpl().cadastrarComentarioHospedagem(comentarioHospedagem, hospedagem.getIdHospedagem(), 1);
+        new PacoteControllerImpl().cadastrarComentarioHospedagem(comentarioHospedagem, cliente, hospedagem);
 
         Comentario comentarioLocal = new Comentario(2, 0, "muito bom", LocalDateTime.now());
-        new PacoteControllerImpl().cadastrarComentarioLocalizacoes(comentarioLocal, local.getIdLocal(), 1);
+        new PacoteControllerImpl().cadastrarComentarioLocalizacoes(comentarioLocal, cliente, local);
 
         Comentario comentarioPacote = new Comentario(3, 0, "muito bom", LocalDateTime.now());
-        new PacoteControllerImpl().cadastrarComentarioPacote(comentarioPacote, cliente.getIdUsuario(), 1);
+        new PacoteControllerImpl().cadastrarComentarioPacote(comentarioPacote, cliente, pacote);
             
     
     }

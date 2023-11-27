@@ -8,6 +8,7 @@ import models.pacote.Hospedagem.TipoHospedagem;
 import models.pacote.Hospedagem.TipoSuite;
 import models.pacote.Pacote.Categoria;
 import models.pacote.Pacote.TipoPassagem;
+import models.usuario.Cliente;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -27,35 +28,7 @@ public class PacoteControllerImpl {
 
     // cadastro no banco de dados
 
-    public void cadastrarPacote(Pacote pacote) {
-        /* Verificar se já existe um pacote igual */
-        if (PacoteExiste(pacote.getId())) {
-
-            return;
-        }
-        
-        String sql = "INSERT INTO Pacote (destino, hospedagem, tipoPassagem, passagem, aluguelCarro, desconto, preco, media_avaliacoes, num_avaliacoes, fechado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql)) {
-            ps.setInt(1, pacote.getIdDestino());
-            ps.setInt(2, pacote.getIdHospedagem());
-            ps.setString(3, pacote.getTipoPassagem().name());
-            ps.setInt(4, pacote.getIdPassagem());
-            ps.setInt(5, pacote.getIdAluguelCarro());
-            ps.setDouble(6, pacote.getDesconto());
-            ps.setDouble(7, pacote.getPreco());
-            ps.setDouble(8, pacote.getMediaAvaliacoes());
-            ps.setInt(9, pacote.getNumAvaliacoes());
-            ps.setBoolean(10, pacote.getFechado());
-
-            ps.executeUpdate();
-
-            pacote.setPreco(somarpagamento(pacote.getId()));
-            listapacotes.add(pacote);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+   
 
     public void cadastrarAluguelCarro(AluguelCarro aluguel) {
         /* Verificar se já existe um aluguel com o mesmo ID */
@@ -129,7 +102,7 @@ public class PacoteControllerImpl {
                 throw new SQLException("Falha ao obter o ID da atividade inserida.");
             }
 
-            String sqlInserirAtividadePacote = "INSERT INTO ativadesPacote (pacote, atividade) VALUES (?, ?)";
+            String sqlInserirAtividadePacote = "INSERT INTO AtivadesPacote (pacote, atividade) VALUES (?, ?)";
             try (PreparedStatement psAtividadePacote = ConexaoMySQL.getConexao()
                     .prepareStatement(sqlInserirAtividadePacote)) {
                 psAtividadePacote.setInt(1, pacote.getId());
@@ -143,12 +116,14 @@ public class PacoteControllerImpl {
         }
     }
 
-    public void cadastrarComentarioHospedagem(Comentario comentario, int idCliente, int idHospedagem) {
+    public void cadastrarComentarioHospedagem(Comentario comentario, Cliente cliente, Hospedagem hospedagem) {
+        int idHospedagem = hospedagem.getIdHospedagem();
 
         if (ComentariosHospedagensExiste(comentario.getId())) {
 
             return;
         }
+        int idCliente= cliente.getIdUsuario();
         try {
             String sql = "INSERT INTO ComentariosHospedagens (cliente, data_e_hora_da_postagem, comentario, hospedagem) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -166,8 +141,9 @@ public class PacoteControllerImpl {
         }
     }
 
-    public void cadastrarComentarioLocalizacoes(Comentario comentario, int idCliente, int idDestino) {
-
+    public void cadastrarComentarioLocalizacoes(Comentario comentario,Cliente cliente, Local local) {
+        int idDestino = local.getIdLocal();
+         int idCliente = cliente.getIdUsuario();
         if (ComentariosLocalizacoesExiste(comentario.getId())) {
 
             return;
@@ -189,7 +165,9 @@ public class PacoteControllerImpl {
         }
     }
 
-    public void cadastrarComentarioPacote(Comentario comentario, int idCliente, int idPacote) {
+    public void cadastrarComentarioPacote(Comentario comentario, Cliente cliente, Pacote pacote) {
+         int idCliente = cliente.getIdUsuario();
+         int idPacote = pacote.getId();
 
         if (ComentariosPacotesExiste(comentario.getId())) {
 
@@ -300,6 +278,36 @@ public class PacoteControllerImpl {
         }
 
     }
+    public void cadastrarPacote(Pacote pacote) {
+            /* Verificar se já existe um pacote igual */
+            if (PacoteExiste(pacote.getId())) {
+
+                return;
+            }
+            
+            String sql = "INSERT INTO Pacote (destino, hospedagem, tipoPassagem, passagem, aluguelCarro, desconto, preco, media_avaliacoes, num_avaliacoes, fechado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql)) {
+                ps.setInt(1, pacote.getIdDestino());
+                ps.setString(2,pacote.getCategoria().name());
+                ps.setInt(3, pacote.getIdHospedagem());
+                ps.setString(4, pacote.getTipoPassagem().name());
+                ps.setInt(5, pacote.getIdPassagem());
+                ps.setInt(6, pacote.getIdAluguelCarro());
+                ps.setDouble(7, pacote.getDesconto());
+                ps.setDouble(8, pacote.getPreco());
+                ps.setDouble(9, pacote.getMediaAvaliacoes());
+                ps.setInt(10, pacote.getNumAvaliacoes());
+                ps.setBoolean(11, pacote.getFechado());
+
+                ps.executeUpdate();
+
+                pacote.setPreco(somarpagamento(pacote.getId()));
+                listapacotes.add(pacote);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
     public void cadastrarPassagem(Passagem passagem) {
         try {
@@ -369,7 +377,7 @@ public class PacoteControllerImpl {
         ps.executeUpdate();
         ps.close();
     }
-
+   
     public void cadastrarReserva(Reserva reserva) {
 
         if (reservaExiste(reserva.getId())) {
@@ -1585,7 +1593,7 @@ public class PacoteControllerImpl {
     public double somarpagamento(int Idpacote) {
        double total = 0.0;
         
-         /*double precoHospedagem;
+         double precoHospedagem;
         if(HospedagemExiste(buscarPacotePorId(Idpacote).getIdHospedagem())!=false){
             Hospedagem hospedagem =buscarHospedagemPorId(buscarPacotePorId(Idpacote).getIdHospedagem());
              precoHospedagem = hospedagem.getPreco();
@@ -1619,7 +1627,7 @@ public class PacoteControllerImpl {
         for (Atividade atividade : lista) {
             precoAtividades += atividade.getPreco();
         }
-        total += precoAtividades;*/
+        total += precoAtividades;
         
         return total;
     }
