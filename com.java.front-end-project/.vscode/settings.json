@@ -11,5 +11,6 @@
         "c:\\Users\\carol\\OneDrive\\Área de Trabalho\\Andre\\openjfx-21.0.1_windows-x64_bin-sdk\\javafx-sdk-21.0.1\\lib\\javafx.swing.jar",
         "c:\\Users\\carol\\OneDrive\\Área de Trabalho\\Andre\\openjfx-21.0.1_windows-x64_bin-sdk\\javafx-sdk-21.0.1\\lib\\javafx.web.jar",
         "c:\\Users\\carol\\OneDrive\\Área de Trabalho\\Andre\\openjfx-21.0.1_windows-x64_bin-sdk\\javafx-sdk-21.0.1\\lib\\javafx-swt.jar"
-    ]
+    ],
+    "java.classPath": "src;lib/mysql-connector-j-8.1.0.jar"
 }

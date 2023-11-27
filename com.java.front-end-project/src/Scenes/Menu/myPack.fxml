@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.SVGPath?>
@@ -39,16 +39,7 @@
                         </Label>
                      </graphic>
                   </Button>
-                  <Button layoutX="144.0" layoutY="12.0" mnemonicParsing="false" onAction="#customPackPage" prefHeight="70.0" prefWidth="125.0" styleClass="buttons" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="145.0" AnchorPane.topAnchor="7.0">
-                     <graphic>
-                        <Label prefHeight="78.0" prefWidth="94.0" text="Custom Package" textAlignment="CENTER" wrapText="true">
-                           <graphic>
-                              <SVGPath content="M5 2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2h3.5A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5H14a.5.5 0 0 1-1 0H3a.5.5 0 0 1-1 0h-.5A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2H5Zm1 0h4a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1ZM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H3V3H1.5ZM15 12.5v-9a.5.5 0 0 0-.5-.5H13v10h1.5a.5.5 0 0 0 .5-.5Zm-3 .5V3H4v10h8Z" scaleX="2.0" scaleY="2.0" />
-                           </graphic>
-                        </Label>
-                     </graphic>
-                  </Button>
-                  <Button layoutX="280.0" layoutY="11.0" mnemonicParsing="false" onAction="#packConfigPage" prefHeight="70.0" prefWidth="125.0" styleClass="buttons" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="7.0">
+                  <Button layoutX="280.0" layoutY="11.0" mnemonicParsing="false" onAction="#packConfigPage" prefHeight="70.0" prefWidth="125.0" styleClass="buttons" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="7.0">
                      <graphic>
                         <Label graphicTextGap="20.0" prefHeight="78.0" prefWidth="94.0" text="Package Config." wrapText="true">
                            <graphic>
@@ -62,30 +53,133 @@
                <children>
                   <TabPane layoutX="6.0" layoutY="7.0" prefHeight="428.0" prefWidth="769.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab text="Self Info">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
-                                 <children>
-                                    <Label layoutX="130.0" layoutY="72.0" text="Name" />
-                                    <TextField layoutX="179.0" layoutY="68.0" prefHeight="25.0" prefWidth="203.0" />
-                                    <Label layoutX="130.0" layoutY="111.0" text="Name" />
-                                    <TextField layoutX="179.0" layoutY="107.0" prefHeight="25.0" prefWidth="203.0" />
-                                    <Button layoutX="130.0" layoutY="262.0" mnemonicParsing="false" text="Update" />
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="User's Info">
+                      <Tab text="My Packages">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="394.0" prefWidth="769.0" style="-fx-background-color: white;">
                                  <children>
-                                    <Label layoutX="143.0" layoutY="141.0" text="Role" />
-                                    <TextField layoutX="186.0" layoutY="98.0" prefHeight="25.0" prefWidth="203.0" />
-                                    <Label layoutX="143.0" layoutY="102.0" text="Name" />
-                                    <Button layoutX="140.0" layoutY="241.0" mnemonicParsing="false" text="Update" />
-                                    <ComboBox layoutX="186.0" layoutY="137.0" prefHeight="25.0" prefWidth="203.0" />
-                                    <Label layoutX="150.0" layoutY="72.0" text="id" />
-                                    <Label layoutX="186.0" layoutY="72.0" prefHeight="17.0" prefWidth="203.0" text="id_example" />
+                                    <TabPane layoutX="19.0" layoutY="164.0" prefHeight="215.0" prefWidth="737.0" tabClosingPolicy="UNAVAILABLE">
+                                      <tabs>
+                                        <Tab text="Pacote">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutX="8.0" layoutY="7.0" prefHeight="173.0" prefWidth="714.0">
+                                                         <columns>
+                                                            <TableColumn prefWidth="75.0" text="idUsuario" />
+                                                            <TableColumn prefWidth="75.0" text="Nome" />
+                                                            <TableColumn prefWidth="75.0" text="Nascimento" />
+                                                            <TableColumn prefWidth="75.0" text="CPF" />
+                                                            <TableColumn prefWidth="90.0" text="email" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="120.0" text="Endereco" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="75.0" text="Cargo" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </Tab>
+                                          <Tab text="Atividades">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutX="8.0" layoutY="7.0" prefHeight="173.0" prefWidth="714.0">
+                                                         <columns>
+                                                            <TableColumn prefWidth="75.0" text="idUsuario" />
+                                                            <TableColumn prefWidth="75.0" text="Nome" />
+                                                            <TableColumn prefWidth="75.0" text="Nascimento" />
+                                                            <TableColumn prefWidth="75.0" text="CPF" />
+                                                            <TableColumn prefWidth="90.0" text="email" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="120.0" text="Endereco" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="75.0" text="Cargo" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Hotel">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutX="8.0" layoutY="7.0" prefHeight="173.0" prefWidth="714.0">
+                                                         <columns>
+                                                            <TableColumn prefWidth="75.0" text="idUsuario" />
+                                                            <TableColumn prefWidth="75.0" text="Nome" />
+                                                            <TableColumn prefWidth="75.0" text="Nascimento" />
+                                                            <TableColumn prefWidth="75.0" text="CPF" />
+                                                            <TableColumn prefWidth="90.0" text="email" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="120.0" text="Endereco" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="75.0" text="Cargo" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Destino">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutX="8.0" layoutY="7.0" prefHeight="173.0" prefWidth="714.0">
+                                                         <columns>
+                                                            <TableColumn prefWidth="75.0" text="idUsuario" />
+                                                            <TableColumn prefWidth="75.0" text="Nome" />
+                                                            <TableColumn prefWidth="75.0" text="Nascimento" />
+                                                            <TableColumn prefWidth="75.0" text="CPF" />
+                                                            <TableColumn prefWidth="90.0" text="email" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="120.0" text="Endereco" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="75.0" text="Cargo" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Transporte">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TableView layoutX="8.0" layoutY="7.0" prefHeight="173.0" prefWidth="714.0">
+                                                         <columns>
+                                                            <TableColumn prefWidth="75.0" text="idUsuario" />
+                                                            <TableColumn prefWidth="75.0" text="Nome" />
+                                                            <TableColumn prefWidth="75.0" text="Nascimento" />
+                                                            <TableColumn prefWidth="75.0" text="CPF" />
+                                                            <TableColumn prefWidth="90.0" text="email" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="120.0" text="Endereco" />
+                                                            <TableColumn prefWidth="75.0" text="Celular" />
+                                                            <TableColumn prefWidth="75.0" text="Cargo" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                      </tabs>
+                                    </TabPane>
+                                    <TableView layoutX="19.0" layoutY="29.0" prefHeight="127.0" prefWidth="734.0">
+                                      <columns>
+                                        <TableColumn prefWidth="75.0" text="idUsuario" />
+                                        <TableColumn prefWidth="75.0" text="Nome" />
+                                          <TableColumn prefWidth="75.0" text="Nascimento" />
+                                          <TableColumn prefWidth="75.0" text="CPF" />
+                                          <TableColumn prefWidth="90.0" text="email" />
+                                          <TableColumn prefWidth="75.0" text="Celular" />
+                                          <TableColumn prefWidth="120.0" text="Endereco" />
+                                          <TableColumn prefWidth="75.0" text="Celular" />
+                                          <TableColumn prefWidth="75.0" text="Cargo" />
+                                      </columns>
+                                    </TableView>
+                                    <Label layoutX="19.0" layoutY="14.0" text="Reservas" />
                                  </children>
                               </AnchorPane>
                         </content>

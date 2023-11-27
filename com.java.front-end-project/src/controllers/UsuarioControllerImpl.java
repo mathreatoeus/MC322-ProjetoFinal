@@ -1,0 +1,471 @@
+package controllers;
+
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.time.LocalDate;
+
+import models.usuario.Cliente;
+import models.usuario.Funcionario;
+import models.usuario.Funcionario.Cargo;
+
+public class UsuarioControllerImpl {
+
+    public <T> T usuarioExists (String senha, String email){
+        if(credenciaisFuncionario(email, senha)){
+            System.out.println("--> Got Employee");
+            T f = (T) getFuncInfo(email, senha);
+            return f;
+        }
+        if(credenciaisCliente(email, senha)){
+            System.out.println("--> Got Client");
+            T c = (T) getCliInfo(email, senha);
+            return c;
+
+        } else{
+            System.out.println("--> Got Nothing");
+            T n = null;
+            return n;
+        }
+        
+
+    }
+    private Cliente getCliInfo(String email, String senha){
+        Cliente c = null;
+        
+        try {
+            String sql = "SELECT * FROM agencia_viagens.cliente AS c WHERE c.senha = ? and c.email = ? ";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, senha);
+            ps.setString(2, email);
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+            while(rs.next()){
+                c = new Cliente(
+                    rs.getInt("id"),
+                    rs.getString("nome"),
+                    rs.getDate("nascimento").toLocalDate(),
+                    rs.getString("cpf"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("celular"),
+                    rs.getString("endereco"),
+                    rs.getString("numero_cartao"),
+                    rs.getDate("validade").toLocalDate(),
+                    rs.getInt("cvv"),
+                    rs.getString("nome_cartao"),
+                    rs.getDate("data_registro").toLocalDate()
+                );
+                System.out.println("-->Deu certo!");
+                return c;
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return c;
+        
+        
+    }
+
+    public Cliente getCliInfo(int id){
+        Cliente c = null;
+        
+        try {
+            String sql = "SELECT * FROM agencia_viagens.cliente AS c WHERE c.id = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+            while(rs.next()){
+                c = new Cliente(
+                    rs.getInt("id"),
+                    rs.getString("nome"),
+                    rs.getDate("nascimento").toLocalDate(),
+                    rs.getString("cpf"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("celular"),
+                    rs.getString("endereco"),
+                    rs.getString("numero_cartao"),
+                    rs.getDate("validade").toLocalDate(),
+                    rs.getInt("cvv"),
+                    rs.getString("nome_cartao"),
+                    rs.getDate("data_registro").toLocalDate()
+                );
+                System.out.println("-->Deu certo!");
+                return c;
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return c;
+        
+        
+    }
+
+    private Funcionario getFuncInfo(String email, String senha){
+        Funcionario f = null;
+        
+        try {
+            String sql = "SELECT * FROM agencia_viagens.funcionario AS f WHERE f.senha = ? and f.email = ? ";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, senha);
+            ps.setString(2, email);
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+            while(rs.next()){
+                Funcionario.Cargo c = getCargo(rs.getString("cargo"));
+                f = new Funcionario(
+                    rs.getInt("id"), 
+                    rs.getString("nome"),
+                    rs.getDate("nascimento").toLocalDate(),
+                    rs.getString("cpf"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("celular"),
+                    rs.getString("endereco"),
+                    c);
+                    System.out.println("-->Deu certo!");
+                return f;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return f;
+        
+        
+    }
+
+ public Funcionario getFuncInfo(int id){
+        Funcionario f = null;
+        
+        try {
+            String sql = "SELECT * FROM agencia_viagens.funcionario AS f WHERE f.id = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+            while(rs.next()){
+                Funcionario.Cargo c = getCargo(rs.getString("cargo"));
+                f = new Funcionario(
+                    rs.getInt("id"), 
+                    rs.getString("nome"),
+                    rs.getDate("nascimento").toLocalDate(),
+                    rs.getString("cpf"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("celular"),
+                    rs.getString("endereco"),
+                    c);
+                    System.out.println("-->Deu certo!");
+                return f;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return f;
+        
+        
+    }
+
+ public ArrayList<Funcionario> getAllList(){
+        ArrayList<Funcionario> f = new ArrayList<Funcionario>();
+        
+        try {
+            Funcionario.Cargo c;
+            String sql = "SELECT * FROM agencia_viagens.funcionario ";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+            while(rs.next()){
+                c = getCargo(rs.getString("cargo"));
+                f.add( new Funcionario(
+                    rs.getInt("id"), 
+                    rs.getString("nome"),
+                    rs.getDate("nascimento").toLocalDate(),
+                    rs.getString("cpf"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("celular"),
+                    rs.getString("endereco"),
+                    c));
+            }
+                    System.out.println("-->Deu certo!");
+            sql = "SELECT * FROM agencia_viagens.cliente ";
+            ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            rs = ps.executeQuery(); // executando uma consulta no banco de dados
+            while(rs.next()){
+                c = Cargo.NA;
+                f.add(new Funcionario(
+                    rs.getInt("id"), 
+                    rs.getString("nome"),
+                    rs.getDate("nascimento").toLocalDate(),
+                    rs.getString("cpf"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("celular"),
+                    rs.getString("endereco"),
+                    c));
+                    System.out.println("-->Deu certo!");
+                return f;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return f;
+        
+        
+    }
+
+    private Funcionario.Cargo getCargo(String cargo){
+        if(cargo == "corretor"){
+            return Cargo.CORRETOR;
+        }
+        if(cargo == "gerente" ){
+            return Cargo.GERENTE;
+        }
+
+        if(cargo =="diretor"){
+            return Cargo.DIRETOR;
+        }
+        else{
+            return Cargo.CORRETOR;
+        }
+    }
+
+    /* metodo para cadastrar usuário tipo cliente */
+
+    public void cadastrarCliente(Cliente usuario) {
+
+        /* Verificar se já existe um usuário com mesmo CPF ou e-mail */
+        if (clienteExiste(usuario.getEmail())) {
+            /* lançar uma mensagem no Front-end --> COMO FAZ ISSO??? */
+            return;
+        }
+        String sql = "INSERT INTO Cliente (NOME, NASCIMENTO, CPF, EMAIL, SENHA, CELULAR, ENDERECO, NUMEROCARTAO, VALIDADE, CVV, NOMECARTAO, DATAREGISTRO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = null;
+
+        try {
+            ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, usuario.getNome());
+
+            // Converter o LocalDate para java.sql.Date
+            Date dataNascimento = Date.valueOf(usuario.getNascimento());
+            ps.setDate(2, dataNascimento);
+            ps.setString(3, usuario.getCpf());
+            ps.setString(4, usuario.getEmail());
+            ps.setString(5, usuario.getSenha());
+            ps.setString(6, usuario.getCelular());
+            ps.setString(7, usuario.getEndereco());
+            ps.setString(8, usuario.getNumeroCartao());
+
+            // Converter o LocalDate para java.sql.Date
+            Date validadeCartao = Date.valueOf(usuario.getValidade());
+            ps.setDate(9, validadeCartao);
+            ps.setInt(10, usuario.getCvv());
+            ps.setString(11, usuario.getNomeCartao());
+
+            // Converter o LocalDate para java.sql.Date
+            Date dataRegistro = Date.valueOf(usuario.getDataRegistro());
+            ps.setDate(12, dataRegistro);
+
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* metodo para cadastrar usuário tipo funcionario */
+
+    public void cadastrarFuncionario(Funcionario usuario) {
+
+        /* Verificar se já existe um usuário com mesmo CPF ou e-mail */
+        if (funcionarioExiste(usuario.getEmail())) {
+            /* lançar uma mensagem no Front-end */
+            return;
+        }
+        String sql = "INSERT INTO Funcionario (NOME, NASCIMENTO, CPF, EMAIL, SENHA, CELULAR, ENDERECO, CARGO) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = null;
+
+        try {
+            ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, usuario.getNome());
+
+            // Converter o LocalDate para java.sql.Date
+            Date dataNascimento = Date.valueOf(usuario.getNascimento());
+            ps.setDate(2, dataNascimento);
+            ps.setString(3, usuario.getCpf());
+            ps.setString(4, usuario.getEmail());
+            ps.setString(5, usuario.getSenha());
+            ps.setString(6, usuario.getCelular());
+            ps.setString(7, usuario.getEndereco());
+            ps.setString(8, usuario.getCargo().name());
+
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * Metodo para verificar se já existe um usuário tipo cliente com mesmo CPF ou
+     * e-mail
+     */
+    public boolean clienteExiste(String email) {
+        try {
+            String sql = "SELECT COUNT(*) FROM Cliente WHERE EMAIL = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+
+            /* verificando se há algum retorno na busca no banco de dados */
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // Se count for maior que 0, já existe um registro com o CPF ou email
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /*
+     * Metodo para verificar se já existe um usuário tipo funcionario com mesmo CPF
+     * ou e-mail
+     */
+    public boolean funcionarioExiste(String email) {
+        try {
+            String sql = "SELECT COUNT(*) FROM Funcionario WHERE EMAIL = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+
+            /* verificando se há algum retorno na busca no banco de dados */
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // Se count for maior que 0, já existe um registro com o CPF ou email
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /*
+     * verificação de credenciais do cliente - retorno deve ser usado pelo Front-end
+     */
+    public boolean credenciaisCliente(String email, String senha) {
+        try {
+            String sql = "SELECT COUNT(*) FROM Cliente WHERE EMAIL = ? OR SENHA = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, senha);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                System.out.println("Credenciais validas -> usar no front");
+                return count > 0; // Se count for maior que 0, as credenciais são válidas
+            } else {
+                System.out.println("Credenciais invalidas -> usar no front");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /*
+     * verificação de credenciais do funcionario - retorno deve ser usado pelo
+     * Front-end
+     */
+    public boolean credenciaisFuncionario(String email, String senha) {
+        try {
+            String sql = "SELECT COUNT(*) FROM Funcionario WHERE EMAIL = ? OR SENHA = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, senha);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                System.out.println("Credenciais validas -> usar no front");
+                return count > 0; // Se count for maior que 0, as credenciais são válidas
+            } else {
+                System.out.println("Credenciais invalidas -> usar no front");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /* exclusão de cliente do banco de dados */
+    public void excluirCliente(String cpf) throws SQLException {
+        String selectSql = "SELECT COUNT(*) FROM Cliente WHERE CPF = ?";
+        String deleteSql = "DELETE FROM Cliente WHERE CPF = ?";
+
+        try (PreparedStatement selectStatement = ConexaoMySQL.getConexao().prepareStatement(selectSql)) {
+            selectStatement.setString(1, cpf);
+            ResultSet rs = selectStatement.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                /* Item encontrado */
+                try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
+                    deleteStatement.setString(1, cpf);
+                    int rowsAffected = deleteStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        return;
+                    } else {
+                        throw new SQLException(
+                                "Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
+                    }
+                }
+            } else {
+                throw new SQLException("usuário com CPF " + cpf + " não encontrado.");
+            }
+        }
+    }
+
+    /* exclusão de funcionario do banco de dados */
+    public void excluirFuncionario(String cpf) throws SQLException {
+        String selectSql = "SELECT COUNT(*) FROM Funcionario WHERE CPF = ?";
+        String deleteSql = "DELETE FROM Funcionario WHERE CPF = ?";
+
+        try (PreparedStatement selectStatement = ConexaoMySQL.getConexao().prepareStatement(selectSql)) {
+            selectStatement.setString(1, cpf);
+            ResultSet rs = selectStatement.executeQuery();
+
+            if (rs.next() && rs.getInt(1) > 0) {
+                /* Item encontrado */
+                try (PreparedStatement deleteStatement = ConexaoMySQL.getConexao().prepareStatement(deleteSql)) {
+                    deleteStatement.setString(1, cpf);
+                    int rowsAffected = deleteStatement.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        return;
+                    } else {
+                        throw new SQLException(
+                                "Falha ao excluir o usuário com CPF " + cpf + ". Nenhuma linha afetada.");
+                    }
+                }
+            } else {
+                throw new SQLException("usuário com CPF " + cpf + " não encontrado.");
+            }
+        }
+    }
+}

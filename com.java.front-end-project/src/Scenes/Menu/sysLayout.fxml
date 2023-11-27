@@ -4,8 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.SVGPath?>
@@ -37,16 +40,7 @@
                         </Label>
                      </graphic>
                   </Button>
-                  <Button layoutX="144.0" layoutY="12.0" mnemonicParsing="false" onAction="#customPackPage" prefHeight="70.0" prefWidth="125.0" styleClass="buttons" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="145.0" AnchorPane.topAnchor="7.0">
-                     <graphic>
-                        <Label prefHeight="78.0" prefWidth="94.0" text="Custom Package" textAlignment="CENTER" wrapText="true">
-                           <graphic>
-                              <SVGPath content="M5 2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2h3.5A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5H14a.5.5 0 0 1-1 0H3a.5.5 0 0 1-1 0h-.5A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2H5Zm1 0h4a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1ZM1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H3V3H1.5ZM15 12.5v-9a.5.5 0 0 0-.5-.5H13v10h1.5a.5.5 0 0 0 .5-.5Zm-3 .5V3H4v10h8Z" scaleX="2.0" scaleY="2.0" />
-                           </graphic>
-                        </Label>
-                     </graphic>
-                  </Button>
-                  <Button layoutX="280.0" layoutY="11.0" mnemonicParsing="false" onAction="#packConfigPage" prefHeight="70.0" prefWidth="125.0" styleClass="buttons" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="7.0">
+                  <Button layoutX="280.0" layoutY="11.0" mnemonicParsing="false" onAction="#packConfigPage" prefHeight="70.0" prefWidth="125.0" styleClass="buttons" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="114.0" AnchorPane.topAnchor="7.0">
                      <graphic>
                         <Label graphicTextGap="20.0" prefHeight="78.0" prefWidth="94.0" text="Package Config." wrapText="true">
                            <graphic>
@@ -56,49 +50,106 @@
                      </graphic>
                   </Button>
                </children></AnchorPane>
-            <AnchorPane prefHeight="430.0" prefWidth="772.0" styleClass="body" stylesheets="@menuDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+            <AnchorPane prefHeight="430.0" prefWidth="772.0" styleClass="body" stylesheets="@menuDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
+            <AnchorPane prefHeight="430.0" prefWidth="772.0" styleClass="body" stylesheets="@../UserSpecific/menuDesign.css" AnchorPane.topAnchor="80.0">
                <children>
-                  <AnchorPane layoutX="75.0" layoutY="80.0" prefHeight="263.0" prefWidth="134.0" styleClass="card" stylesheets="@menuDesign.css" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="80.0">
+                  <TableView id="tablePacks" fx:id="tablePacks1" layoutX="170.0" layoutY="41.0" prefHeight="160.0" prefWidth="602.0">
+                     <columns>
+                        <TableColumn id="id" fx:id="id1" minWidth="2.0" prefWidth="45.0" text="id" />
+                        <TableColumn id="idDestino" fx:id="idDestino1" minWidth="2.0" prefWidth="45.0" text="idDestino" />
+                        <TableColumn id="categoria" fx:id="categoria1" minWidth="2.0" prefWidth="45.0" text="Categoria" />
+                        <TableColumn id="idHospedagem" fx:id="idHospedagem1" minWidth="2.0" prefWidth="45.0" text="IdHospedagem" />
+                        <TableColumn id="tipopassagem" fx:id="tipopassagem1" minWidth="2.0" prefWidth="45.0" text="tipoPassagem" />
+                        <TableColumn id="idpassagem" fx:id="idpassagem1" minWidth="2.0" prefWidth="45.0" text="idPassagem" />
+                        <TableColumn id="idaluguelcarro" fx:id="idaluguelcarro1" minWidth="2.0" prefWidth="45.0" text="idAluguelCarro" />
+                        <TableColumn id="desconto" fx:id="desconto1" minWidth="2.0" prefWidth="45.0" text="Desconto" />
+                        <TableColumn id="preco" fx:id="preco1" minWidth="2.0" prefWidth="45.0" text="Preco" />
+                        <TableColumn id="mediaavaliacoes" fx:id="mediaavaliacoes1" minWidth="2.0" prefWidth="45.0" text="MediaAvaliacoes" />
+                        <TableColumn id="numavaliacoes" fx:id="numavaliacoes1" minWidth="2.0" prefWidth="45.0" text="NumAvaliacoes" />
+                        <TableColumn id="fechado" fx:id="fechado1" minWidth="2.0" prefWidth="45.0" text="Fechado" />
+                     </columns>
+                  </TableView>
+                  <AnchorPane layoutX="170.0" layoutY="178.0" prefHeight="247.0" prefWidth="602.0">
                      <children>
-                        <ImageView fitHeight="130.0" fitWidth="183.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="17.0">
-                           <image>
-                              <Image url="@../../Img/image-not-found-scaled-1150x647.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="cardName1" layoutX="80.0" layoutY="175.0" text="Label" />
-                        <Text layoutX="34.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-                        <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
-                        <Label fx:id="cardCost1" layoutX="80.0" layoutY="200.0" text="Label" />
+                        <TabPane layoutY="30.0" prefHeight="217.0" prefWidth="602.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab text="Destination">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="602.0" style="-fx-background-color: white;">
+                                       <children>
+                                          <Label layoutX="23.0" layoutY="20.0" text="Country" />
+                                          <TextField layoutX="75.0" layoutY="16.0" />
+                                          <Label layoutX="23.0" layoutY="60.0" text="State" />
+                                          <TextField layoutX="75.0" layoutY="56.0" />
+                                          <Label layoutX="23.0" layoutY="98.0" text="City" />
+                                          <TextField layoutX="75.0" layoutY="94.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Accomodation">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                       <children>
+                                          <Label layoutX="22.0" layoutY="21.0" text="Nome" />
+                                          <TextField layoutX="74.0" layoutY="17.0" />
+                                          <Label layoutX="22.0" layoutY="50.0" text="Tipo" />
+                                          <TextField layoutX="74.0" layoutY="46.0" />
+                                          <Label layoutX="22.0" layoutY="78.0" text="Suite" />
+                                          <TextField layoutX="74.0" layoutY="75.0" />
+                                          <Label layoutX="22.0" layoutY="110.0" text="Descricao" />
+                                          <TextField layoutX="74.0" layoutY="107.0" prefHeight="53.0" prefWidth="279.0" />
+                                          <Label layoutX="243.0" layoutY="21.0" text="Endereco" />
+                                          <TextField layoutX="309.0" layoutY="17.0" />
+                                          <Label layoutX="243.0" layoutY="50.0" text="Check-in" />
+                                          <TextField layoutX="309.0" layoutY="46.0" />
+                                          <Label layoutX="243.0" layoutY="78.0" text="Check-out" />
+                                          <TextField layoutX="309.0" layoutY="74.0" />
+                                          <Label layoutX="365.0" layoutY="125.0" text="Diaria" />
+                                          <TextField layoutX="416.0" layoutY="121.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Trasportation">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                       <children>
+                                          <Label layoutX="22.0" layoutY="23.0" text="Companhia" />
+                                          <TextField layoutX="107.0" layoutY="19.0" />
+                                          <Label layoutX="22.0" layoutY="55.0" text="Local partida" />
+                                          <TextField layoutX="107.0" layoutY="51.0" />
+                                          <Label layoutX="22.0" layoutY="86.0" text="Local chegada" />
+                                          <TextField layoutX="107.0" layoutY="82.0" />
+                                          <Label layoutX="281.0" layoutY="52.0" text="Data partida" />
+                                          <TextField layoutX="366.0" layoutY="48.0" />
+                                          <Label layoutX="281.0" layoutY="83.0" text="Data chegada" />
+                                          <TextField layoutX="366.0" layoutY="79.0" />
+                                          <Label layoutX="22.0" layoutY="123.0" text="Preco" />
+                                          <TextField layoutX="107.0" layoutY="119.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="291.0" layoutY="80.0" prefHeight="263.0" prefWidth="134.0" styleClass="card" stylesheets="@menuDesign.css">
+                  <AnchorPane layoutX="8.0" layoutY="14.0" prefHeight="412.0" prefWidth="156.0" style="-fx-background-color: white; -fx-border-radius: 10px;">
                      <children>
-                        <ImageView fitHeight="130.0" fitWidth="183.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="17.0">
-                           <image>
-                              <Image url="@../../Img/image-not-found-scaled-1150x647.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="cardName11" layoutX="80.0" layoutY="175.0" text="Label" />
-                        <Text layoutX="34.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-                        <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
-                        <Label fx:id="cardCost11" layoutX="80.0" layoutY="200.0" text="Label" />
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="46.0" text="Filter" />
+                        <Label layoutX="14.0" layoutY="47.0" text="Destino" />
+                        <TextField layoutX="7.0" layoutY="64.0" prefHeight="25.0" prefWidth="143.0" />
+                        <Label layoutX="14.0" layoutY="110.0" text="Categoria" />
+                        <TextField layoutX="7.0" layoutY="127.0" prefHeight="25.0" prefWidth="143.0" />
+                        <Label layoutX="14.0" layoutY="174.0" text="Max. Preco" />
+                        <TextField layoutX="7.0" layoutY="191.0" prefHeight="25.0" prefWidth="143.0" />
+                        <Button layoutX="7.0" layoutY="348.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Filter" />
+                        <Button layoutX="76.0" layoutY="348.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Clear" />
+                        <Button layoutX="86.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Reset" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="507.0" layoutY="80.0" prefHeight="263.0" prefWidth="134.0" styleClass="card" stylesheets="@menuDesign.css">
-                     <children>
-                        <ImageView fitHeight="130.0" fitWidth="183.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" translateZ="-1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="17.0">
-                           <image>
-                              <Image url="@../../Img/image-not-found-scaled-1150x647.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="cardName12" layoutX="80.0" layoutY="175.0" text="Label" />
-                        <Text layoutX="34.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-                        <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost:" />
-                        <Label fx:id="cardCost12" layoutX="80.0" layoutY="200.0" text="Label" />
-                     </children>
-                  </AnchorPane>
-                  <Button layoutX="14.0" layoutY="192.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="44.0" style="-fx-background-radius: 100%; -fx-background-color: white;" styleClass="card-button" />
-                  <Button layoutX="725.0" layoutY="200.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="44.0" style="-fx-background-radius: 100%; -fx-background-color: white;" styleClass="card-button" />
+                  <Button layoutX="689.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Book" />
                </children>
             </AnchorPane>
          </children>
