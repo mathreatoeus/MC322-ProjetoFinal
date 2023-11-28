@@ -226,3 +226,78 @@ foreign key (usuario) references Cliente(id),
 foreign key (usuario) references Funcionario(id),
 foreign key (pagamento) references Pagamento(id)
 ) default charset = utf8mb4;
+
+-- -->Create first users:
+-- -----------------------------------------
+-- 		-->Gerente
+INSERT INTO agencia_viagens.funcionario (nome, nascimento, cpf, email, senha, celular, endereco, cargo) 
+VALUES ('teste', '2023-11-26', '4566454', 'algo@func.com', '123', '454654', 'rua x', 'GERENTE');
+
+-- 		-->Cliente
+INSERT INTO agencia_viagens.cliente (nome, nascimento, cpf, email, senha, celular, endereco, numero_cartao, validade, cvv, nome_cartao, data_registro) 
+VALUES ('teste', '2023-11-26', '4566454', 'algo@cli.com', '123', '454654', 'rua x', '54654654', '2023-12-01', '1', 'asdas', '2023-11-26');
+
+-- --> Create first locations:
+
+INSERT INTO agencia_viagens.localizacao (cidade, continente, mediaAvaliacoes, numAvaliacoes, estado, pais) 
+VALUES ('Santiago', 'AMERICA_DO_SUL', '0', '0', 'Santiago', 'Chile'),
+ ('Buenos Aires', 'AMERICA_DO_SUL', '0', '0', 'Buenos Aires', 'Argentina'),
+ ('Rio de Janeiro', 'AMERICA_DO_SUL', '0', '0', 'Rio de Janeiro', 'Brasil'),
+ ('São Paulo', 'AMERICA_DO_SUL', '0', '0', 'São Paulo', 'Brasil'),
+ ('Salvador', 'AMERICA_DO_SUL', '0', '0', 'Bahia', 'Brasil');
+ 
+ -- --> Create first hospedagem
+INSERT INTO agencia_viagens.hospedagem (nome, tipo_hospedagem, tipo_suite, tipo_cama, descricao, endereco, localizacao, checkin, checkout, diaria, num_diarias, preco, mediaAvaliacoes, numAvaliacoes, disponivel)
+VALUES ('Recanto chile', 'POUSADA', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '1', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Recanto Chile para 1', 'POUSADA', 'INDIVIDUAL', 'SOLTEIRO', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '1', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Experiencia Argentina', 'HOTEL', 'DUPLA', 'QUEEN', 'Venha conhecer um local muito rico em experiencias gastronomicas', 'Rua xyz', '2', '2024-01-10', '2024-01-17', '2000', '7', '14000', '0', '0', '1'),
+ ('Descubra o Rio', 'POUSADA', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '3', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Festas em Sampa', 'POUSADA', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '4', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Interior de São Paulo', 'POUSADA', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '4', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('História de Salvador', 'HOTEL', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '5', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Cultura Bahiana', 'POUSADA', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '5', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Praias maravilhosas', 'POUSADA', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '3', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Trilhas e cachoeiras', 'ALBERGUE', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '4', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Gastronomia Paulista', 'HOTEL', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '4', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1'),
+ ('Trilha dos vinhos', 'HOTEL', 'DUPLA', 'QUEEN', 'Belo local para descansar com a família em pousada paradisiaca', 'Rua xyz', '1', '2024-01-10', '2024-01-17', '1000', '7', '7000', '0', '0', '1');
+
+-- --> Create first passagem
+INSERT INTO agencia_viagens.passagemaerea (localpartida, localchegada, saida, chegada, duracao, companhia, preco, aeroporto_partida, aeroporto_chegada, iatapartida, iatadestino)
+VALUES ('4', '1', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('4', '1', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('3', '2', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('5', '3', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('3', '4', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('3', '5', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('4', '3', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('4', '3', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('2', '3', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('2', '4', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo'),
+('4', '1', '2024-01-10', '2024-01-17', '0.2', 'LATAM', '500', 'GRU', 'XYZ', 'algo', 'algo');
+
+INSERT INTO agencia_viagens.passagemonibus (localpartida, localchegada, saida, chegada, duracao, companhia, preco, enderecopartida, enderecochegada)
+VALUES ('4', '1', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('4', '1', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('3', '2', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('5', '3', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('3', '4', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('3', '5', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('4', '3', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('4', '3', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('2', '3', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('2', '4', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ'),
+('4', '1', '2024-01-10', '2024-01-17', '0.2', 'ONIBOUS', '500', 'GRU', 'XYZ');
+
+-- --> Create packages
+INSERT INTO agencia_viagens.pacote (destino, categoria, hospedagem, tipopassagem, passagem, aluguelcarro, desconto, preco, media_avaliacoes, num_avaliacoes, fechado)
+VALUES ('1', 'FAMILIA', '1', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('1', 'RELAXAMENTO', '2', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('2', 'GASTRONOMIA', '3', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('3', 'VIDA_NOTURNA', '4', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('4', 'FAMILIA', '5', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('5', 'HISTORICO', '6', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('3', 'CULTURA', '7', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('3', 'RELAXAMENTO', '8', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('3', 'AVENTURA', '9', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('4', 'GASTRONOMIA', '10', 'AEREA', '1', '0', '0','500', '0', '0', '0'),
+('1', 'GASTRONOMIA', '11', 'AEREA', '1', '0', '0','500', '0', '0', '0');
