@@ -1,26 +1,24 @@
 package models.pacote;
 
-import models.pacote.Local;
-import models.usuario.GerarID;
 import java.time.LocalDateTime;
 
 public abstract class Passagem {
     // Attributes -----------------------------------------------------------------------
     private final int idPassagem;
-    private final Local partida;
-    private final Local destino;
+    private final int idPartida;
+    private final int idDestino;
     private LocalDateTime saida;
     private LocalDateTime chegada;
-    private double duracao;
+    private double duracao;                                                     // Horas.
     private String companhia;
     private double preco;
 
     // Constructor ----------------------------------------------------------------------
-    public Passagem(Local partida, Local destino, LocalDateTime saida, LocalDateTime chegada,
-                    double duracao, String companhia, double preco) {
-        this.idPassagem = GerarID.gerarId(partida.getNome() + destino.getNome());
-        this.partida = partida;
-        this.destino = destino;
+    public Passagem(int idPassagem, int idPartida, int idDestino, LocalDateTime saida,
+                    LocalDateTime chegada, double duracao, String companhia, double preco) {
+        this.idPassagem = idPassagem;
+        this.idPartida = idPartida;
+        this.idDestino = idDestino;
         this.saida = saida;
         this.chegada = chegada;
         this.duracao = duracao;
@@ -29,16 +27,16 @@ public abstract class Passagem {
     }
 
     // Getters --------------------------------------------------------------------------
-    public int getIdPassagem() {
+    public int getId() {
         return idPassagem;
     }
 
-    public Local getPartida() {
-        return partida;
+    public int getIdPartida() {
+        return idPartida;
     }
 
-    public Local getDestino() {
-        return destino;
+    public int getIdDestino() {
+        return idDestino;
     }
 
     public LocalDateTime getSaida() {

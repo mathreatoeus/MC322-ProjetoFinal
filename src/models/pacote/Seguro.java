@@ -2,17 +2,28 @@ package models.pacote;
 
 public class Seguro {
     // Attributes -----------------------------------------------------------------------
+    private final int id;
     private double franquia;
-    // Usuario vem aqui
+    private String descricao;
 
     // Constructor ----------------------------------------------------------------------
-    public Seguro() {
-        this.franquia = calcularFranquia();
+    public Seguro(int id, double franquia, String descricao) {
+        this.id = id;
+        this.franquia = franquia;
+        this.descricao = descricao;
     }
 
     // Getters --------------------------------------------------------------------------
-    private double getFranquia() {
+    public int getId() {
+        return id;
+    }
+
+    public double getFranquia() {
         return franquia;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
     // Setters --------------------------------------------------------------------------
@@ -20,9 +31,7 @@ public class Seguro {
         this.franquia = franquia;
     }
 
-    // Methods --------------------------------------------------------------------------
-    private double calcularFranquia() {
-        // Logica para calculo da franquia...
-        return 0.0;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

@@ -1,25 +1,25 @@
 package models.pacote;
 
-import models.usuario.GerarID;
-
 import java.time.LocalDateTime;
 
 public class Atividade {
     // Attributes -----------------------------------------------------------------------
     private final int idAtividade;
     private final String nomeAtividade;
-    private final Local local;
+    private String descricao;
+    private final int idLocal;
     private String endereco;
     private LocalDateTime inicio;
     private LocalDateTime fim;
     private double preco;
 
     // Constructor ----------------------------------------------------------------------
-    public Atividade(String nomeAtividade, Local local, String endereco, LocalDateTime inicio,
-                     LocalDateTime fim, double preco) {
-        this.idAtividade = GerarID.gerarId(nomeAtividade);
+    public Atividade(int idAtividade, String nomeAtividade, int idLocal, String descricao,
+                     String endereco, LocalDateTime inicio, LocalDateTime fim, double preco) {
+        this.idAtividade = idAtividade;
         this.nomeAtividade = nomeAtividade;
-        this.local = local;
+        this.descricao = descricao;
+        this.idLocal = idLocal;
         this.endereco = endereco;
         this.inicio = inicio;
         this.fim = fim;
@@ -27,7 +27,7 @@ public class Atividade {
     }
 
     // Getters --------------------------------------------------------------------------
-    public int getIdAtividade() {
+    public int getId() {
         return idAtividade;
     }
 
@@ -35,8 +35,12 @@ public class Atividade {
         return nomeAtividade;
     }
 
-    public Local getLocal() {
-        return local;
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public int getLocal() {
+        return idLocal;
     }
 
     public String getEndereco() {
@@ -62,6 +66,10 @@ public class Atividade {
 
     private void setInicio(LocalDateTime inicio) {
         this.inicio = inicio;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     private void setFim(LocalDateTime fim) {

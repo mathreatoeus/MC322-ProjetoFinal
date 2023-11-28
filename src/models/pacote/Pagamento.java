@@ -1,20 +1,27 @@
 package models.pacote;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import models.usuario.Usuario;
 
 public class Pagamento {
     private int idPagamento;
-    private Usuario usuario;
-    private double quantia;
-    private LocalDateTime prazo;
+    private int idUsuario;
+    private double valor;
+    private Situacao situacao;
+    private LocalDate vencimento;
 
     // private StatusPagamento status;
-    public Pagamento(int idPagamento, Usuario usuario, double quantia, LocalDateTime prazo) {
+    public Pagamento(int idPagamento, int idUsuario, double valor, Situacao situacao,
+                     LocalDate vencimento) {
         this.idPagamento = idPagamento;
-        this.usuario = usuario;
-        this.quantia = quantia;
-        this.prazo = prazo;
+        this.idUsuario = idUsuario;
+        this.valor = valor;
+        this.situacao = situacao;
+        this.vencimento = vencimento;
+    }
+
+    public enum Situacao {
+        PENDENTE, PAGO, ATRASADO
     }
 
     public int getIdPagamento() {
@@ -25,28 +32,35 @@ public class Pagamento {
         this.idPagamento = idPagamento;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public double getQuantia() {
-        return quantia;
+    public double getValor() {
+        return valor;
     }
 
-    public void setQuantia(double quantia) {
-        this.quantia = quantia;
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
-    public LocalDateTime getPrazo() {
-        return prazo;
+    public Situacao getSituacao() {
+        return situacao;
     }
 
-    public void setPrazo(LocalDateTime prazo) {
-        this.prazo = prazo;
+    public void setSituacao(Situacao situacao) {
+        this.situacao = situacao;
     }
 
+    public LocalDate getVencimento() {
+        return vencimento;
+    }
+
+    public void setPrazo(LocalDate vencimento) {
+        this.vencimento = vencimento;
+    }
 }

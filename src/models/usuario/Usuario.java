@@ -10,7 +10,6 @@ public abstract class Usuario {
     private final int idUsuario;
     private String nome;
     private LocalDate nascimento;
-    private String rg;
     private String cpf;
     private String email;
     private String senha;
