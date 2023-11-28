@@ -199,3 +199,4 @@ create table Reserva(
     preco decimal(6,2) not null,
     primary key (id)
 ) default charset = utf8mb4;
+
