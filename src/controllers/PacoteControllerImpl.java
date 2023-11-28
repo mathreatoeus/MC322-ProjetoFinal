@@ -1616,6 +1616,7 @@ public class PacoteControllerImpl {
                 break;
         }
         total += precoPassagem;
+        
 
         double precoAluguelCarro = buscarAluguelCarroPorId(buscarPacotePorId(Idpacote).getIdAluguelCarro()).getPreco();
         total += precoAluguelCarro;
