@@ -2,7 +2,7 @@ package models.pacote;
 
 import java.time.LocalDateTime;
 
-public class AluguelCarro implements ItemPacote {
+public class AluguelCarro {
     // Attributes -----------------------------------------------------------------------
     private final int idAluguelCarro;
     private int numDiarias;
