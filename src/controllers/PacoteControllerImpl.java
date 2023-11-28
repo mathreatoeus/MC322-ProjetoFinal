@@ -28,7 +28,269 @@ public class PacoteControllerImpl {
 
     // cadastro no banco de dados
 
-   
+   private boolean itemFazParte (String table, int id){
+
+        try {
+            String sql = "SELECT COUNT(*) FROM ? WHERE ID = ?";
+            PreparedStatement ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+            ps.setString(1, table);
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery(); // executando uma consulta no banco de dados
+
+            /* verificando se há algum retorno na busca no banco de dados */
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0; // Se count for maior que 0, já existe
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+    //Funcao para editar pacote passagem aerea
+    public void editarItem(Pacote pacote, Local local, Hospedagem hospedagem, PassagemAerea pa, AluguelCarro aluguelCarro){
+        
+        //Checar se os items fazem parte do pacote
+        if (itemFazParte("localizacao", pacote.getIdDestino()) && 
+            itemFazParte("hospedagem", pacote.getIdHospedagem()) &&
+            itemFazParte("passagemaerea", pacote.getIdPassagem()) &&
+            itemFazParte("aluguelcarro", pacote.getIdAluguelCarro())
+        ){
+            
+            try {
+                //Atualiza localizacao (destino)
+                String sql = "UPDATE localizacao SET nome = ?, continente = ?, mediaAvaliacoes = ?, numAvaliacoes = ? WHERE id = ?";
+                PreparedStatement ps = null;
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setString(1, local.getNome());
+                ps.setString(2, String.valueOf(local.getContinente()));
+                ps.setDouble(3, local.getMediaAvaliacoes());
+                ps.setInt(4, local.getNumAvaliacoes());
+                ps.setInt(5, local.getIdLocal());
+
+                ps.execute();
+
+                //Atualiza hospedagem
+                sql = "UPDATE hospedagem SET nome = ?, tipo_hospedagem = ?, tipo_suite = ?, tipo_cama = ?, descricao = ?, endereco = ?, localizacao = ?, checkin = ?, checkout = ?, diaria = ?, num_diarias = ?, preco = ?, mediaAvaliacoes = ?, numAvaliacoes = ?, disponivel = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setString(1, hospedagem.getNome());
+                ps.setString(2, String.valueOf(hospedagem.getTipoHospedagem()));
+                ps.setString(3, String.valueOf(hospedagem.getTipoSuite()));
+                ps.setString(4, String.valueOf(hospedagem.getTipoCama()));
+                ps.setString(5, hospedagem.getDescricao());
+                ps.setString(6, hospedagem.getEndereco());
+                ps.setInt(7, hospedagem.getIdLocal());
+                ps.setTimestamp(8, Timestamp.valueOf(hospedagem.getCheckin()));
+                ps.setTimestamp(9, Timestamp.valueOf(hospedagem.getCheckout()));
+                ps.setDouble(10, hospedagem.getDiaria());
+                ps.setDouble(11, hospedagem.getNumDiarias());
+                ps.setDouble(12, hospedagem.getPreco());
+                ps.setDouble(13, hospedagem.getMediaAvaliacoes());
+                ps.setInt(14, hospedagem.getNumAvaliacoes());
+                ps.setBoolean(15, hospedagem.getDisponivel());
+                ps.setInt(16, hospedagem.getIdHospedagem());
+
+                ps.execute();
+
+                //Atualiza pa
+                sql = "UPDATE passagemaerea SET localPartida = ?, localChegada = ?, saida = ?, chegada = ?, duracao = ?, companhia = ?, preco = ?, aeroporto_partida = ?, aeroporto_chegada = ?, iataPartida = ?, iataDestino = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setInt(1, pa.getIdPartida());
+                ps.setInt(2, pa.getIdDestino());
+                ps.setTimestamp(3, Timestamp.valueOf(pa.getSaida()));
+                ps.setTimestamp(4, Timestamp.valueOf(pa.getChegada()));
+                ps.setDouble(5, pa.getDuracao());
+                ps.setString(6, pa.getCompanhia());
+                ps.setDouble(7, pa.getPreco());
+                ps.setString(8, pa.getAeroportoPartida());
+                ps.setString(9, pa.getAeroportoChegada());
+                ps.setString(10, pa.getIataPartida());
+                ps.setString(11, pa.getIataChegada());
+                ps.setInt(12, pa.getId());
+
+                ps.execute();
+
+                //Atualiza aluguel
+                sql = "UPDATE aluguelcarro SET num_diarias = ?, modelo_carro = ?, locadora = ?, retirada = ?, devolucao = ?, endereco_retirada = ?, endereco_devolucao = ?, diaria = ?, preco = ?, seguro = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setInt(1, aluguelCarro.getNumDiarias());
+                ps.setString(2, aluguelCarro.getModeloCarro());
+                ps.setString(3, aluguelCarro.getLocadora());
+
+                // Convertendo LocalDateTime para Timestamp
+                LocalDateTime retiradaLocalDateTime = aluguelCarro.getRetirada();
+                Timestamp retiradaTimestamp = Timestamp.valueOf(retiradaLocalDateTime);
+                ps.setTimestamp(4, retiradaTimestamp);
+                LocalDateTime devolucaoLocalDateTime = aluguelCarro.getDevolucao();
+                Timestamp devolucaoTimestamp = Timestamp.valueOf(devolucaoLocalDateTime);
+                ps.setTimestamp(5, devolucaoTimestamp);
+                ps.setString(6, aluguelCarro.getEnderecoRetirada());
+                ps.setString(7, aluguelCarro.getEnderecoDevolucao());
+                ps.setDouble(8, aluguelCarro.getDiaria());
+                ps.setDouble(9, aluguelCarro.getPreco());
+                ps.setInt(10, aluguelCarro.getIdSeguro());
+                ps.setInt(11, aluguelCarro.getIdSeguro());
+
+
+                ps.execute();
+
+                //Atualiza pacote
+                sql = "UPDATE pacote SET destino = ?, categoria = ?, hospedagem = ?, tipopassagem = ?, passagem = ?, aluguelCarro = ?, desconto = ?, preco = ?, media_avaliacoes = ?, num_avaliacoes = ?, fechado = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setInt(1, pacote.getIdDestino());
+                ps.setString(2,pacote.getCategoria().name());
+                ps.setInt(3, pacote.getIdHospedagem());
+                ps.setString(4, pacote.getTipoPassagem().name());
+                ps.setInt(5, pacote.getIdPassagem());
+                ps.setInt(6, pacote.getIdAluguelCarro());
+                ps.setDouble(7, pacote.getDesconto());
+                ps.setDouble(8, pacote.getPreco());
+                ps.setDouble(9, pacote.getMediaAvaliacoes());
+                ps.setInt(10, pacote.getNumAvaliacoes());
+                ps.setBoolean(11, pacote.getFechado());
+                ps.setInt(11, pacote.getId());
+
+
+                ps.execute();
+
+                ps.close();
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        }else{
+            System.out.println("Ops, não conseguimos atualizar as informações porque há itens não relacionados com o pacote.")
+        }
+
+
+
+
+
+
+    }
+
+    //Funcao editar item passagem onibus
+    public void editarItem(Pacote pacote, Local local, Hospedagem hospedagem, PassagemOnibus pa, AluguelCarro aluguelCarro){
+        
+        //Checar se os items fazem parte do pacote
+        if (itemFazParte("localizacao", pacote.getIdDestino()) && 
+            itemFazParte("hospedagem", pacote.getIdHospedagem()) &&
+            itemFazParte("passagemaerea", pacote.getIdPassagem()) &&
+            itemFazParte("aluguelcarro", pacote.getIdAluguelCarro())
+        ){
+            
+            try {
+                //Atualiza localizacao (destino)
+                String sql = "UPDATE localizacao SET nome = ?, continente = ?, mediaAvaliacoes = ?, numAvaliacoes = ? WHERE id = ?";
+                PreparedStatement ps = null;
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setString(1, local.getNome());
+                ps.setString(2, String.valueOf(local.getContinente()));
+                ps.setDouble(3, local.getMediaAvaliacoes());
+                ps.setInt(4, local.getNumAvaliacoes());
+                ps.setInt(5, local.getIdLocal());
+
+                ps.execute();
+
+                //Atualiza hospedagem
+                sql = "UPDATE hospedagem SET nome = ?, tipo_hospedagem = ?, tipo_suite = ?, tipo_cama = ?, descricao = ?, endereco = ?, localizacao = ?, checkin = ?, checkout = ?, diaria = ?, num_diarias = ?, preco = ?, mediaAvaliacoes = ?, numAvaliacoes = ?, disponivel = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setString(1, hospedagem.getNome());
+                ps.setString(2, String.valueOf(hospedagem.getTipoHospedagem()));
+                ps.setString(3, String.valueOf(hospedagem.getTipoSuite()));
+                ps.setString(4, String.valueOf(hospedagem.getTipoCama()));
+                ps.setString(5, hospedagem.getDescricao());
+                ps.setString(6, hospedagem.getEndereco());
+                ps.setInt(7, hospedagem.getIdLocal());
+                ps.setTimestamp(8, Timestamp.valueOf(hospedagem.getCheckin()));
+                ps.setTimestamp(9, Timestamp.valueOf(hospedagem.getCheckout()));
+                ps.setDouble(10, hospedagem.getDiaria());
+                ps.setDouble(11, hospedagem.getNumDiarias());
+                ps.setDouble(12, hospedagem.getPreco());
+                ps.setDouble(13, hospedagem.getMediaAvaliacoes());
+                ps.setInt(14, hospedagem.getNumAvaliacoes());
+                ps.setBoolean(15, hospedagem.getDisponivel());
+                ps.setInt(16, hospedagem.getIdHospedagem());
+
+                ps.execute();
+
+                //Atualiza pa
+                sql = "UPDATE passagemonibus SET localPartida = ?, localChegada = ?, saida = ?, chegada = ?, duracao = ?, companhia = ?, preco = ?, enderecoPartida = ?, enderecoChegada = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setInt(1, pa.getIdPartida());
+                ps.setInt(2, pa.getIdDestino());
+                ps.setTimestamp(3, Timestamp.valueOf(pa.getSaida()));
+                ps.setTimestamp(4, Timestamp.valueOf(pa.getChegada()));
+                ps.setDouble(5, pa.getDuracao());
+                ps.setString(6, pa.getCompanhia());
+                ps.setDouble(7, pa.getPreco());
+                ps.setString(8, pa.getEnderecoPartida());
+                ps.setString(9, pa.getEnderecoChegada());
+                ps.setInt(10, pa.getId());
+
+                ps.execute();
+
+                //Atualiza aluguel
+                sql = "UPDATE aluguelcarro SET num_diarias = ?, modelo_carro = ?, locadora = ?, retirada = ?, devolucao = ?, endereco_retirada = ?, endereco_devolucao = ?, diaria = ?, preco = ?, seguro = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setInt(1, aluguelCarro.getNumDiarias());
+                ps.setString(2, aluguelCarro.getModeloCarro());
+                ps.setString(3, aluguelCarro.getLocadora());
+
+                // Convertendo LocalDateTime para Timestamp
+                LocalDateTime retiradaLocalDateTime = aluguelCarro.getRetirada();
+                Timestamp retiradaTimestamp = Timestamp.valueOf(retiradaLocalDateTime);
+                ps.setTimestamp(4, retiradaTimestamp);
+                LocalDateTime devolucaoLocalDateTime = aluguelCarro.getDevolucao();
+                Timestamp devolucaoTimestamp = Timestamp.valueOf(devolucaoLocalDateTime);
+                ps.setTimestamp(5, devolucaoTimestamp);
+                ps.setString(6, aluguelCarro.getEnderecoRetirada());
+                ps.setString(7, aluguelCarro.getEnderecoDevolucao());
+                ps.setDouble(8, aluguelCarro.getDiaria());
+                ps.setDouble(9, aluguelCarro.getPreco());
+                ps.setInt(10, aluguelCarro.getIdSeguro());
+                ps.setInt(11, aluguelCarro.getIdSeguro());
+
+
+                ps.execute();
+
+                //Atualiza pacote
+                sql = "UPDATE pacote SET destino = ?, categoria = ?, hospedagem = ?, tipopassagem = ?, passagem = ?, aluguelCarro = ?, desconto = ?, preco = ?, media_avaliacoes = ?, num_avaliacoes = ?, fechado = ? WHERE id = ?";
+                ps = ConexaoMySQL.getConexao().prepareStatement(sql);
+                ps.setInt(1, pacote.getIdDestino());
+                ps.setString(2,pacote.getCategoria().name());
+                ps.setInt(3, pacote.getIdHospedagem());
+                ps.setString(4, pacote.getTipoPassagem().name());
+                ps.setInt(5, pacote.getIdPassagem());
+                ps.setInt(6, pacote.getIdAluguelCarro());
+                ps.setDouble(7, pacote.getDesconto());
+                ps.setDouble(8, pacote.getPreco());
+                ps.setDouble(9, pacote.getMediaAvaliacoes());
+                ps.setInt(10, pacote.getNumAvaliacoes());
+                ps.setBoolean(11, pacote.getFechado());
+                ps.setInt(11, pacote.getId());
+
+
+                ps.execute();
+
+                ps.close();
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        }else{
+            System.out.println("Ops, não conseguimos atualizar as informações porque há itens não relacionados com o pacote.")
+        }
+
+
+
+
+
+
+    }   
 
     public void cadastrarAluguelCarro(AluguelCarro aluguel) {
         /* Verificar se já existe um aluguel com o mesmo ID */
